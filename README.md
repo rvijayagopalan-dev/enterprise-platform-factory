@@ -6,6 +6,12 @@ The Enterprise Platform Factory turns natural-language requirements into governe
 
 ![Enterprise Platform Factory reference architecture](docs/images/enterprise-platform-factory.svg)
 
+## Interactive demo
+
+Open the [Enterprise Platform Factory interactive demo](demo/index.html) to explore the provider-neutral control plane, build-request workflow, approval gates, identity and policy controls, architecture layers, integrations and simulated audit trail.
+
+The demo is a standalone HTML experience. All workflow actions and status metrics are simulated; it does not connect to live AI providers, GitHub, Terraform or cloud accounts.
+
 ## Vision
 
 Create a standardized factory for moving from **idea to production** through AI-assisted specification, architecture, coding, testing, repository management, infrastructure provisioning, deployment and operations.
