@@ -12,6 +12,12 @@ Open the [Enterprise Platform Factory interactive demo](demo/index.html) to expl
 
 The demo is a standalone HTML experience. All workflow actions and status metrics are simulated; it does not connect to live AI providers, GitHub, Terraform or cloud accounts.
 
+## Enterprise Strategy Factory
+
+Open the [Enterprise Strategy Factory experience](strategy-factory/index.html) to explore strategy intake, strategic choices and objectives, initiative portfolio alignment, scenario planning, execution outcomes, governance and organizational learning.
+
+This is a standalone HTML prototype with synthetic metrics and simulated client-side actions. It does not connect to live strategy, planning, financial or analytics systems.
+
 ## Trust and operations control plane demo
 
 Explore the [FinOps, Governance, Security and Monitoring demo](demo/platform-controls.html) for the cross-cutting control plane that should govern every factory workload. It includes cost allocation and optimization, governance coverage and evidence, zero-trust security posture, SLOs and telemetry, policy enforcement points, and an audit evidence ledger.

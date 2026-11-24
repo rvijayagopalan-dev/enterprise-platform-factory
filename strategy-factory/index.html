@@ -1,0 +1,194 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#10101f">
+<title>Enterprise Strategy Factory | Product Experience</title>
+<style>
+:root{--bg:#10101f;--panel:#19192b;--panel2:#202039;--line:#34344f;--text:#f0effa;--muted:#a6a4bd;--accent:#bb9cff;--accent2:#7b8dff;--green:#73d7ab;--amber:#f2c46f;--red:#ff858e}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(circle at 65% -20%,#30284a 0,transparent 38%),var(--bg);color:var(--text);font:14px/1.5 Inter,ui-sans-serif,system-ui,Segoe UI,Arial}button,input,select,textarea{font:inherit}button{cursor:pointer}.app{display:grid;grid-template-columns:246px 1fr;min-height:100vh}.side{background:#121222;border-right:1px solid var(--line);padding:20px 14px;position:sticky;top:0;height:100vh;overflow:auto}.brand{display:flex;gap:12px;align-items:center;padding:5px 10px 24px}.logo{width:38px;height:38px;border-radius:12px;background:linear-gradient(135deg,#bd9cff,#778cff);display:grid;place-items:center;color:#161225;font-weight:900;font-size:18px}.brand b{font-size:14px;letter-spacing:.3px}.brand small{display:block;color:var(--muted);font-size:11px}.navlabel{color:#85839e;text-transform:uppercase;font-size:10px;letter-spacing:1.4px;padding:14px 11px 6px}.nav button{display:flex;align-items:center;gap:11px;width:100%;border:0;background:transparent;color:#b9b7cb;padding:10px 12px;border-radius:9px;text-align:left;margin:2px 0}.nav button.active,.nav button:hover{background:#2b2944;color:white}.nav .ico{width:18px;text-align:center;color:var(--accent)}.sidefoot{position:absolute;bottom:16px;left:18px;right:18px;border-top:1px solid var(--line);padding-top:12px;color:var(--muted);font-size:10px}.main{min-width:0}.top{height:64px;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;padding:0 28px;background:#141425eF;position:sticky;top:0;z-index:5;backdrop-filter:blur(12px)}.crumb{color:var(--muted);font-size:12px}.topright{display:flex;align-items:center;gap:10px}.pill{border:1px solid var(--line);padding:6px 10px;border-radius:30px;color:var(--muted);font-size:10px}.dot{display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--green);margin-right:6px}.avatar{width:30px;height:30px;border-radius:50%;background:#494166;display:grid;place-items:center;font-size:10px}.content{max-width:1480px;margin:auto;padding:26px 28px 56px}.view{display:none}.view.active{display:block}.eyebrow{color:var(--accent);font-size:10px;text-transform:uppercase;letter-spacing:1.6px;font-weight:750}.hero{display:flex;justify-content:space-between;gap:22px;align-items:flex-start;margin:7px 0 22px}.hero h1{font-size:29px;line-height:1.15;margin:6px 0 9px;letter-spacing:-.7px}.hero p{color:var(--muted);max-width:780px;margin:0}.actions{display:flex;gap:8px;flex-wrap:wrap}.btn{border:1px solid #51466d;background:#282640;color:#f0effa;border-radius:8px;padding:9px 13px;font-weight:650;font-size:12px}.btn.primary{background:linear-gradient(110deg,#b38ef5,#8493ff);border:0;color:#171326}.btn.ghost{background:transparent}.btn:disabled{opacity:.45;cursor:not-allowed}.grid{display:grid;gap:13px}.g4{grid-template-columns:repeat(4,minmax(0,1fr))}.g3{grid-template-columns:repeat(3,minmax(0,1fr))}.g2{grid-template-columns:repeat(2,minmax(0,1fr))}.card{background:linear-gradient(155deg,#1d1d33,#171727);border:1px solid var(--line);border-radius:12px;padding:16px;min-width:0}.card h3{font-size:13px;margin:0 0 8px}.muted{color:var(--muted)}.small{font-size:11px}.metric{font-size:26px;font-weight:780;letter-spacing:-.6px;margin:4px 0}.metriclabel{font-size:11px;color:var(--muted)}.delta{font-size:10px;color:var(--green)}.sectionhead{display:flex;justify-content:space-between;align-items:center;margin:24px 0 11px}.sectionhead h2{font-size:15px;margin:0}.tag{display:inline-flex;align-items:center;border:1px solid var(--line);border-radius:20px;padding:4px 8px;font-size:10px;color:var(--muted);gap:5px}.tag.ok{color:var(--green);border-color:#315c4d}.tag.warn{color:var(--amber);border-color:#65532f}.tag.info{color:var(--accent);border-color:#51406c}.bar{height:6px;background:#34334c;border-radius:10px;overflow:hidden;margin:9px 0}.bar i{display:block;height:100%;background:linear-gradient(90deg,#b18bf1,#7f91ff);border-radius:10px}.pillars{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}.pillar{border:1px solid var(--line);border-radius:10px;padding:13px;background:#1a1a2c}.pillar strong{display:block;font-size:12px;margin-bottom:5px}.pillar span{font-size:10px;color:var(--muted)}.flow{display:grid;grid-template-columns:repeat(5,1fr);gap:8px}.step{background:#1a1a2d;border:1px solid var(--line);border-radius:9px;padding:11px;min-height:84px}.step b{display:block;font-size:11px;margin:7px 0 3px}.step small{color:var(--muted);font-size:10px}.num{width:21px;height:21px;border-radius:7px;background:#36304d;color:var(--accent);display:grid;place-items:center;font-size:10px;font-weight:800}.table{width:100%;border-collapse:collapse;font-size:11px}.table th{text-align:left;color:#9c99b4;font-weight:600;padding:9px;border-bottom:1px solid var(--line)}.table td{padding:10px 9px;border-bottom:1px solid #2b2a40;color:#dedced}.table tr:last-child td{border:0}.status{font-size:10px;border-radius:12px;padding:3px 7px;background:#1e3c33;color:var(--green);white-space:nowrap}.status.pending{background:#443922;color:var(--amber)}.status.risk{background:#462a35;color:var(--red)}.field label{display:block;color:#b1aec5;font-size:11px;margin-bottom:5px}.field input,.field select,.field textarea{width:100%;background:#141423;color:var(--text);border:1px solid #45435f;border-radius:8px;padding:10px;outline:none}.field textarea{min-height:95px;resize:vertical}.formgrid{display:grid;grid-template-columns:1fr 1fr;gap:11px}.field.full{grid-column:1/-1}.result{background:#141423;border:1px solid #443e60;border-radius:9px;padding:13px;margin-top:12px}.callout{border-left:3px solid var(--accent);padding:10px 12px;background:#211e33;border-radius:0 8px 8px 0;color:#d4cde8;font-size:11px}.objective{padding:11px 0;border-bottom:1px solid #302e45}.objective:last-child{border:0}.objective b{font-size:11px}.objective .meta{display:flex;justify-content:space-between;gap:10px;font-size:10px;color:var(--muted);margin-top:5px}.priority{display:inline-flex;align-items:center;gap:5px;color:var(--accent);font-size:10px}.scenario{border:1px solid var(--line);background:#1a1a2c;border-radius:9px;padding:13px}.scenario h3{margin:0 0 5px;font-size:12px}.toast{position:fixed;right:20px;bottom:20px;background:#233d36;border:1px solid #3c765d;padding:11px 15px;border-radius:9px;color:#e3fff1;display:none;z-index:20;box-shadow:0 8px 30px #0008}.footnote{font-size:10px;color:#8886a1;margin-top:13px}
+@media(max-width:1050px){.g4{grid-template-columns:repeat(2,1fr)}.pillars{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:760px){.app{grid-template-columns:1fr}.side{height:auto;position:relative;padding:10px}.brand{padding-bottom:8px}.nav{display:flex;overflow:auto}.navlabel,.sidefoot{display:none}.nav button{white-space:nowrap;width:auto}.top{padding:0 14px}.content{padding:18px 14px}.hero{display:block}.actions{margin-top:13px}.g3,.g2,.pillars{grid-template-columns:1fr}.g4{grid-template-columns:repeat(2,1fr)}.flow{grid-template-columns:repeat(2,1fr)}.formgrid{grid-template-columns:1fr}.field.full{grid-column:auto}.tablewrap{overflow-x:auto}.table{min-width:620px}}
+</style>
+</head>
+<body>
+<div class="app">
+<aside class="side">
+  <div class="brand"><div class="logo">SF</div><div><b>ENTERPRISE STRATEGY</b><small>AI-enabled strategy system</small></div></div>
+  <div class="navlabel">Strategy workspace</div>
+  <nav class="nav" id="nav">
+    <button class="active" data-view="overview"><span class="ico">◈</span> Command Center</button>
+    <button data-view="intake"><span class="ico">✳</span> Strategy Intake</button>
+    <button data-view="map"><span class="ico">⌘</span> Strategy Map</button>
+    <button data-view="portfolio"><span class="ico">▤</span> Initiative Portfolio</button>
+    <button data-view="scenarios"><span class="ico">◉</span> Scenarios & Signals</button>
+    <button data-view="execution"><span class="ico">⇢</span> Execution & Outcomes</button>
+    <div class="navlabel">Trust & learning</div>
+    <button data-view="governance"><span class="ico">⬡</span> Governance & Risk</button>
+    <button data-view="insights"><span class="ico">⌁</span> Insights & Learning</button>
+  </nav>
+  <div class="sidefoot">ESF Product Demo · v0.1<br>Illustrative data · No live integrations</div>
+</aside>
+<main class="main">
+  <header class="top"><div class="crumb">Strategy / <b id="crumb">Command Center</b></div><div class="topright"><span class="pill"><i class="dot"></i> Demo environment</span><span class="pill">Enterprise: Acme Group</span><div class="avatar">AR</div></div></header>
+  <div class="content">
+    <section class="view active" id="overview">
+      <div class="hero"><div><div class="eyebrow">One strategy · Shared direction · Measurable outcomes</div><h1>Turn strategic intent into<br>coordinated enterprise action.</h1><p>Enterprise Strategy Factory connects market signals, strategic choices, objectives, investments and measurable outcomes in one governed learning cycle.</p></div><div class="actions"><button class="btn primary" onclick="show('intake')">＋ Shape a strategy</button><button class="btn ghost" onclick="show('map')">Explore strategy map</button></div></div>
+      <div class="grid g4">
+        <div class="card"><div class="metric">6</div><div class="metriclabel">Active strategic priorities</div><div class="delta">2 refreshed this quarter</div></div>
+        <div class="card"><div class="metric">24</div><div class="metriclabel">Funded initiatives</div><div class="delta">Across 4 strategic pillars</div></div>
+        <div class="card"><div class="metric">78%</div><div class="metriclabel">Outcome confidence</div><div class="delta">↑ 6 points vs. last quarter</div></div>
+        <div class="card"><div class="metric">$42.6M</div><div class="metriclabel">Strategic investment</div><div class="delta">91% aligned to priorities</div></div>
+      </div>
+      <div class="sectionhead"><h2>Strategy at a glance</h2><span class="tag info">FY2026 · Illustrative</span></div>
+      <div class="pillars">
+        <div class="pillar"><strong>01 · Customer-led growth</strong><span>Grow trusted, personalized relationships across channels.</span></div>
+        <div class="pillar"><strong>02 · Digital operations</strong><span>Simplify journeys and improve end-to-end productivity.</span></div>
+        <div class="pillar"><strong>03 · Data & AI advantage</strong><span>Turn governed data into differentiated decisions and services.</span></div>
+        <div class="pillar"><strong>04 · Resilient enterprise</strong><span>Strengthen talent, risk posture and adaptable foundations.</span></div>
+      </div>
+      <div class="sectionhead"><h2>Strategy-to-outcome cycle</h2><span class="tag ok">Governed planning cycle</span></div>
+      <div class="flow">
+        <div class="step"><div class="num">01</div><b>Sense & frame</b><small>Signals, context and strategic question</small></div>
+        <div class="step"><div class="num">02</div><b>Make choices</b><small>Options, trade-offs and assumptions</small></div>
+        <div class="step"><div class="num">03</div><b>Align & fund</b><small>Objectives, owners and investments</small></div>
+        <div class="step"><div class="num">04</div><b>Execute & measure</b><small>Initiatives, milestones and outcomes</small></div>
+        <div class="step"><div class="num">05</div><b>Learn & adapt</b><small>Evidence, review and strategy updates</small></div>
+      </div>
+      <div class="sectionhead"><h2>Decisions and outcomes needing attention</h2><span class="small muted">Illustrative records</span></div>
+      <div class="card tablewrap"><table class="table"><thead><tr><th>Strategic item</th><th>Priority</th><th>Owner</th><th>Next checkpoint</th><th>Status</th></tr></thead><tbody>
+        <tr><td>Unified customer identity</td><td>Customer-led growth</td><td>Digital Products</td><td>Investment review · Jun 12</td><td><span class="status pending">Decision required</span></td></tr>
+        <tr><td>AI-assisted service operations</td><td>Data & AI advantage</td><td>Enterprise Operations</td><td>Outcome review · Jun 18</td><td><span class="status">On track</span></td></tr>
+        <tr><td>Resilience modernization</td><td>Resilient enterprise</td><td>Technology</td><td>Risk checkpoint · Jun 21</td><td><span class="status risk">At risk</span></td></tr>
+      </tbody></table></div>
+      <p class="footnote">All strategy records, measures and financial figures are synthetic examples for product exploration.</p>
+    </section>
+
+    <section class="view" id="intake">
+      <div class="hero"><div><div class="eyebrow">Sense & frame · Structured strategy intake</div><h1>Shape a strategic response</h1><p>Frame the opportunity, clarify the choices and review an evidence-aware strategy proposal before creating an execution plan.</p></div><span class="tag info">Human decision gate</span></div>
+      <div class="grid g2">
+        <div class="card"><h3>Describe the strategic opportunity</h3>
+          <div class="field"><label for="strategyPrompt">Opportunity or strategic question</label><textarea id="strategyPrompt">How can we improve digital customer retention and lifetime value over the next 18 months while simplifying service operations?</textarea></div>
+          <div class="formgrid" style="margin-top:11px">
+            <div class="field"><label for="horizon">Planning horizon</label><select id="horizon"><option>12 months</option><option selected>18 months</option><option>3 years</option><option>5 years</option></select></div>
+            <div class="field"><label for="scope">Strategic scope</label><select id="scope"><option>Business unit</option><option selected>Enterprise</option><option>Product / market</option><option>Operating function</option></select></div>
+            <div class="field"><label for="investment">Investment envelope</label><select id="investment"><option>$5M–$15M</option><option selected>$15M–$50M</option><option>$50M–$100M</option><option>To be determined</option></select></div>
+            <div class="field"><label for="risk">Risk appetite</label><select id="risk"><option>Conservative</option><option selected>Balanced</option><option>Growth-oriented</option></select></div>
+            <div class="field full"><label for="evidence">Known evidence, constraints or assumptions</label><textarea id="evidence">Retention is strongest for customers using multiple digital services. Service costs are rising. Data use must meet privacy and regulatory commitments.</textarea></div>
+          </div>
+          <div class="actions" style="margin-top:13px"><button class="btn primary" onclick="analyzeStrategy()">Frame strategy options</button><button class="btn ghost" onclick="document.getElementById('strategyPrompt').value=''">Clear question</button></div>
+        </div>
+        <div class="card"><h3>Strategy framing</h3><div id="strategyOutput" class="result"><div class="eyebrow">Awaiting strategic question</div><p class="muted">Submit a question to generate a structured framing, candidate choices and measures for review.</p></div>
+          <div class="callout" style="margin-top:12px">This deterministic demo organizes the provided context; it does not validate evidence, forecast outcomes, or replace accountable leadership decisions.</div>
+        </div>
+      </div>
+      <div class="sectionhead"><h2>Review the proposed direction</h2><span id="proposalState" class="tag warn">Not prepared</span></div>
+      <div class="card"><div class="grid g3"><div><div class="small muted">Strategic thesis</div><b id="thesis">Customer value through connected digital experiences</b></div><div><div class="small muted">Primary outcome</div><b id="outcome">Improve retention and customer lifetime value</b></div><div><div class="small muted">Planning horizon</div><b id="proposalHorizon">18 months</b></div></div>
+        <div class="bar"><i id="proposalBar" style="width:0%"></i></div><p id="proposalSummary" class="muted small">Frame the opportunity to review choices, assumptions, dependencies and measures.</p>
+        <div class="actions"><button class="btn primary" id="confirmStrategy" disabled onclick="confirmStrategy()">Confirm direction & create review plan</button><button class="btn ghost" onclick="toast('Revision noted. Update the framing and regenerate the proposal.')">Request revision</button></div><div id="planCreated" class="result" style="display:none"></div>
+      </div>
+    </section>
+
+    <section class="view" id="map">
+      <div class="hero"><div><div class="eyebrow">Strategic choices · Objectives · Measures</div><h1>Strategy map</h1><p>Make the strategic logic visible: the choices we make, the capabilities they require and the outcomes we expect to measure.</p></div><span class="tag info">FY2026 · v2.1</span></div>
+      <div class="card"><h3>North star</h3><p style="font-size:18px;margin:4px 0"><b>Earn lasting customer trust through simple, useful and connected experiences.</b></p><p class="muted small">Strategic intent · Approved by Executive Committee · Reviewed May 14, 2026</p></div>
+      <div class="sectionhead"><h2>Strategic pillars and intended outcomes</h2><span class="small muted">Objectives are illustrative</span></div>
+      <div class="grid g2">
+        <div class="card"><div class="eyebrow">Pillar 01 · Customer-led growth</div><div class="objective"><b>Increase customer retention in priority segments</b><div class="meta"><span>Owner: Chief Growth Officer</span><span>Target: +8 pts</span></div><div class="bar"><i style="width:63%"></i></div></div><div class="objective"><b>Grow value from connected product relationships</b><div class="meta"><span>Owner: Consumer Business</span><span>Target: +12%</span></div><div class="bar"><i style="width:48%"></i></div></div></div>
+        <div class="card"><div class="eyebrow">Pillar 02 · Digital operations</div><div class="objective"><b>Resolve routine service needs through digital self-service</b><div class="meta"><span>Owner: Chief Operating Officer</span><span>Target: 65%</span></div><div class="bar"><i style="width:71%"></i></div></div><div class="objective"><b>Reduce avoidable customer effort</b><div class="meta"><span>Owner: Customer Experience</span><span>Target: −20%</span></div><div class="bar"><i style="width:54%"></i></div></div></div>
+        <div class="card"><div class="eyebrow">Pillar 03 · Data & AI advantage</div><div class="objective"><b>Improve decision quality with governed, timely data</b><div class="meta"><span>Owner: Chief Data Officer</span><span>Target: 90% coverage</span></div><div class="bar"><i style="width:59%"></i></div></div><div class="objective"><b>Scale responsible AI in priority journeys</b><div class="meta"><span>Owner: AI Council</span><span>Target: 5 journeys</span></div><div class="bar"><i style="width:42%"></i></div></div></div>
+        <div class="card"><div class="eyebrow">Pillar 04 · Resilient enterprise</div><div class="objective"><b>Strengthen service continuity and operational resilience</b><div class="meta"><span>Owner: Chief Risk Officer</span><span>Target: 99.95%</span></div><div class="bar"><i style="width:76%"></i></div></div><div class="objective"><b>Build critical skills for a changing enterprise</b><div class="meta"><span>Owner: Chief People Officer</span><span>Target: 80% pathways</span></div><div class="bar"><i style="width:38%"></i></div></div></div>
+      </div>
+      <div class="sectionhead"><h2>Strategic choice record</h2></div>
+      <div class="card tablewrap"><table class="table"><thead><tr><th>Choice</th><th>Rationale</th><th>Trade-off</th><th>Confidence</th><th>Review</th></tr></thead><tbody><tr><td>Prioritize connected customer journeys</td><td>Higher retention in multi-service cohorts</td><td>Defer low-scale channel customization</td><td>Medium</td><td>Q3 FY2026</td></tr><tr><td>Build on governed shared data products</td><td>Improves reuse and decision consistency</td><td>Near-term platform investment</td><td>Medium</td><td>Q4 FY2026</td></tr></tbody></table></div>
+    </section>
+
+    <section class="view" id="portfolio">
+      <div class="hero"><div><div class="eyebrow">Resource allocation · Strategic alignment</div><h1>Initiative portfolio</h1><p>See how investments connect to outcomes, capacity, dependencies and risk. Portfolio data is illustrative and not a live financial forecast.</p></div><button class="btn primary" onclick="toast('Initiative draft created in this demo. No external systems were changed.')">＋ Add initiative</button></div>
+      <div class="grid g4"><div class="card"><div class="metric">24</div><div class="metriclabel">Active initiatives</div></div><div class="card"><div class="metric">91%</div><div class="metriclabel">Investment aligned</div></div><div class="card"><div class="metric">7</div><div class="metriclabel">Cross-portfolio dependencies</div></div><div class="card"><div class="metric">3</div><div class="metriclabel">Capacity constraints</div></div></div>
+      <div class="sectionhead"><h2>Funded initiatives and outcome contribution</h2><span class="tag warn">2 decisions due this month</span></div>
+      <div class="card tablewrap"><table class="table"><thead><tr><th>Initiative</th><th>Strategic pillar</th><th>Executive owner</th><th>Investment</th><th>Outcome confidence</th><th>Health</th></tr></thead><tbody>
+        <tr><td>Unified customer identity</td><td>Customer-led growth</td><td>Digital Products</td><td>$8.4M</td><td>Medium · 68%</td><td><span class="status pending">Decision required</span></td></tr>
+        <tr><td>Next-best-action capability</td><td>Data & AI advantage</td><td>Consumer Business</td><td>$6.2M</td><td>Medium · 72%</td><td><span class="status">On track</span></td></tr>
+        <tr><td>Service journey simplification</td><td>Digital operations</td><td>Enterprise Operations</td><td>$4.8M</td><td>High · 81%</td><td><span class="status">On track</span></td></tr>
+        <tr><td>Resilience modernization</td><td>Resilient enterprise</td><td>Technology</td><td>$9.1M</td><td>Low · 49%</td><td><span class="status risk">At risk</span></td></tr>
+        <tr><td>Enterprise data products</td><td>Data & AI advantage</td><td>Data Office</td><td>$5.7M</td><td>Medium · 66%</td><td><span class="status pending">Dependency</span></td></tr>
+      </tbody></table></div>
+      <div class="sectionhead"><h2>Portfolio guardrails</h2></div><div class="grid g3"><div class="card"><h3>Strategic fit</h3><p class="small muted">Every funded initiative names an accountable outcome, an executive owner and the evidence supporting its strategic contribution.</p></div><div class="card"><h3>Capacity & dependencies</h3><p class="small muted">Surface shared talent, sequencing constraints, platform dependencies and opportunity cost before funding decisions.</p></div><div class="card"><h3>Reallocation</h3><p class="small muted">Review value assumptions and stop, pivot or scale decisions at explicit portfolio checkpoints.</p></div></div>
+    </section>
+
+    <section class="view" id="scenarios">
+      <div class="hero"><div><div class="eyebrow">External context · Strategic uncertainty</div><h1>Scenarios & signals</h1><p>Track the assumptions that matter, explore plausible futures and define signposts that could change a strategic choice.</p></div><span class="tag info">Illustrative scenario set</span></div>
+      <div class="grid g3">
+        <div class="scenario"><span class="tag ok">Base case</span><h3 style="margin-top:10px">Steady digital adoption</h3><p class="small muted">Customer digital engagement grows at expected rates; current investment sequencing remains viable.</p><div class="small"><b>Signpost:</b> Digital active users +8% YoY</div></div>
+        <div class="scenario"><span class="tag warn">Upside</span><h3 style="margin-top:10px">AI-led service acceleration</h3><p class="small muted">Responsible automation improves service speed and frees capacity for higher-value customer support.</p><div class="small"><b>Signpost:</b> Contained resolution exceeds 60%</div></div>
+        <div class="scenario"><span class="tag warn">Downside</span><h3 style="margin-top:10px">Margin and trust pressure</h3><p class="small muted">Higher operating costs and customer concerns delay adoption and increase scrutiny of data use.</p><div class="small"><b>Signpost:</b> Service cost +10% or trust index −5 pts</div></div>
+      </div>
+      <div class="sectionhead"><h2>Assumption register</h2><span class="small muted">Review owner and trigger are explicit</span></div>
+      <div class="card tablewrap"><table class="table"><thead><tr><th>Assumption</th><th>Confidence</th><th>Evidence</th><th>Owner</th><th>Trigger to revisit</th></tr></thead><tbody><tr><td>Connected journeys improve retention</td><td>Medium</td><td>Segment cohort analysis</td><td>Growth Strategy</td><td>Retention lift below 3 pts</td></tr><tr><td>Customers accept relevant personalization</td><td>Medium</td><td>Research; consent rates</td><td>Customer Experience</td><td>Trust index decreases</td></tr><tr><td>Shared data products reduce delivery duplication</td><td>Low–medium</td><td>Delivery baseline pending</td><td>Data Office</td><td>Reuse below 30%</td></tr></tbody></table></div>
+      <div class="callout" style="margin-top:12px">Scenarios are plausible futures, not forecasts. Signals should inform human review; they do not automatically change strategic commitments.</div>
+    </section>
+
+    <section class="view" id="execution">
+      <div class="hero"><div><div class="eyebrow">Strategy activation · Outcomes and accountability</div><h1>Execution & outcomes</h1><p>Connect strategic intent to owned objectives, delivery milestones and evidence of realized value.</p></div><span class="tag ok">Quarterly review cycle</span></div>
+      <div class="grid g4"><div class="card"><div class="metric">68%</div><div class="metriclabel">Priority outcomes on track</div></div><div class="card"><div class="metric">14 / 18</div><div class="metriclabel">Milestones met this quarter</div></div><div class="card"><div class="metric">82%</div><div class="metriclabel">Objectives with current measures</div></div><div class="card"><div class="metric">4</div><div class="metriclabel">Benefits ready to validate</div></div></div>
+      <div class="sectionhead"><h2>Execution rhythm</h2></div><div class="flow"><div class="step"><div class="num">01</div><b>Set direction</b><small>Annual choices and outcomes</small></div><div class="step"><div class="num">02</div><b>Align objectives</b><small>Quarterly priorities and owners</small></div><div class="step"><div class="num">03</div><b>Deliver initiatives</b><small>Milestones and dependencies</small></div><div class="step"><div class="num">04</div><b>Review evidence</b><small>Measures, risks and benefits</small></div><div class="step"><div class="num">05</div><b>Adapt commitments</b><small>Continue, pivot, stop or scale</small></div></div>
+      <div class="sectionhead"><h2>Outcome scorecard</h2><span class="tag info">Q2 FY2026 · Sample data</span></div>
+      <div class="card tablewrap"><table class="table"><thead><tr><th>Outcome measure</th><th>Baseline</th><th>Target</th><th>Current</th><th>Owner</th><th>Confidence</th></tr></thead><tbody><tr><td>Priority-segment customer retention</td><td>72%</td><td>80%</td><td>77%</td><td>Growth</td><td><span class="status">Medium</span></td></tr><tr><td>Digital self-service resolution</td><td>48%</td><td>65%</td><td>56%</td><td>Operations</td><td><span class="status pending">Medium</span></td></tr><tr><td>Customer effort score</td><td>3.1 / 5</td><td>4.0 / 5</td><td>3.5 / 5</td><td>Experience</td><td><span class="status pending">Low</span></td></tr><tr><td>Critical services meeting resilience target</td><td>84%</td><td>99%</td><td>91%</td><td>Technology</td><td><span class="status risk">Low</span></td></tr></tbody></table></div>
+    </section>
+
+    <section class="view" id="governance">
+      <div class="hero"><div><div class="eyebrow">Accountability · Integrity · Responsible strategy</div><h1>Governance & risk</h1><p>Make decision rights, evidence quality, risk appetite and review cadence visible throughout strategy formation and execution.</p></div></div>
+      <div class="grid g4"><div class="card"><div class="metric">12</div><div class="metriclabel">Strategic decisions recorded</div></div><div class="card"><div class="metric">94%</div><div class="metriclabel">Priority risks with owners</div></div><div class="card"><div class="metric">5</div><div class="metriclabel">Assumptions due for review</div></div><div class="card"><div class="metric">2</div><div class="metriclabel">Escalations awaiting decision</div></div></div>
+      <div class="sectionhead"><h2>Strategy governance principles</h2></div><div class="grid g3"><div class="card"><h3>Clear decision rights</h3><p class="small muted">Name the accountable decision-maker, consulted stakeholders, approval forum and review date for each material choice.</p></div><div class="card"><h3>Evidence and provenance</h3><p class="small muted">Distinguish observed facts, estimates, assumptions and recommendations; link claims to source, owner and freshness.</p></div><div class="card"><h3>Responsible use of AI</h3><p class="small muted">AI supports synthesis and option exploration. Leaders validate evidence, assess bias and retain accountability for decisions.</p></div></div>
+      <div class="sectionhead"><h2>Decision and risk register</h2></div><div class="card tablewrap"><table class="table"><thead><tr><th>Item</th><th>Type</th><th>Decision owner</th><th>Review date</th><th>State</th></tr></thead><tbody><tr><td>Approve customer identity investment tranche</td><td>Funding choice</td><td>Investment Committee</td><td>Jun 12, 2026</td><td><span class="status pending">Awaiting decision</span></td></tr><tr><td>Validate retention cohort evidence</td><td>Assumption</td><td>Growth Strategy</td><td>Jun 20, 2026</td><td><span class="status pending">Review due</span></td></tr><tr><td>Resilience modernization dependency</td><td>Execution risk</td><td>Technology Council</td><td>Jun 21, 2026</td><td><span class="status risk">Escalated</span></td></tr></tbody></table></div>
+    </section>
+
+    <section class="view" id="insights">
+      <div class="hero"><div><div class="eyebrow">Learning loop · Evidence-informed adaptation</div><h1>Insights & learning</h1><p>Use performance, stakeholder feedback and changing conditions to test strategic assumptions and improve the next planning cycle.</p></div><span class="tag info">Learning agenda</span></div>
+      <div class="grid g3"><div class="card"><h3>What is working</h3><p class="muted small">Multi-service customers show stronger retention; validate causality and segment differences before scaling the conclusion.</p><span class="tag ok">Evidence strengthening</span></div><div class="card"><h3>Where to investigate</h3><p class="muted small">Self-service adoption varies widely by journey; identify usability and accessibility barriers in lower-performing segments.</p><span class="tag warn">Research needed</span></div><div class="card"><h3>What may change</h3><p class="muted small">Cost pressure and data-use expectations could alter the economics and trust conditions of personalization.</p><span class="tag warn">Monitor signals</span></div></div>
+      <div class="sectionhead"><h2>Learning agenda</h2></div><div class="card tablewrap"><table class="table"><thead><tr><th>Strategic question</th><th>Evidence to collect</th><th>Owner</th><th>Due</th><th>State</th></tr></thead><tbody><tr><td>Which connected journeys drive durable retention?</td><td>Cohort analysis; controlled pilots</td><td>Growth Analytics</td><td>Jul 2026</td><td><span class="status">In progress</span></td></tr><tr><td>What prevents customers using self-service?</td><td>Journey research; accessibility review</td><td>Customer Experience</td><td>Jun 2026</td><td><span class="status pending">Research planned</span></td></tr><tr><td>Do shared data products reduce time to decision?</td><td>Reuse and cycle-time baseline</td><td>Data Office</td><td>Aug 2026</td><td><span class="status pending">Baseline needed</span></td></tr></tbody></table></div>
+      <div class="callout" style="margin-top:12px">A strategy review should revisit choices when evidence changes—not just report whether initiatives are on schedule.</div>
+    </section>
+  </div>
+</main>
+</div>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+<script>
+const labels={overview:'Command Center',intake:'Strategy Intake',map:'Strategy Map',portfolio:'Initiative Portfolio',scenarios:'Scenarios & Signals',execution:'Execution & Outcomes',governance:'Governance & Risk',insights:'Insights & Learning'};
+function show(id){document.querySelectorAll('.view').forEach(view=>view.classList.toggle('active',view.id===id));document.querySelectorAll('.nav button').forEach(button=>button.classList.toggle('active',button.dataset.view===id));document.getElementById('crumb').textContent=labels[id];window.scrollTo(0,0)}
+document.querySelectorAll('.nav button').forEach(button=>button.addEventListener('click',()=>show(button.dataset.view)));
+let strategyPrepared=false;
+function analyzeStrategy(){
+  const prompt=document.getElementById('strategyPrompt').value.trim();
+  if(!prompt){toast('Add a strategic question before framing options.');return}
+  const horizon=document.getElementById('horizon').value;
+  const scope=document.getElementById('scope').value;
+  const investment=document.getElementById('investment').value;
+  const risk=document.getElementById('risk').value;
+  const evidence=document.getElementById('evidence').value.trim();
+  document.getElementById('strategyOutput').innerHTML=`<div class="eyebrow">Strategy brief · ESF-2026-0018</div><p><b>Strategic question:</b> ${escapeHtml(prompt)}</p><p><b>Scope:</b> ${escapeHtml(scope)} · <b>Horizon:</b> ${escapeHtml(horizon)} · <b>Investment:</b> ${escapeHtml(investment)} · <b>Risk appetite:</b> ${escapeHtml(risk)}</p><p><b>Candidate choices:</b> Improve connected digital journeys; focus investment on high-value segments; establish measurable service and trust guardrails.</p><p><b>Evidence to validate:</b> ${evidence?escapeHtml(evidence):'No evidence or constraints supplied.'}</p><span class="tag info">Framing drafted</span> <span class="tag warn">Leadership review required</span>`;
+  document.getElementById('proposalHorizon').textContent=horizon;
+  document.getElementById('proposalSummary').textContent=`Proposed direction focuses on customer retention and service simplicity over ${horizon.toLowerCase()}. Validate segment economics, customer trust implications, delivery capacity and cross-portfolio dependencies before committing investment.`;
+  document.getElementById('proposalBar').style.width='72%';
+  document.getElementById('proposalState').textContent='Ready for review';
+  document.getElementById('proposalState').className='tag info';
+  document.getElementById('confirmStrategy').disabled=false;
+  strategyPrepared=true;
+  toast('Strategy framing prepared. Review the assumptions and choices.');
+}
+function confirmStrategy(){
+  if(!strategyPrepared)return;
+  document.getElementById('planCreated').style.display='block';
+  document.getElementById('planCreated').innerHTML='<span class="tag ok">Direction confirmed for review</span><h3 style="margin:9px 0 4px">Review plan ESF-RP-0018 created</h3><p class="small muted">The demo plan records stakeholder alignment, evidence validation, scenario review, initiative mapping and an executive decision checkpoint. No funding or external system changes are made.</p><div class="bar"><i style="width:15%"></i></div><b class="small">15% · Review planning</b>';
+  document.getElementById('proposalState').textContent='Review plan created';
+  document.getElementById('proposalState').className='tag ok';
+  document.getElementById('confirmStrategy').disabled=true;
+  toast('Demo review plan created. No external systems were changed.');
+}
+function escapeHtml(value){return value.replace(/[&<>"']/g,char=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[char]))}
+function toast(message){const element=document.getElementById('toast');element.textContent=message;element.style.display='block';clearTimeout(window.toastTimer);window.toastTimer=setTimeout(()=>element.style.display='none',3200)}
+</script>
+</body>
+</html>
