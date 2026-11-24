@@ -1,0 +1,74 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="1000" viewBox="0 0 1600 1000" role="img" aria-labelledby="title desc">
+<title id="title">Enterprise Platform Factory reference architecture</title>
+<desc id="desc">AI-driven engineering factory connecting AI assistants, agent gateway and identity, eight specialized engineering agents, GitHub and infrastructure delivery, GCP runtime, and cross-cutting enterprise governance.</desc>
+<defs>
+  <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#f8fbff"/><stop offset="1" stop-color="#edf4ff"/></linearGradient>
+  <linearGradient id="head" x1="0" y1="0" x2="1" y2="0"><stop stop-color="#12366b"/><stop offset="1" stop-color="#087e9b"/></linearGradient>
+  <style>
+    text{font-family:Inter,Segoe UI,Arial,sans-serif;fill:#152b4a}
+    .h{font-size:30px;font-weight:700;fill:white}.sub{font-size:16px;fill:#d9edff}
+    .layer{font-size:20px;font-weight:700}.small{font-size:14px;fill:#536780}.agent{font-size:16px;font-weight:700}.desc{font-size:12px;fill:#536780}
+    .card{fill:white;stroke:#c8d8ed;stroke-width:1.5}.tag{font-size:14px;font-weight:600}
+    .arrow{stroke:#7895b8;stroke-width:3;fill:none;stroke-linecap:round;stroke-linejoin:round}
+  </style>
+</defs>
+<rect width="1600" height="1000" fill="url(#bg)"/>
+<rect x="0" y="0" width="1600" height="100" fill="url(#head)"/>
+<text x="55" y="48" class="h">ENTERPRISE PLATFORM FACTORY</text>
+<text x="57" y="76" class="sub">AI-driven, secure and automated software &amp; infrastructure delivery</text>
+<g transform="translate(1190 28)"><rect width="110" height="42" rx="21" fill="#ffffff" opacity=".15"/><text x="55" y="27" text-anchor="middle" fill="white" class="tag">GENERATE</text><rect x="120" width="100" height="42" rx="21" fill="#ffffff" opacity=".15"/><text x="170" y="27" text-anchor="middle" fill="white" class="tag">BUILD</text><rect x="230" width="100" height="42" rx="21" fill="#ffffff" opacity=".15"/><text x="280" y="27" text-anchor="middle" fill="white" class="tag">DEPLOY</text><rect x="340" width="100" height="42" rx="21" fill="#24a879"/><text x="390" y="27" text-anchor="middle" fill="white" class="tag">OPERATE</text></g>
+<!-- main column -->
+<rect x="35" y="125" width="1135" height="805" rx="22" fill="#fff" stroke="#8bb3e9" stroke-width="2"/>
+<!-- AI layer -->
+<rect x="58" y="148" width="1089" height="105" rx="16" fill="#eee9ff" stroke="#c7b5f5"/>
+<text x="82" y="183" class="layer">1 · AI INTERACTION LAYER</text><text x="82" y="210" class="small">Natural-language engineering interface</text>
+<g><rect x="460" y="170" width="185" height="62" rx="12" class="card"/><text x="552" y="195" text-anchor="middle" class="agent">ChatGPT / Codex</text><text x="552" y="216" text-anchor="middle" class="desc">AI development assistant</text>
+<rect x="660" y="170" width="185" height="62" rx="12" class="card"/><text x="752" y="195" text-anchor="middle" class="agent">Claude / Claude Code</text><text x="752" y="216" text-anchor="middle" class="desc">AI coding environment</text>
+<rect x="860" y="170" width="120" height="62" rx="12" class="card"/><text x="920" y="195" text-anchor="middle" class="agent">Gemini</text><text x="920" y="216" text-anchor="middle" class="desc">AI assistant</text>
+<rect x="995" y="170" width="130" height="62" rx="12" class="card"/><text x="1060" y="195" text-anchor="middle" class="agent">Custom agents</text><text x="1060" y="216" text-anchor="middle" class="desc">Enterprise AI</text></g>
+<path d="M600 254 V278" class="arrow"/><path d="M592 270 L600 280 L608 270" class="arrow"/>
+<!-- gateway -->
+<rect x="58" y="285" width="1089" height="94" rx="16" fill="#e4f2ff" stroke="#9bc8f1"/>
+<text x="82" y="321" class="layer">2 · AGENT GATEWAY &amp; IDENTITY</text><text x="82" y="347" class="small">Secure access, authentication and policy-aware tool routing</text>
+<g><rect x="610" y="301" width="145" height="55" rx="10" class="card"/><text x="682" y="324" text-anchor="middle" class="agent">Tyk</text><text x="682" y="343" text-anchor="middle" class="desc">API gateway</text>
+<rect x="770" y="301" width="145" height="55" rx="10" class="card"/><text x="842" y="324" text-anchor="middle" class="agent">Apigee</text><text x="842" y="343" text-anchor="middle" class="desc">API management</text>
+<rect x="930" y="301" width="95" height="55" rx="10" class="card"/><text x="977" y="324" text-anchor="middle" class="agent">Okta</text><text x="977" y="343" text-anchor="middle" class="desc">Identity / SSO</text>
+<rect x="1040" y="301" width="90" height="55" rx="10" class="card"/><text x="1085" y="324" text-anchor="middle" class="agent">OIDC</text><text x="1085" y="343" text-anchor="middle" class="desc">Agent identity</text></g>
+<path d="M600 380 V402" class="arrow"/><path d="M592 394 L600 404 L608 394" class="arrow"/>
+<!-- orchestration -->
+<rect x="58" y="410" width="1089" height="222" rx="16" fill="#f3edff" stroke="#c7b5f5"/>
+<text x="82" y="446" class="layer">3 · PLATFORM FACTORY ORCHESTRATION</text><text x="82" y="471" class="small">Multi-agent engineering system · plans, delegates, coordinates and validates work</text>
+<g>
+<rect x="75" y="490" width="125" height="116" rx="12" fill="#fff" stroke="#cbb8f5"/><text x="137" y="520" text-anchor="middle" class="agent">Specification</text><text x="137" y="542" text-anchor="middle" class="desc">Requirements</text><text x="137" y="559" text-anchor="middle" class="desc">and acceptance</text><text x="137" y="576" text-anchor="middle" class="desc">criteria</text>
+<rect x="210" y="490" width="125" height="116" rx="12" fill="#fff" stroke="#9fc2f5"/><text x="272" y="520" text-anchor="middle" class="agent">Architecture</text><text x="272" y="542" text-anchor="middle" class="desc">Solution and</text><text x="272" y="559" text-anchor="middle" class="desc">infrastructure</text><text x="272" y="576" text-anchor="middle" class="desc">design</text>
+<rect x="345" y="490" width="125" height="116" rx="12" fill="#fff" stroke="#9ed7b5"/><text x="407" y="520" text-anchor="middle" class="agent">Coding</text><text x="407" y="542" text-anchor="middle" class="desc">Application</text><text x="407" y="559" text-anchor="middle" class="desc">and service</text><text x="407" y="576" text-anchor="middle" class="desc">implementation</text>
+<rect x="480" y="490" width="125" height="116" rx="12" fill="#fff" stroke="#f3c88b"/><text x="542" y="520" text-anchor="middle" class="agent">Testing</text><text x="542" y="542" text-anchor="middle" class="desc">Unit, integration</text><text x="542" y="559" text-anchor="middle" class="desc">and security</text><text x="542" y="576" text-anchor="middle" class="desc">validation</text>
+<rect x="615" y="490" width="125" height="116" rx="12" fill="#fff" stroke="#b7c6ef"/><text x="677" y="520" text-anchor="middle" class="agent">Repository</text><text x="677" y="542" text-anchor="middle" class="desc">GitHub, branches</text><text x="677" y="559" text-anchor="middle" class="desc">commits and</text><text x="677" y="576" text-anchor="middle" class="desc">pull requests</text>
+<rect x="750" y="490" width="125" height="116" rx="12" fill="#fff" stroke="#b8a9ed"/><text x="812" y="520" text-anchor="middle" class="agent">Infrastructure</text><text x="812" y="542" text-anchor="middle" class="desc">Terraform and</text><text x="812" y="559" text-anchor="middle" class="desc">IaC generation</text><text x="812" y="576" text-anchor="middle" class="desc">and planning</text>
+<rect x="885" y="490" width="125" height="116" rx="12" fill="#fff" stroke="#9fc2f5"/><text x="947" y="520" text-anchor="middle" class="agent">Deployment</text><text x="947" y="542" text-anchor="middle" class="desc">CI/CD, release</text><text x="947" y="559" text-anchor="middle" class="desc">and rollout</text>
+<rect x="1020" y="490" width="110" height="116" rx="12" fill="#fff" stroke="#edb4d5"/><text x="1075" y="520" text-anchor="middle" class="agent">Observability</text><text x="1075" y="542" text-anchor="middle" class="desc">Monitor, validate</text><text x="1075" y="559" text-anchor="middle" class="desc">and diagnose</text></g>
+<path d="M600 633 V655" class="arrow"/><path d="M592 647 L600 657 L608 647" class="arrow"/>
+<!-- delivery -->
+<rect x="58" y="663" width="1089" height="115" rx="16" fill="#e8f8ee" stroke="#a3d9b6"/>
+<text x="82" y="698" class="layer">4 · EXECUTION &amp; DELIVERY</text><text x="82" y="724" class="small">Build · provision · test · release</text>
+<g><rect x="410" y="680" width="205" height="72" rx="12" class="card"/><text x="512" y="708" text-anchor="middle" class="agent">GitHub platform</text><text x="512" y="730" text-anchor="middle" class="desc">Repos · PRs · Actions · CI</text>
+<rect x="630" y="680" width="220" height="72" rx="12" class="card"/><text x="740" y="708" text-anchor="middle" class="agent">Infrastructure as Code</text><text x="740" y="730" text-anchor="middle" class="desc">Terraform · Helm · Kubernetes</text>
+<rect x="865" y="680" width="265" height="72" rx="12" class="card"/><text x="997" y="708" text-anchor="middle" class="agent">Deployment targets</text><text x="997" y="730" text-anchor="middle" class="desc">GKE · Cloud Run · managed services</text></g>
+<path d="M600 779 V801" class="arrow"/><path d="M592 793 L600 803 L608 793" class="arrow"/>
+<!-- cloud -->
+<rect x="58" y="809" width="1089" height="94" rx="16" fill="#e7f1ff" stroke="#9fc2f5"/>
+<text x="82" y="846" class="layer">5 · GOOGLE CLOUD PLATFORM</text><text x="82" y="871" class="small">Runtime and managed services</text>
+<g><text x="555" y="850" class="agent">GKE</text><text x="555" y="873" class="desc">Kubernetes</text><text x="665" y="850" class="agent">Cloud Run</text><text x="665" y="873" class="desc">Serverless</text><text x="790" y="850" class="agent">Cloud Storage</text><text x="790" y="873" class="desc">Artifacts &amp; data</text><text x="925" y="850" class="agent">Cloud SQL</text><text x="925" y="873" class="desc">Managed DB</text><text x="1050" y="850" class="agent">Monitoring</text><text x="1050" y="873" class="desc">Logs &amp; metrics</text></g>
+<!-- governance side panel -->
+<rect x="1195" y="125" width="370" height="805" rx="22" fill="#fff" stroke="#8bb3e9" stroke-width="2"/>
+<rect x="1215" y="148" width="330" height="68" rx="14" fill="#153d70"/><text x="1380" y="178" text-anchor="middle" fill="white" class="layer">CROSS-CUTTING</text><text x="1380" y="200" text-anchor="middle" fill="#d9edff" class="tag">ENTERPRISE GOVERNANCE</text>
+<g>
+<rect x="1215" y="238" width="330" height="92" rx="12" class="card"/><text x="1240" y="270" class="agent">Security &amp; access</text><text x="1240" y="295" class="small">IAM · least privilege · WIF</text><text x="1240" y="314" class="desc">Scoped identities and credentials</text>
+<rect x="1215" y="345" width="330" height="92" rx="12" class="card"/><text x="1240" y="377" class="agent">Policy-as-code</text><text x="1240" y="402" class="small">Guardrails · policy checks</text><text x="1240" y="421" class="desc">Pre-deployment enforcement</text>
+<rect x="1215" y="452" width="330" height="92" rx="12" class="card"/><text x="1240" y="484" class="agent">Audit &amp; compliance</text><text x="1240" y="509" class="small">Change logs · cloud audit logs</text><text x="1240" y="528" class="desc">Traceability and evidence</text>
+<rect x="1215" y="559" width="330" height="92" rx="12" class="card"/><text x="1240" y="591" class="agent">FinOps</text><text x="1240" y="616" class="small">Budgets · cost visibility</text><text x="1240" y="635" class="desc">Optimization and accountability</text>
+<rect x="1215" y="666" width="330" height="92" rx="12" class="card"/><text x="1240" y="698" class="agent">SRE &amp; reliability</text><text x="1240" y="723" class="small">SLIs / SLOs · health · recovery</text><text x="1240" y="742" class="desc">Operational resilience</text>
+<rect x="1215" y="773" width="330" height="92" rx="12" class="card"/><text x="1240" y="805" class="agent">AgentOps</text><text x="1240" y="830" class="small">Lifecycle · usage · evaluation</text><text x="1240" y="849" class="desc">Agent safety and performance</text>
+</g>
+<rect x="35" y="947" width="1530" height="42" rx="12" fill="#12366b"/><text x="800" y="974" text-anchor="middle" fill="white" class="tag">BUSINESS OUTCOMES  ·  FASTER DELIVERY  ·  STANDARDIZED &amp; REUSABLE  ·  SECURE &amp; COMPLIANT  ·  SCALABLE  ·  HIGHER PRODUCTIVITY</text>
+</svg>
