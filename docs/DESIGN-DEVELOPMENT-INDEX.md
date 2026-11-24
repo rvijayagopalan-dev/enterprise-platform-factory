@@ -34,6 +34,14 @@ This index organizes the next design phase. These documents establish scope, que
 | Testing | implementation/test-strategy.md | Functional, security, AI and resilience testing |
 | Traceability | traceability/discussion-to-repository.md | Discussion to design and implementation mapping |
 
+## Canonical meta-model baseline (v0.1.0)
+
+- [Enterprise meta-model](metamodel/enterprise-meta-model.md) — domains, entity envelope, aggregate boundaries, 40 entity definitions, invariants, versioning and persistence guidance.
+- [Canonical logical ERD](metamodel/canonical-erd.md) — request-to-delivery relationships and cardinality constraints.
+- [Core JSON Schema](metamodel/epf-core.schema.json) — machine-readable common envelope, principal references, provenance, relationships and artifact/approval definitions.
+
+The baseline is a draft design contract, not a complete set of per-entity production schemas. Capability-owned extension schemas, formal transition tables, API/event contracts and ADRs remain follow-on design tasks.
+
 ## Recommended sequence
 1. Confirm product boundaries, capabilities and terminology.
 2. Complete entities, relationships, schemas and lifecycle.
