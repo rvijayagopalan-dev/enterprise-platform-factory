@@ -1,0 +1,111 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.enterprise-platform-factory.dev/metamodel/epf-core.schema.json",
+  "title": "Enterprise Platform Factory Core Entity",
+  "description": "Version 0.1.0 logical core envelope. Domain extensions remain owned by capability schemas.",
+  "type": "object",
+  "required": ["id", "entityType", "schemaVersion", "tenantId", "lifecycleState", "createdAt", "updatedAt", "version", "owner", "classification"],
+  "properties": {
+    "id": {"type": "string", "minLength": 1, "maxLength": 128, "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]*$"},
+    "entityType": {"type": "string", "minLength": 1},
+    "schemaVersion": {"type": "string", "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$"},
+    "name": {"type": "string", "maxLength": 256},
+    "description": {"type": "string", "maxLength": 10000},
+    "tenantId": {"type": "string", "minLength": 1},
+    "projectId": {"type": ["string", "null"]},
+    "workspaceId": {"type": ["string", "null"]},
+    "owner": {"$ref": "#/$defs/principalRef"},
+    "lifecycleState": {"type": "string", "minLength": 1},
+    "labels": {"type": "object", "additionalProperties": {"type": ["string", "number", "boolean"]}},
+    "classification": {"enum": ["public", "internal", "confidential", "restricted"]},
+    "createdAt": {"type": "string", "format": "date-time"},
+    "updatedAt": {"type": "string", "format": "date-time"},
+    "createdBy": {"$ref": "#/$defs/principalRef"},
+    "updatedBy": {"$ref": "#/$defs/principalRef"},
+    "version": {"type": "integer", "minimum": 1},
+    "source": {"$ref": "#/$defs/provenance"},
+    "relationships": {"type": "array", "items": {"$ref": "#/$defs/relationshipRef"}},
+    "extensions": {"type": "object", "description": "Capability-owned extension data; validate with entity-specific schema."}
+  },
+  "patternProperties": {
+    "(?i)(password|secret|token|privatekey|credential)": false
+  },
+  "additionalProperties": false,
+  "$defs": {
+    "principalRef": {
+      "type": "object",
+      "required": ["principalType", "principalId"],
+      "properties": {
+        "principalType": {"enum": ["human", "agent", "workload", "service", "external"]},
+        "principalId": {"type": "string", "minLength": 1},
+        "displayName": {"type": "string"}
+      },
+      "additionalProperties": false
+    },
+    "provenance": {
+      "type": "object",
+      "required": ["system", "actorType"],
+      "properties": {
+        "system": {"type": "string"},
+        "actorType": {"enum": ["human", "agent", "workload", "service", "external"]},
+        "actorId": {"type": "string"},
+        "sourceRef": {"type": "string"},
+        "digest": {"type": "string"}
+      },
+      "additionalProperties": false
+    },
+    "relationshipRef": {
+      "type": "object",
+      "required": ["type", "targetId", "targetType"],
+      "properties": {
+        "type": {"type": "string", "minLength": 1},
+        "targetId": {"type": "string", "minLength": 1},
+        "targetType": {"type": "string", "minLength": 1},
+        "cardinality": {"enum": ["one", "many"]},
+        "attributes": {"type": "object"}
+      },
+      "additionalProperties": false
+    },
+    "artifactRef": {
+      "type": "object",
+      "required": ["uri", "digest", "mediaType"],
+      "properties": {
+        "uri": {"type": "string", "format": "uri"},
+        "digest": {"type": "string", "pattern": "^[A-Fa-f0-9]{64}$"},
+        "mediaType": {"type": "string"},
+        "sizeBytes": {"type": "integer", "minimum": 0}
+      },
+      "additionalProperties": false
+    },
+    "approvalDecision": {
+      "type": "object",
+      "required": ["decision", "approver", "decidedAt", "subjectDigest"],
+      "properties": {
+        "decision": {"enum": ["approved", "rejected"]},
+        "approver": {"$ref": "#/$defs/principalRef"},
+        "decidedAt": {"type": "string", "format": "date-time"},
+        "subjectDigest": {"type": "string"},
+        "rationale": {"type": "string"}
+      },
+      "additionalProperties": false
+    }
+  },
+  "examples": [{
+    "id": "req_01JEXAMPLE",
+    "entityType": "BuildRequest",
+    "schemaVersion": "0.1.0",
+    "name": "Create a governed FastAPI service",
+    "tenantId": "tenant_example",
+    "projectId": "project_example",
+    "workspaceId": null,
+    "owner": {"principalType": "human", "principalId": "user_example"},
+    "lifecycleState": "received",
+    "classification": "internal",
+    "createdAt": "2026-11-24T12:00:00Z",
+    "updatedAt": "2026-11-24T12:00:00Z",
+    "version": 1,
+    "source": {"system": "epf-experience", "actorType": "human", "actorId": "user_example"},
+    "relationships": [],
+    "extensions": {"requestedOutcome": "FastAPI application with CI/CD and governed GCP deployment"}
+  }]
+}
