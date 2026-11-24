@@ -162,3 +162,11 @@ The end-to-end product baseline is documented in:
 Open [demo/product-experience.html](demo/product-experience.html) for the consolidated EPF product experience: command center, conversational build, blueprint confirmation, architecture, lifecycle, engineering engines, first-class entity catalog, governance, security, FinOps, observability and integrations.
 
 This is a standalone HTML prototype with synthetic metrics and simulated client-side actions. It does not invoke a live model or connect to GitHub, Terraform, identity providers, policy engines or cloud accounts.
+
+
+## Design and development workbench
+
+The [Design & Development Index](docs/DESIGN-DEVELOPMENT-INDEX.md) is the entry point for the next design phase. It links starter documents for the enterprise meta-model, entity catalog, relationships, lifecycle, component/deployment/agentic/execution architecture, engineering engines, shared platform services, integrations, APIs, events, data, testing and discussion traceability.
+
+These are deliberately starter documents: they capture scope, candidate models, design questions and expected deliverables so detailed design and implementation can be continued later. They are not all approved or implementation-ready specifications.
+
