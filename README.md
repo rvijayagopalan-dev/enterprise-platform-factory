@@ -12,6 +12,12 @@ Open the [Enterprise Platform Factory interactive demo](demo/index.html) to expl
 
 The demo is a standalone HTML experience. All workflow actions and status metrics are simulated; it does not connect to live AI providers, GitHub, Terraform or cloud accounts.
 
+## Trust and operations control plane demo
+
+Explore the [FinOps, Governance, Security and Monitoring demo](demo/platform-controls.html) for the cross-cutting control plane that should govern every factory workload. It includes cost allocation and optimization, governance coverage and evidence, zero-trust security posture, SLOs and telemetry, policy enforcement points, and an audit evidence ledger.
+
+This is a standalone prototype with synthetic metrics and simulated controls; it does not connect to live cloud accounts, monitoring systems, identity providers or policy engines.
+
 ## Vision
 
 Create a standardized factory for moving from **idea to production** through AI-assisted specification, architecture, coding, testing, repository management, infrastructure provisioning, deployment and operations.
