@@ -18,6 +18,12 @@ Explore the [FinOps, Governance, Security and Monitoring demo](demo/platform-con
 
 This is a standalone prototype with synthetic metrics and simulated controls; it does not connect to live cloud accounts, monitoring systems, identity providers or policy engines.
 
+## Conversational build and provisioning workflow
+
+The interactive build demo supports a conversational entry point using text and browser speech recognition where available. The guided flow separates intent discovery and clarification from blueprint generation and requester confirmation. Only after the blueprint is confirmed can the workflow hand the specification to the Infrastructure Engine for a Terraform plan; policy checks and human approval remain required before apply.
+
+The demo simulates these interactions and does not invoke a live speech service, AI model, Terraform runner or cloud account.
+
 ## Vision
 
 Create a standardized factory for moving from **idea to production** through AI-assisted specification, architecture, coding, testing, repository management, infrastructure provisioning, deployment and operations.
