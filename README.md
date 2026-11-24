@@ -149,3 +149,16 @@ This repository establishes the reference architecture and initial documentation
 ## License
 
 License to be determined.
+
+## Product specification and design
+
+The end-to-end product baseline is documented in:
+- [Product specification](docs/product-specification.md) — vision, personas, capability map, user journey, functional and non-functional requirements, first-class entities, guardrails, MVP and roadmap.
+- [Target architecture](docs/architecture/target-architecture.md) — six-plane architecture, trust boundaries, identity, workflow/task contracts, event/data architecture, GCP-first deployment topology, security and resilience.
+- [Product experience and interaction design](docs/design/product-experience-design.md) — navigation, screen-level behavior, conversational flow, approval UX, design system and acceptance criteria.
+
+## End-to-end product experience demo
+
+Open [demo/product-experience.html](demo/product-experience.html) for the consolidated EPF product experience: command center, conversational build, blueprint confirmation, architecture, lifecycle, engineering engines, first-class entity catalog, governance, security, FinOps, observability and integrations.
+
+This is a standalone HTML prototype with synthetic metrics and simulated client-side actions. It does not invoke a live model or connect to GitHub, Terraform, identity providers, policy engines or cloud accounts.
