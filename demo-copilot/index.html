@@ -1,0 +1,669 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#10172b">
+  <title>AI Platform Factory | Interactive Demo</title>
+  <style>
+    :root {
+      color-scheme: dark;
+      --bg: #0b1020;
+      --panel: #111a2d;
+      --panel-raised: #17233a;
+      --panel-soft: #0e1729;
+      --line: #273650;
+      --text: #edf3ff;
+      --muted: #9aabc4;
+      --dim: #70819b;
+      --blue: #70a7ff;
+      --cyan: #62d7db;
+      --green: #63d6a0;
+      --amber: #ffc978;
+      --red: #ff8d97;
+      --purple: #c1a5ff;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      font-synthesis: none;
+      text-rendering: optimizeLegibility;
+    }
+
+    * { box-sizing: border-box; }
+    body { margin: 0; min-width: 320px; background: var(--bg); color: var(--text); }
+    button, input, select { font: inherit; }
+    button { color: inherit; }
+    a { color: var(--cyan); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    button:focus-visible, input:focus-visible, select:focus-visible, a:focus-visible {
+      outline: 2px solid var(--cyan);
+      outline-offset: 3px;
+    }
+    .shell { max-width: 1540px; margin: 0 auto; padding: 22px 30px 34px; }
+    .topbar { display: flex; align-items: center; justify-content: space-between; gap: 18px; margin-bottom: 24px; }
+    .brand { display: flex; gap: 12px; align-items: center; min-width: 0; }
+    .brand-mark {
+      width: 40px; height: 40px; display: grid; place-items: center; border: 1px solid #33507a;
+      border-radius: 12px; background: linear-gradient(145deg, #1d3760, #12223e); color: var(--cyan);
+      font-weight: 850; letter-spacing: -.08em;
+    }
+    .brand-name { font-size: 15px; font-weight: 750; letter-spacing: .01em; }
+    .brand-sub { margin-top: 3px; color: var(--muted); font-size: 11px; }
+    .top-actions { display: flex; align-items: center; gap: 10px; }
+    .pill, .icon-label {
+      display: inline-flex; align-items: center; gap: 8px; border: 1px solid var(--line); border-radius: 999px;
+      padding: 8px 11px; color: var(--muted); background: #10182a; font-size: 11px; white-space: nowrap;
+    }
+    .dot { width: 7px; height: 7px; border-radius: 50%; background: var(--green); box-shadow: 0 0 12px #63d6a070; }
+    .small-link { font-size: 12px; font-weight: 650; }
+    .hero {
+      display: grid; grid-template-columns: minmax(0, 1fr) 260px; gap: 24px; align-items: center;
+      padding: 28px 30px; border: 1px solid #304463; border-radius: 20px;
+      background: radial-gradient(ellipse at 85% 12%, #20385c 0, transparent 37%), linear-gradient(115deg, #17243b, #111a2c 68%);
+      box-shadow: 0 20px 70px #00000020;
+    }
+    .eyebrow { color: var(--cyan); font-size: 10px; font-weight: 800; letter-spacing: .14em; text-transform: uppercase; }
+    h1 { margin: 10px 0 8px; font-size: clamp(26px, 3vw, 39px); line-height: 1.12; letter-spacing: -.035em; }
+    .hero p { max-width: 770px; margin: 0; color: #b6c4d9; font-size: 13px; line-height: 1.65; }
+    .hero-side { border-left: 1px solid #364969; padding-left: 22px; }
+    .hero-side strong { display: block; margin-top: 8px; font-size: 15px; }
+    .hero-side span { color: var(--muted); font-size: 11px; line-height: 1.5; }
+    .tiny-label { color: var(--dim); font-size: 9px; font-weight: 800; letter-spacing: .12em; text-transform: uppercase; }
+    .stats { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; margin: 16px 0; }
+    .stat {
+      min-height: 78px; padding: 15px 17px; border: 1px solid var(--line); border-radius: 13px; background: var(--panel);
+    }
+    .stat span { display: block; color: var(--muted); font-size: 10px; }
+    .stat strong { display: block; margin-top: 7px; font-size: 17px; letter-spacing: -.02em; }
+    .stat strong.compact { font-size: 14px; }
+    .layout { display: grid; grid-template-columns: minmax(285px, .82fr) minmax(470px, 1.48fr) minmax(260px, .75fr); gap: 14px; align-items: start; }
+    .column { display: grid; gap: 14px; min-width: 0; }
+    .card { border: 1px solid var(--line); border-radius: 15px; background: var(--panel); overflow: hidden; }
+    .card-head { display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; padding: 17px 18px 13px; }
+    .card-head h2, .card-head h3 { margin: 0; font-size: 13px; font-weight: 750; }
+    .card-head p { margin: 5px 0 0; color: var(--muted); font-size: 10px; line-height: 1.5; }
+    .card-body { padding: 0 18px 18px; }
+    .control-label { display: block; margin: 0 0 7px; color: #c6d3e7; font-size: 10px; font-weight: 700; }
+    select, input {
+      width: 100%; min-height: 38px; border: 1px solid #33435f; border-radius: 9px;
+      background: #0d1526; color: var(--text); padding: 9px 11px; font-size: 11px;
+    }
+    textarea {
+      display: block; width: 100%; min-height: 94px; resize: vertical; border: 1px solid #33435f;
+      border-radius: 9px; background: #0d1526; color: var(--text); padding: 10px 11px;
+      font: inherit; font-size: 11px; line-height: 1.55;
+    }
+    .field { margin-bottom: 15px; }
+    .field-hint { margin-top: 6px; color: var(--dim); font-size: 9px; line-height: 1.5; }
+    .button-row { display: flex; gap: 8px; }
+    .btn {
+      display: inline-flex; align-items: center; justify-content: center; gap: 7px; min-height: 36px;
+      padding: 0 12px; border: 1px solid transparent; border-radius: 9px; cursor: pointer;
+      font-size: 10px; font-weight: 750; transition: background .15s, border-color .15s, transform .15s;
+    }
+    .btn:hover:not(:disabled) { transform: translateY(-1px); }
+    .btn:disabled { cursor: not-allowed; opacity: .48; }
+    .btn-primary { flex: 1; background: #5da4ff; color: #071426; }
+    .btn-primary:hover:not(:disabled) { background: #87bcff; }
+    .btn-secondary { border-color: #3a4b67; background: #18243a; color: #d7e4f7; }
+    .btn-approve { border-color: #287c5b; background: #113b30; color: #82e6b6; }
+    .btn-reject { border-color: #75434e; background: #35212d; color: #ffadb4; }
+    .notice {
+      display: flex; gap: 9px; margin-top: 13px; padding: 10px; border: 1px solid #3b4b65;
+      border-radius: 9px; background: #121e32; color: #adbed4; font-size: 9px; line-height: 1.55;
+    }
+    .notice-icon { color: var(--amber); font-weight: 900; }
+    .run-meta { display: flex; gap: 7px; flex-wrap: wrap; padding: 0 18px 16px; }
+    .tag {
+      display: inline-flex; align-items: center; gap: 5px; padding: 5px 8px; border: 1px solid #2c3b55;
+      border-radius: 999px; background: #0e1728; color: #adbed4; font-size: 9px;
+    }
+    .tag b { color: #e2ebf8; font-weight: 700; }
+    .flow-card { min-height: 516px; }
+    .flow-progress { height: 3px; background: #1c2a42; }
+    .flow-progress span { display: block; height: 100%; width: 0; background: linear-gradient(90deg, var(--blue), var(--cyan), var(--green)); transition: width .45s ease; }
+    .stage-list { padding: 3px 18px 11px; }
+    .stage {
+      position: relative; display: grid; grid-template-columns: 28px minmax(0, 1fr) auto; gap: 10px;
+      min-height: 49px; align-items: center;
+    }
+    .stage:not(:last-child)::after {
+      position: absolute; top: 33px; left: 13px; width: 1px; height: 22px; background: #293a55; content: "";
+    }
+    .stage-mark {
+      z-index: 1; display: grid; place-items: center; width: 26px; height: 26px; border: 1px solid #34445f;
+      border-radius: 50%; background: #121d30; color: #8395b0; font-size: 10px; font-weight: 800;
+    }
+    .stage.done .stage-mark { border-color: #2e8b66; background: #13382f; color: var(--green); }
+    .stage.active .stage-mark { border-color: #4a87d7; background: #152d4b; color: #8fc0ff; box-shadow: 0 0 0 4px #4e97ff1c; }
+    .stage.waiting .stage-mark { border-color: #9e7546; background: #382d20; color: var(--amber); }
+    .stage.failed .stage-mark { border-color: #8f4c57; background: #3b222b; color: var(--red); }
+    .stage-title { font-size: 10px; font-weight: 700; }
+    .stage-detail { margin-top: 3px; color: var(--dim); font-size: 9px; }
+    .stage-status { color: var(--dim); font-size: 8px; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; }
+    .stage.done .stage-status { color: var(--green); }
+    .stage.active .stage-status { color: var(--blue); }
+    .stage.waiting .stage-status { color: var(--amber); }
+    .stage.failed .stage-status { color: var(--red); }
+    .state-banner { margin: 0 18px 16px; padding: 11px 12px; border: 1px solid #293a55; border-radius: 10px; background: #0d1627; }
+    .state-banner[data-tone="waiting"] { border-color: #6f5635; background: #241e17; }
+    .state-banner[data-tone="success"] { border-color: #286047; background: #10251f; }
+    .state-banner[data-tone="error"] { border-color: #73404b; background: #2a1a22; }
+    .state-banner strong { display: block; font-size: 10px; }
+    .state-banner p { margin: 4px 0 0; color: var(--muted); font-size: 9px; line-height: 1.5; }
+    .approval-card { border-color: #54452f; }
+    .approval-content { padding: 0 16px 16px; }
+    .approval-empty { color: var(--dim); font-size: 10px; line-height: 1.55; }
+    .approval-value { display: flex; justify-content: space-between; gap: 10px; padding: 8px 0; border-top: 1px solid #2b3548; font-size: 9px; }
+    .approval-value span { color: var(--muted); }
+    .approval-value strong { text-align: right; font-weight: 700; }
+    .approval-actions { display: grid; grid-template-columns: 1fr 1fr; gap: 7px; margin-top: 12px; }
+    .approval-actions .btn { padding: 0 8px; }
+    .integration-list { display: grid; gap: 9px; padding: 0 16px 16px; }
+    .integration {
+      display: grid; grid-template-columns: 30px minmax(0, 1fr) auto; gap: 9px; align-items: center;
+      padding: 9px; border: 1px solid #25344d; border-radius: 10px; background: #0e1728;
+    }
+    .integration-icon {
+      display: grid; place-items: center; width: 28px; height: 28px; border-radius: 8px; background: #1b2b45;
+      color: var(--blue); font-size: 10px; font-weight: 850;
+    }
+    .integration strong { display: block; font-size: 9px; }
+    .integration span { display: block; margin-top: 3px; color: var(--dim); font-size: 8px; line-height: 1.4; }
+    .integration .mini-state { color: var(--green); font-size: 8px; white-space: nowrap; }
+    .section-heading { display: flex; justify-content: space-between; align-items: end; gap: 16px; margin: 25px 1px 11px; }
+    .section-heading h2 { margin: 0; font-size: 15px; letter-spacing: -.015em; }
+    .section-heading p { margin: 4px 0 0; color: var(--muted); font-size: 10px; }
+    .architecture-card { padding: 16px; }
+    .architecture-scroll { overflow-x: auto; }
+    .architecture {
+      display: grid; grid-template-columns: 1.05fr 1.1fr 1.25fr 1.15fr 1.1fr; gap: 22px;
+      min-width: 770px; align-items: stretch;
+    }
+    .arch-group {
+      position: relative; display: flex; flex-direction: column; gap: 8px; padding: 12px 10px;
+      border: 1px solid #2d3f5b; border-radius: 12px; background: #0e1728;
+    }
+    .arch-group:not(:last-child)::after {
+      position: absolute; z-index: 2; top: 50%; right: -17px; color: #607995; content: "→"; font-size: 15px; font-weight: 800;
+    }
+    .arch-label { margin-bottom: 2px; color: var(--dim); font-size: 8px; font-weight: 800; letter-spacing: .11em; text-transform: uppercase; }
+    .arch-node {
+      padding: 9px; border: 1px solid #2d3d56; border-radius: 8px; background: #15223a;
+      transition: border-color .2s, background .2s, transform .2s;
+    }
+    .arch-node strong { display: block; font-size: 9px; }
+    .arch-node span { display: block; margin-top: 4px; color: var(--muted); font-size: 8px; line-height: 1.45; }
+    .arch-node.highlight { border-color: #5aaef3; background: #16344a; transform: translateY(-1px); }
+    .boundary-note { margin: 12px 2px 0; color: var(--dim); font-size: 9px; line-height: 1.55; }
+    .lower-grid { display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(300px, .8fr); gap: 14px; margin-top: 15px; }
+    .event-list { display: grid; gap: 0; }
+    .event {
+      display: grid; grid-template-columns: 58px 8px minmax(0, 1fr); gap: 9px; align-items: start;
+      padding: 8px 0; border-top: 1px solid #26344b;
+    }
+    .event-time { color: var(--dim); font: 9px ui-monospace, SFMono-Regular, Menlo, monospace; }
+    .event-bullet { width: 7px; height: 7px; margin-top: 3px; border-radius: 50%; background: #70819b; }
+    .event[data-kind="success"] .event-bullet { background: var(--green); }
+    .event[data-kind="warning"] .event-bullet { background: var(--amber); }
+    .event[data-kind="error"] .event-bullet { background: var(--red); }
+    .event-text { color: #bdcbe0; font-size: 9px; line-height: 1.5; }
+    .event-text strong { color: var(--text); font-weight: 700; }
+    .guardrail-list { display: grid; gap: 8px; padding: 0 17px 17px; }
+    .guardrail { display: flex; gap: 8px; color: #b9c9de; font-size: 9px; line-height: 1.5; }
+    .check { flex: 0 0 15px; color: var(--green); font-weight: 900; }
+    .footer { display: flex; justify-content: space-between; gap: 14px; margin-top: 24px; padding-top: 14px; border-top: 1px solid #202d43; color: var(--dim); font-size: 9px; }
+    .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0; }
+
+    @media (max-width: 1120px) {
+      .layout { grid-template-columns: minmax(265px, .85fr) minmax(430px, 1.4fr); }
+      .right-column { grid-column: 1 / -1; grid-template-columns: repeat(2, minmax(0, 1fr)); align-items: start; }
+    }
+    @media (max-width: 760px) {
+      .shell { padding: 16px 14px 26px; }
+      .hero { grid-template-columns: 1fr; padding: 23px 20px; }
+      .hero-side { border-left: 0; border-top: 1px solid #364969; padding: 14px 0 0; }
+      .stats { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .layout { grid-template-columns: 1fr; }
+      .right-column { grid-column: auto; grid-template-columns: 1fr; }
+      .lower-grid { grid-template-columns: 1fr; }
+      .topbar { align-items: flex-start; }
+      .top-actions .pill { display: none; }
+      .footer { flex-direction: column; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { scroll-behavior: auto !important; transition-duration: .01ms !important; animation-duration: .01ms !important; }
+    }
+  </style>
+</head>
+<body>
+  <main class="shell">
+    <header class="topbar">
+      <div class="brand">
+        <div class="brand-mark" aria-hidden="true">AF</div>
+        <div>
+          <div class="brand-name">AI Platform Factory</div>
+          <div class="brand-sub">Enterprise engineering control plane</div>
+        </div>
+      </div>
+      <div class="top-actions">
+        <span class="pill"><span class="dot" aria-hidden="true"></span> Demo environment · simulated</span>
+        <a class="small-link" href="./reference-architecture.md">Technical reference ↗</a>
+      </div>
+    </header>
+
+    <section class="hero" aria-labelledby="page-title">
+      <div>
+        <div class="eyebrow">Governed AI-assisted delivery</div>
+        <h1 id="page-title">From a natural-language request<br>to a verified GKE deployment.</h1>
+        <p>See how ChatGPT/Codex or Claude Code can work through GitHub MCP, CI, and Terraform while identity, policy, and a human approval gate stay in control.</p>
+      </div>
+      <div class="hero-side">
+        <div class="tiny-label">Demo scenario</div>
+        <strong>FastAPI service · non-production</strong>
+        <span>Generate → review → plan → approve → deploy → verify</span>
+      </div>
+    </section>
+
+    <section class="stats" aria-label="Run summary">
+      <div class="stat"><span>RUN STATUS</span><strong id="summary-status">Ready to start</strong></div>
+      <div class="stat"><span>ACTIVE ASSISTANT</span><strong class="compact" id="summary-assistant">ChatGPT / Codex</strong></div>
+      <div class="stat"><span>APPROVAL GATE</span><strong class="compact" id="summary-approval">Human · Terraform apply</strong></div>
+      <div class="stat"><span>TARGET</span><strong class="compact">GCP · GKE · non-prod</strong></div>
+    </section>
+
+    <section class="layout" aria-label="Interactive factory demonstration">
+      <div class="column">
+        <article class="card">
+          <div class="card-head">
+            <div><h2>Start a factory run</h2><p>Choose an AI entry point and submit the example request.</p></div>
+            <span class="tiny-label">01 / INPUT</span>
+          </div>
+          <div class="card-body">
+            <div class="field">
+              <label class="control-label" for="assistant-select">AI assistant</label>
+              <select id="assistant-select">
+                <option value="ChatGPT / Codex">ChatGPT / Codex</option>
+                <option value="Claude Code">Claude Code</option>
+              </select>
+            </div>
+            <div class="field">
+              <label class="control-label" for="request-input">Engineering request</label>
+              <textarea id="request-input" maxlength="240" spellcheck="true">Create a FastAPI service with a health endpoint, tests, and a Dockerfile. Open a GitHub pull request, then deploy to non-production GKE only after approval.</textarea>
+              <div class="field-hint">The demo runs locally in this page. No prompt or credentials are sent to a service.</div>
+            </div>
+            <div class="button-row">
+              <button class="btn btn-primary" id="run-button" type="button">▶&nbsp; Run demo</button>
+              <button class="btn btn-secondary" id="reset-button" type="button" disabled>Reset</button>
+            </div>
+            <div class="notice"><span class="notice-icon" aria-hidden="true">!</span><span>Simulation only. GitHub, Tyk, Okta, GCP, and AI providers are not contacted; the events below are illustrative.</span></div>
+          </div>
+        </article>
+
+        <article class="card">
+          <div class="card-head">
+            <div><h3>Run context</h3><p>Bounded scope and traceable artifacts.</p></div>
+            <span class="tiny-label">CONTROLLED SCOPE</span>
+          </div>
+          <div class="run-meta">
+            <span class="tag">Project <b>payments-api</b></span>
+            <span class="tag">Environment <b>non-prod</b></span>
+            <span class="tag">Repository <b>allowlisted</b></span>
+            <span class="tag">Identity <b>short-lived</b></span>
+            <span class="tag">Production access <b>none</b></span>
+          </div>
+        </article>
+      </div>
+
+      <article class="card flow-card">
+        <div class="card-head">
+          <div><h2>Delivery workflow</h2><p id="flow-subtitle">A policy-gated path from request to a healthy service.</p></div>
+          <span class="tiny-label" id="run-id-label">NO ACTIVE RUN</span>
+        </div>
+        <div class="flow-progress" role="progressbar" aria-label="Workflow progress" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" id="progressbar"><span id="progress-fill"></span></div>
+        <div class="stage-list" id="stage-list" aria-live="polite"></div>
+        <div class="state-banner" id="state-banner" data-tone="neutral" role="status" aria-live="polite">
+          <strong id="banner-title">Ready when you are</strong>
+          <p id="banner-copy">Start the demo to watch the governed vertical slice advance. It will pause for human approval before infrastructure apply.</p>
+        </div>
+      </article>
+
+      <div class="column right-column">
+        <article class="card approval-card">
+          <div class="card-head">
+            <div><h2>Human approval</h2><p>Approval binds to the displayed plan digest.</p></div>
+            <span class="tiny-label" id="approval-chip">LOCKED</span>
+          </div>
+          <div class="approval-content" id="approval-content">
+            <div class="approval-empty">The Terraform plan must pass policy checks before this gate opens. No apply can occur without an explicit decision.</div>
+          </div>
+        </article>
+
+        <article class="card">
+          <div class="card-head">
+            <div><h2>Integration path</h2><p>Separate identities for people, tools, CI, and workloads.</p></div>
+          </div>
+          <div class="integration-list">
+            <div class="integration"><div class="integration-icon">AI</div><div><strong id="provider-card-name">ChatGPT / Codex</strong><span>Human sign-in via Okta · bounded task</span></div><span class="mini-state">ENTRY</span></div>
+            <div class="integration"><div class="integration-icon">MCP</div><div><strong>GitHub MCP</strong><span>Repository allowlist · scoped GitHub App</span></div><span class="mini-state">TOOLS</span></div>
+            <div class="integration"><div class="integration-icon">CI</div><div><strong>GitHub Actions</strong><span>PR checks · approval-protected deploy job</span></div><span class="mini-state">BUILD</span></div>
+            <div class="integration"><div class="integration-icon">GCP</div><div><strong>WIF → GKE</strong><span>OIDC federation · environment-scoped identity</span></div><span class="mini-state">RUNTIME</span></div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <div class="section-heading">
+      <div><h2>Reference architecture</h2><p>One bounded request path; distinct credentials at each trust boundary.</p></div>
+      <a class="small-link" href="./reference-architecture.md">Read technical details ↗</a>
+    </div>
+    <section class="card architecture-card" aria-label="AI Platform Factory reference architecture">
+      <div class="architecture-scroll">
+        <div class="architecture">
+          <div class="arch-group">
+            <div class="arch-label">01 · AI clients</div>
+            <div class="arch-node" data-node="assistant"><strong>ChatGPT / Codex</strong><span>or Claude Code · user-initiated, bounded request</span></div>
+            <div class="arch-node"><strong>Workforce identity</strong><span>Okta SSO · OAuth 2.0 / OIDC</span></div>
+          </div>
+          <div class="arch-group">
+            <div class="arch-label">02 · Governed access</div>
+            <div class="arch-node"><strong>Tyk API gateway</strong><span>Authenticate, rate-limit, route and correlate</span></div>
+            <div class="arch-node" data-node="mcp"><strong>GitHub MCP server</strong><span>Allowlisted tools · repository-scoped GitHub App</span></div>
+          </div>
+          <div class="arch-group">
+            <div class="arch-label">03 · Factory control plane</div>
+            <div class="arch-node"><strong>Orchestrator &amp; policy</strong><span>Task graph · durable state · approvals · audit</span></div>
+            <div class="arch-node"><strong>Agent workspace</strong><span>Specification · code · test · infrastructure</span></div>
+          </div>
+          <div class="arch-group">
+            <div class="arch-label">04 · Versioned delivery</div>
+            <div class="arch-node" data-node="github"><strong>GitHub repository</strong><span>Pull request · required human review</span></div>
+            <div class="arch-node" data-node="actions"><strong>GitHub Actions</strong><span>Tests · Terraform plan · protected apply job</span></div>
+          </div>
+          <div class="arch-group">
+            <div class="arch-label">05 · GCP runtime</div>
+            <div class="arch-node" data-node="wif"><strong>OIDC → GCP WIF</strong><span>Claim conditions · short-lived, least-privilege SA</span></div>
+            <div class="arch-node" data-node="gke"><strong>GKE non-production</strong><span>Workload identity · health and rollout checks</span></div>
+          </div>
+        </div>
+      </div>
+      <p class="boundary-note"><strong>Trust boundaries:</strong> Okta authenticates people; GitHub App credentials authorize repository operations; GitHub OIDC + GCP WIF authorize CI jobs. Interactive agents receive no GCP credentials. Tyk is the factory/MCP API gateway—not a replacement for cluster ingress.</p>
+    </section>
+
+    <section class="lower-grid" aria-label="Execution evidence and guardrails">
+      <article class="card">
+        <div class="card-head">
+          <div><h2>Execution evidence</h2><p>Correlated, attributable events for this simulated task.</p></div>
+          <span class="tiny-label" id="event-count">0 EVENTS</span>
+        </div>
+        <div class="card-body"><div class="event-list" id="event-list" aria-live="polite"><div class="approval-empty">No events yet. Start a demo run to create an execution trace.</div></div></div>
+      </article>
+      <article class="card">
+        <div class="card-head">
+          <div><h2>Built-in guardrails</h2><p>Consequential actions remain behind the platform.</p></div>
+        </div>
+        <div class="guardrail-list">
+          <div class="guardrail"><span class="check" aria-hidden="true">✓</span><span>Tool calls are allowlisted, task-scoped, and attributed to an identity.</span></div>
+          <div class="guardrail"><span class="check" aria-hidden="true">✓</span><span>Branch protection and CI checks precede merge and deployment.</span></div>
+          <div class="guardrail"><span class="check" aria-hidden="true">✓</span><span>Terraform plan is reviewed; approval is tied to its exact digest.</span></div>
+          <div class="guardrail"><span class="check" aria-hidden="true">✓</span><span>GitHub OIDC federation replaces long-lived cloud service-account keys.</span></div>
+          <div class="guardrail"><span class="check" aria-hidden="true">✓</span><span>Production projects and credentials are outside the interactive agent boundary.</span></div>
+        </div>
+      </article>
+    </section>
+
+    <footer class="footer">
+      <span>AI Platform Factory · Interactive reference demo · no external calls</span>
+      <span>Architecture is a proposal; configure and validate each integration before deployment.</span>
+    </footer>
+  </main>
+
+  <script>
+    (() => {
+      "use strict";
+
+      const stages = [
+        { title: "Request authenticated", detail: "Okta identity · project and repository authorization", event: "Okta validated the requester; project scope and repository allowlist passed." },
+        { title: "Specification approved", detail: "Acceptance criteria · non-production scope · task trace created", event: "Task specification validated and approval requirements recorded." },
+        { title: "Plan and agent hand-off", detail: "Typed task graph · bounded capabilities · correlation ID", event: "Orchestrator created a dependency-aware plan and selected approved capabilities." },
+        { title: "Code generated and PR opened", detail: "GitHub MCP · scoped app installation · branch and pull request", event: "Coding agent prepared the FastAPI change; GitHub MCP opened a reviewable pull request." },
+        { title: "CI checks passed", detail: "GitHub Actions · tests · dependency and secret checks", event: "Required tests and configured security checks passed on the pull request." },
+        { title: "Terraform plan validated", detail: "Non-production target · policy checks · immutable plan digest", event: "Terraform plan passed policy checks. Apply is paused until a human approves this digest." },
+        { title: "Human approval granted", detail: "Plan digest verified · authorized approver · non-production", event: "Authorized human approved the exact Terraform plan digest for non-production." },
+        { title: "Federated cloud identity issued", detail: "GitHub OIDC claims · GCP WIF conditions · short-lived credentials", event: "GitHub Actions exchanged its restricted OIDC identity through GCP WIF; no key was used." },
+        { title: "Applied and deployed to GKE", detail: "Terraform apply · environment-scoped service account · rollout", event: "Approved infrastructure was applied and the application rollout completed on non-production GKE." },
+        { title: "Health and evidence verified", detail: "Smoke check · deployment result · task audit trail", event: "Health check passed; deployment evidence and correlated task events are ready." }
+      ];
+
+      const el = (id) => document.getElementById(id);
+      const stageList = el("stage-list");
+      const eventList = el("event-list");
+      const runButton = el("run-button");
+      const resetButton = el("reset-button");
+      const approvalContent = el("approval-content");
+      let state = "idle";
+      let currentStage = -1;
+      let runId = "";
+      let timer = null;
+      let eventTotal = 0;
+      let selectedAssistant = el("assistant-select").value;
+
+      const escapeHtml = (value) => value.replace(/[&<>"']/g, (char) => ({
+        "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;"
+      })[char]);
+
+      function renderStages() {
+        stageList.innerHTML = stages.map((stage, index) => {
+          let className = "stage";
+          let status = "Queued";
+          let mark = String(index + 1);
+          if (index < currentStage) {
+            className += " done";
+            status = "Complete";
+            mark = "✓";
+          } else if (index === currentStage) {
+            if (state === "awaiting-approval") {
+              className += " waiting";
+              status = "Approval";
+              mark = "!";
+            } else if (state === "failed") {
+              className += " failed";
+              status = "Blocked";
+              mark = "×";
+            } else if (state === "running") {
+              className += " active";
+              status = "Running";
+              mark = "…";
+            } else if (state === "complete") {
+              className += " done";
+              status = "Complete";
+              mark = "✓";
+            }
+          }
+          return `<div class="${className}"${index === currentStage ? ' aria-current="step"' : ""}>
+            <div class="stage-mark" aria-hidden="true">${mark}</div>
+            <div><div class="stage-title">${stage.title}</div><div class="stage-detail">${stage.detail}</div></div>
+            <div class="stage-status">${status}</div>
+          </div>`;
+        }).join("");
+
+        const completed = state === "complete" ? stages.length : Math.max(0, currentStage);
+        const percent = state === "awaiting-approval"
+          ? Math.round((currentStage / stages.length) * 100)
+          : Math.round((completed / stages.length) * 100);
+        el("progress-fill").style.width = `${percent}%`;
+        el("progressbar").setAttribute("aria-valuenow", String(percent));
+      }
+
+      function addEvent(message, kind = "info") {
+        if (eventTotal === 0) eventList.innerHTML = "";
+        eventTotal += 1;
+        const time = new Intl.DateTimeFormat(undefined, { hour: "2-digit", minute: "2-digit", second: "2-digit" }).format(new Date());
+        const row = document.createElement("div");
+        row.className = "event";
+        row.dataset.kind = kind;
+        row.innerHTML = `<span class="event-time">${time}</span><span class="event-bullet" aria-hidden="true"></span><span class="event-text">${escapeHtml(message)}</span>`;
+        eventList.prepend(row);
+        el("event-count").textContent = `${eventTotal} EVENT${eventTotal === 1 ? "" : "S"}`;
+      }
+
+      function setBanner(title, copy, tone = "neutral") {
+        el("banner-title").textContent = title;
+        el("banner-copy").textContent = copy;
+        el("state-banner").dataset.tone = tone;
+      }
+
+      function updateSummary() {
+        const labels = {
+          idle: "Ready to start",
+          running: "Run in progress",
+          "awaiting-approval": "Awaiting approval",
+          complete: "Deployment healthy",
+          failed: "Run blocked"
+        };
+        el("summary-status").textContent = labels[state];
+        el("summary-assistant").textContent = selectedAssistant;
+        el("provider-card-name").textContent = selectedAssistant;
+        el("run-id-label").textContent = runId ? `TASK ${runId}` : "NO ACTIVE RUN";
+        el("approval-chip").textContent = state === "awaiting-approval" ? "ACTION REQUIRED" : state === "complete" ? "APPROVED" : state === "failed" ? "REJECTED" : "LOCKED";
+        runButton.disabled = state === "running" || state === "awaiting-approval" || state === "complete";
+        resetButton.disabled = state === "running";
+      }
+
+      function resetApproval() {
+        approvalContent.innerHTML = '<div class="approval-empty">The Terraform plan must pass policy checks before this gate opens. No apply can occur without an explicit decision.</div>';
+      }
+
+      function showApproval() {
+        approvalContent.innerHTML = `<div class="approval-value"><span>Action</span><strong>Terraform apply</strong></div>
+          <div class="approval-value"><span>Target</span><strong>GCP · non-prod</strong></div>
+          <div class="approval-value"><span>Plan digest</span><strong>sha256:7f3a…91c2</strong></div>
+          <div class="approval-value"><span>Policy</span><strong>Passed · least privilege</strong></div>
+          <div class="approval-actions">
+            <button type="button" class="btn btn-approve" id="approve-button">Approve plan</button>
+            <button type="button" class="btn btn-reject" id="reject-button">Reject plan</button>
+          </div>`;
+        el("approve-button").addEventListener("click", approvePlan);
+        el("reject-button").addEventListener("click", rejectPlan);
+      }
+
+      function highlightArchitecture(stageIndex) {
+        document.querySelectorAll(".arch-node").forEach((node) => node.classList.remove("highlight"));
+        let nodes = [];
+        if (stageIndex <= 2) nodes = ["assistant"];
+        else if (stageIndex === 3) nodes = ["mcp", "github"];
+        else if (stageIndex === 4 || stageIndex === 5 || stageIndex === 6) nodes = ["actions"];
+        else if (stageIndex === 7) nodes = ["actions", "wif"];
+        else if (stageIndex >= 8) nodes = ["wif", "gke"];
+        nodes.forEach((name) => {
+          const node = document.querySelector(`[data-node="${name}"]`);
+          if (node) node.classList.add("highlight");
+        });
+      }
+
+      function advance() {
+        if (state !== "running") return;
+        currentStage += 1;
+        if (currentStage === 5) {
+          state = "awaiting-approval";
+          showApproval();
+          addEvent(stages[currentStage].event, "warning");
+          setBanner("Approval required before apply", "Review the non-production Terraform plan and approve its exact digest, or reject it. No infrastructure change has been applied.", "waiting");
+          renderStages();
+          updateSummary();
+          return;
+        }
+
+        if (currentStage >= stages.length) {
+          state = "complete";
+          currentStage = stages.length - 1;
+          addEvent("Task completed successfully; health and deployment evidence were recorded.", "success");
+          setBanner("Non-production deployment is healthy", "The simulated vertical slice completed. The production environment remains isolated and was not accessed.", "success");
+          renderStages();
+          updateSummary();
+          return;
+        }
+
+        addEvent(stages[currentStage].event, currentStage === 9 ? "success" : "info");
+        highlightArchitecture(currentStage);
+        if (currentStage === 0) setBanner("Validating requester and task scope", "The factory checks identity, project membership, repository allowlist, environment, and requested capabilities.");
+        else if (currentStage < 5) setBanner("Run in progress", "The orchestrator records the task state and moves through scoped tools and required validation.");
+        else setBanner("Continuing after approval", "The approved digest is bound to this run; GitHub Actions can now request a short-lived federated identity.", "neutral");
+        renderStages();
+        updateSummary();
+        timer = window.setTimeout(advance, 700);
+      }
+
+      function startRun() {
+        const request = el("request-input").value.trim();
+        if (!request) {
+          el("request-input").setCustomValidity("Enter an engineering request before starting the demo.");
+          el("request-input").reportValidity();
+          return;
+        }
+        el("request-input").setCustomValidity("");
+        selectedAssistant = el("assistant-select").value;
+        runId = Math.random().toString(36).slice(2, 8).toUpperCase();
+        currentStage = -1;
+        eventTotal = 0;
+        state = "running";
+        resetApproval();
+        eventList.innerHTML = "";
+        el("flow-subtitle").textContent = `Request: “${request.slice(0, 88)}${request.length > 88 ? "…" : ""}”`;
+        addEvent(`Run ${runId} started from ${selectedAssistant}; demo request accepted for the non-production project.`, "success");
+        updateSummary();
+        advance();
+      }
+
+      function approvePlan() {
+        if (state !== "awaiting-approval") return;
+        addEvent("Human approver approved plan sha256:7f3a…91c2 for GCP non-production.", "success");
+        state = "running";
+        el("approval-content").innerHTML = '<div class="approval-empty">Approved by an authorized human. The decision is bound to the reviewed plan digest.</div>';
+        setBanner("Approval recorded", "The approved Terraform plan is unchanged. The delivery workflow is resuming with short-lived federated credentials.", "neutral");
+        renderStages();
+        updateSummary();
+        timer = window.setTimeout(advance, 500);
+      }
+
+      function rejectPlan() {
+        if (state !== "awaiting-approval") return;
+        state = "failed";
+        el("approval-content").innerHTML = '<div class="approval-empty">Plan rejected. Apply was not run and no GCP credentials were requested.</div>';
+        addEvent("Authorized human rejected the plan; apply was blocked and the run stopped safely.", "error");
+        setBanner("Run blocked by approval policy", "No Terraform apply, cloud credential exchange, or deployment occurred. Reset to start a new simulated run.", "error");
+        renderStages();
+        updateSummary();
+      }
+
+      function resetRun() {
+        if (timer !== null) window.clearTimeout(timer);
+        timer = null;
+        state = "idle";
+        currentStage = -1;
+        runId = "";
+        eventTotal = 0;
+        selectedAssistant = el("assistant-select").value;
+        el("flow-subtitle").textContent = "A policy-gated path from request to a healthy service.";
+        eventList.innerHTML = '<div class="approval-empty">No events yet. Start a demo run to create an execution trace.</div>';
+        el("event-count").textContent = "0 EVENTS";
+        resetApproval();
+        setBanner("Ready when you are", "Start the demo to watch the governed vertical slice advance. It will pause for human approval before infrastructure apply.");
+        document.querySelectorAll(".arch-node").forEach((node) => node.classList.remove("highlight"));
+        renderStages();
+        updateSummary();
+      }
+
+      runButton.addEventListener("click", startRun);
+      resetButton.addEventListener("click", resetRun);
+      el("assistant-select").addEventListener("change", () => {
+        if (state === "idle") {
+          selectedAssistant = el("assistant-select").value;
+          updateSummary();
+        }
+      });
+
+      renderStages();
+      updateSummary();
+    })();
+  </script>
+</body>
+</html>
