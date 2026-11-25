@@ -47,7 +47,7 @@
     "tags": {"type": "array", "items": {"type": "string"}}
   },
   "patternProperties": {
-    "(?i)(password|secret|token|privatekey|credential)": false
+    "([Pp]assword|[Ss]ecret|[Tt]oken|[Pp]rivate[Kk]ey|[Cc]redential)": false
   },
   "additionalProperties": false,
   "$defs": {
