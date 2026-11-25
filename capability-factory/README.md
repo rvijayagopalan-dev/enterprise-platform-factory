@@ -1,7 +1,7 @@
 # Capability Factory — Discussion Workspace
 
 **Status:** Discussion draft  
-**Version:** 0.1.0  
+**Version:** 0.2.0  
 **Purpose:** Capture the capability-driven enterprise factory model for subsequent architecture discussion and design.
 
 ## Why this workspace exists
@@ -21,6 +21,7 @@ This folder is a design and discussion baseline. It does not establish approved 
 
 | Document | Purpose |
 |---|---|
+| [Capability Model Gap Register](capability-model-gap-register.md) | Evidence-based assessment of the current Explorer, prioritized gaps, acceptance criteria and remediation sequence |
 | [Capability Meta-Model](capability-meta-model.md) | Three-layer capability structure and modeling principles |
 | [Universal Capability Catalog](universal-capability-catalog.md) | Proposed 15 universal L1 capability domains and example L2 branches |
 | [Industry Capability Extensions](industry-capability-extensions.md) | Industry-specific extensions and inheritance/variation principles |
@@ -56,13 +57,22 @@ See the repository's [EPF design and development index](../docs/DESIGN-DEVELOPME
 6. Do not assume every factory is a separate team, application or deployment.
 7. Keep model ownership, provenance, versioning, traceability and governance explicit.
 8. Treat all taxonomies and examples in this workspace as proposals until reviewed.
+9. Distinguish source observations from proposed model improvements; do not label draft catalogues as certified or authoritative.
+10. Treat applicability as explicit and evidence-backed; missing mappings are unassessed, not automatically applicable.
 
-## Suggested discussion sequence
+## Suggested discussion and design sequence
 
-1. Confirm capability boundaries and the proposed 15 universal L1 domains.
-2. Define L2/L3 decomposition rules and reusable capability patterns.
-3. Define extension and inheritance rules for industry and specialized models.
-4. Specify the composition engine's inputs, outputs and validation rules.
-5. Agree the factory classification and common factory contract.
-6. Define how the Enterprise Meta Factory and EPF interact.
-7. Record accepted decisions and translate them into detailed design artifacts.
+1. Review the [Capability Model Gap Register](capability-model-gap-register.md) and agree remediation priorities.
+2. Confirm capability boundaries and the proposed 15 universal L1 domains.
+3. Define L2/L3 decomposition rules and reusable capability patterns.
+4. Define extension, applicability and inheritance rules for industry and specialized models.
+5. Specify the composition engine's inputs, outputs, resolution rules and validation criteria.
+6. Agree the factory classification and common factory contract.
+7. Define how the Enterprise Meta Factory and EPF interact.
+8. Record accepted decisions and translate them into detailed design artifacts.
+
+## Maturity states
+
+Starter → Draft → Reviewed → Accepted → Implemented → Verified.
+
+Record material decisions as ADRs with context, options, decision, consequences, owner and affected artifacts. Maintain traceability as the design evolves.
