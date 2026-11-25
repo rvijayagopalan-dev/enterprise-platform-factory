@@ -33,6 +33,7 @@ This index organizes the next design phase. These documents establish scope, que
 | Data | implementation/data-architecture.md | Persistence, ownership and retention |
 | Testing | implementation/test-strategy.md | Functional, security, AI and resilience testing |
 | Traceability | traceability/discussion-to-repository.md | Discussion to design and implementation mapping |
+| Capability intelligence | ../capability-factory/capability-model-gap-register.md | Capability taxonomy quality, composition, applicability, assessment and factory linkage |
 
 ## Canonical meta-model baseline (v0.1.0)
 
@@ -42,16 +43,22 @@ This index organizes the next design phase. These documents establish scope, que
 
 The baseline is a draft design contract, not a complete set of per-entity production schemas. Capability-owned extension schemas, formal transition tables, API/event contracts and ADRs remain follow-on design tasks.
 
+## Capability Factory workstream
+
+The [Capability Factory workspace](../capability-factory/README.md) maintains the capability and factory domain model. Its [Capability Model Gap Register](../capability-factory/capability-model-gap-register.md) records source-derived findings from the Universal Enterprise Capability Explorer and prioritized remediation proposals. It is a domain-level design workstream, not a replacement for EPF's shared execution and trust platform.
+
 ## Recommended sequence
 1. Confirm product boundaries, capabilities and terminology.
 2. Complete entities, relationships, schemas and lifecycle.
-3. Define components, trust boundaries and platform services.
-4. Specify agent, engine, connector, API and event contracts.
-5. Design execution isolation, identity federation and cloud deployment.
-6. Define security, governance, FinOps and operations.
-7. Convert accepted designs into epics, stories and test cases.
+3. Review the Capability Factory gap register and agree canonical capability semantics and composition requirements.
+4. Define components, trust boundaries and platform services.
+5. Specify agent, engine, connector, API and event contracts.
+6. Design execution isolation, identity federation and cloud deployment.
+7. Define security, governance, FinOps and operations.
+8. Convert accepted designs into epics, stories and test cases.
 
 ## Maturity states
+
 Starter → Draft → Reviewed → Accepted → Implemented → Verified.
 
 Record material decisions as ADRs with context, options, decision, consequences, owner and affected artifacts. Maintain traceability as the design evolves.
