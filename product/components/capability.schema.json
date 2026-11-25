@@ -1,0 +1,156 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.enterprise-platform-factory.dev/product/components/capability.schema.json",
+  "title": "EPF Capability Definition",
+  "description": "Version 1.0.0-draft capability-domain schema. Domain extension only; EPF Core Entity remains the shared envelope authority.",
+  "type": "object",
+  "required": ["id", "entityType", "schemaVersion", "tenantId", "owner", "lifecycleState", "classification", "createdAt", "updatedAt", "version", "capabilityKey", "canonicalName", "definition", "semanticLayer", "decompositionLevel", "context"],
+  "properties": {
+    "id": {"type": "string", "minLength": 1, "maxLength": 128},
+    "entityType": {"const": "Capability"},
+    "schemaVersion": {"const": "1.0.0"},
+    "name": {"type": "string", "maxLength": 256},
+    "description": {"type": "string", "maxLength": 10000},
+    "tenantId": {"type": "string", "minLength": 1},
+    "projectId": {"type": ["string", "null"]},
+    "workspaceId": {"type": ["string", "null"]},
+    "owner": {"$ref": "#/$defs/principalRef"},
+    "lifecycleState": {"enum": ["draft", "proposed", "in_review", "accepted", "deprecated", "retired"]},
+    "labels": {"type": "object"},
+    "classification": {"enum": ["public", "internal", "confidential", "restricted"]},
+    "createdAt": {"type": "string", "format": "date-time"},
+    "updatedAt": {"type": "string", "format": "date-time"},
+    "createdBy": {"$ref": "#/$defs/principalRef"},
+    "updatedBy": {"$ref": "#/$defs/principalRef"},
+    "version": {"type": "integer", "minimum": 1},
+    "source": {"$ref": "#/$defs/provenance"},
+    "relationships": {"type": "array", "items": {"$ref": "#/$defs/entityRelationship"}},
+    "extensions": {"type": "object"},
+    "capabilityKey": {"type": "string", "pattern": "^[A-Z][A-Z0-9-]{1,31}$"},
+    "definitionVersion": {"type": "string", "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$"},
+    "canonicalName": {"type": "string", "minLength": 3, "maxLength": 180},
+    "definition": {"type": "string", "minLength": 20, "maxLength": 4000},
+    "semanticLayer": {"enum": ["universal", "industry", "specialized", "enterprise"]},
+    "decompositionLevel": {"enum": ["L1", "L2", "L3", "L4+"]},
+    "parentCapabilityId": {"type": ["string", "null"]},
+    "domainKey": {"type": "string"},
+    "context": {"$ref": "#/$defs/context"},
+    "scopeIn": {"type": "array", "items": {"type": "string"}},
+    "scopeOut": {"type": "array", "items": {"type": "string"}},
+    "outcomes": {"type": "array", "items": {"type": "string"}},
+    "activities": {"type": "array", "items": {"type": "string"}},
+    "aliases": {"type": "array", "items": {"type": "string"}},
+    "relationshipsToCapabilities": {"type": "array", "items": {"$ref": "#/$defs/capabilityRelationship"}},
+    "steward": {"$ref": "#/$defs/principalRef"},
+    "evidenceRefs": {"type": "array", "items": {"type": "string"}},
+    "sourceRefs": {"type": "array", "items": {"type": "string"}},
+    "tags": {"type": "array", "items": {"type": "string"}}
+  },
+  "patternProperties": {
+    "(?i)(password|secret|token|privatekey|credential)": false
+  },
+  "additionalProperties": false,
+  "$defs": {
+    "principalRef": {
+      "type": "object",
+      "required": ["principalType", "principalId"],
+      "properties": {
+        "principalType": {"enum": ["human", "agent", "workload", "service", "external"]},
+        "principalId": {"type": "string", "minLength": 1},
+        "displayName": {"type": "string"}
+      },
+      "additionalProperties": false
+    },
+    "provenance": {
+      "type": "object",
+      "required": ["system", "actorType"],
+      "properties": {
+        "system": {"type": "string"},
+        "actorType": {"enum": ["human", "agent", "workload", "service", "external"]},
+        "actorId": {"type": "string"},
+        "sourceRef": {"type": "string"},
+        "digest": {"type": "string"}
+      },
+      "additionalProperties": false
+    },
+    "context": {
+      "type": "object",
+      "required": ["scopeType", "applicability"],
+      "properties": {
+        "scopeType": {"enum": ["enterprise", "business_unit", "industry", "sub_industry", "business_model", "product_service", "geography", "jurisdiction", "operating_model", "specialist"]},
+        "enterpriseIds": {"type": "array", "items": {"type": "string"}},
+        "industryCodes": {"type": "array", "items": {"type": "string"}},
+        "subIndustryCodes": {"type": "array", "items": {"type": "string"}},
+        "businessModels": {"type": "array", "items": {"type": "string"}},
+        "productServiceRefs": {"type": "array", "items": {"type": "string"}},
+        "geographies": {"type": "array", "items": {"type": "string"}},
+        "jurisdictions": {"type": "array", "items": {"type": "string"}},
+        "operatingModels": {"type": "array", "items": {"type": "string"}},
+        "applicability": {"enum": ["unassessed", "applicable", "conditional", "not_applicable", "externally_provided", "planned"]},
+        "conditions": {"type": "array", "items": {"type": "string"}},
+        "rationale": {"type": "string"},
+        "validFrom": {"type": "string", "format": "date-time"},
+        "validTo": {"type": "string", "format": "date-time"}
+      },
+      "additionalProperties": false
+    },
+    "entityRelationship": {
+      "type": "object",
+      "required": ["type", "targetId", "targetType"],
+      "properties": {
+        "type": {"type": "string", "minLength": 1},
+        "targetId": {"type": "string", "minLength": 1},
+        "targetType": {"type": "string", "minLength": 1},
+        "attributes": {"type": "object"}
+      },
+      "additionalProperties": false
+    },
+    "capabilityRelationship": {
+      "type": "object",
+      "required": ["type", "targetCapabilityId"],
+      "properties": {
+        "type": {"enum": ["parentOf", "childOf", "specializes", "extends", "dependsOn", "enables", "supports", "overlapsWith", "complements", "supersedes", "mapsTo"]},
+        "targetCapabilityId": {"type": "string", "minLength": 1},
+        "mappingKind": {"type": "string"},
+        "confidence": {"type": "number", "minimum": 0, "maximum": 1},
+        "rationale": {"type": "string"},
+        "sourceRef": {"type": "string"}
+      },
+      "additionalProperties": false
+    }
+  },
+  "allOf": [
+    {
+      "if": {"properties": {"decompositionLevel": {"const": "L1"}}},
+      "then": {"properties": {"parentCapabilityId": {"type": "null"}}}
+    },
+    {
+      "if": {"properties": {"decompositionLevel": {"enum": ["L2", "L3", "L4+"]}}},
+      "then": {"required": ["parentCapabilityId"], "properties": {"parentCapabilityId": {"type": "string", "minLength": 1}}}
+    }
+  ],
+  "examples": [
+    {
+      "id": "cap_u08",
+      "entityType": "Capability",
+      "schemaVersion": "1.0.0",
+      "tenantId": "tenant_demo",
+      "owner": {"principalType": "human", "principalId": "finance_owner"},
+      "lifecycleState": "proposed",
+      "classification": "internal",
+      "createdAt": "2026-11-24T12:00:00Z",
+      "updatedAt": "2026-11-24T12:00:00Z",
+      "version": 1,
+      "capabilityKey": "U08",
+      "definitionVersion": "0.1.0",
+      "canonicalName": "Finance and Accounting",
+      "definition": "The enterprise ability to plan, record, control and report financial resources and obligations to support stewardship and decision-making.",
+      "semanticLayer": "universal",
+      "decompositionLevel": "L1",
+      "parentCapabilityId": null,
+      "domainKey": "enterprise-management",
+      "context": {"scopeType": "enterprise", "applicability": "unassessed"},
+      "outcomes": ["Reliable financial stewardship", "Decision-useful financial information"]
+    }
+  ]
+}
