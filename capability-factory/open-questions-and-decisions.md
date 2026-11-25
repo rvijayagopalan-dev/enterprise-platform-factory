@@ -1,9 +1,9 @@
 # Open Questions and Decisions
 
 **Status:** Discussion backlog  
-**Version:** 0.1.0
+**Version:** 0.2.0
 
-This document records unresolved questions for the Capability Factory workstream. No item below should be treated as an accepted architecture decision unless its status is explicitly changed and rationale recorded.
+This document records unresolved questions for the Capability Factory workstream. No item below should be treated as an accepted architecture decision unless its status is explicitly changed and rationale recorded. The evidence-based remediation backlog is maintained in the [Capability Model Gap Register](capability-model-gap-register.md).
 
 ## 1. Capability taxonomy
 
@@ -15,6 +15,9 @@ This document records unresolved questions for the Capability Factory workstream
 | Q-004 | Should Research be grouped with Innovation or modeled separately? | Research may span science, product and enterprise innovation | Open |
 | Q-005 | What formal rules govern L1/L2/L3 decomposition? | Ensures consistency and reuse | Open |
 | Q-006 | Which capability relationship types are required? | Enables dependency, composition and traceability | Open |
+| Q-027 | What is the canonical capability definition contract, including scope, exclusions, outcomes, aliases and provenance? | Makes capability semantics testable and reusable | Open |
+| Q-028 | Which relationship types and cardinality rules are required beyond parent-child hierarchy? | Enables capability graph traversal and validation | Open |
+| Q-029 | Which candidate universal domains are missing or ambiguously placed (architecture, knowledge, ecosystem, sustainability, resilience, assets, research, regulatory affairs, security and master data)? | Avoids premature L1 expansion while ensuring coverage | Open |
 
 ## 2. Industry and specialization
 
@@ -25,6 +28,9 @@ This document records unresolved questions for the Capability Factory workstream
 | Q-009 | When is a variation an extension versus a new capability? | Controls taxonomy fragmentation | Open |
 | Q-010 | How should jurisdictional and regulatory variants be represented? | Supports global and local operating models | Open |
 | Q-011 | What criteria promote a specialized capability into an industry or universal catalog? | Governs reuse and catalog evolution | Open |
+| Q-030 | What explicit applicability states are supported, and what evidence is required to assert each state? | Prevents default applicability from being mistaken for validated commonality | Open |
+| Q-031 | How should sub-industry, business-model, product/service, jurisdiction and operating-context overlays compose? | Supports multi-dimensional specialization without copying entire hierarchies | Open |
+| Q-032 | How should cross-cutting capabilities and controls relate to industry-specific decompositions? | Prevents risk, quality, safety, resilience and sustainability from being inconsistently embedded | Open |
 
 ## 3. Composition engine
 
@@ -35,8 +41,19 @@ This document records unresolved questions for the Capability Factory workstream
 | Q-014 | How are conflicts, duplicates and semantic overlaps resolved? | Protects model integrity | Open |
 | Q-015 | How are catalog versions pinned and enterprise models migrated? | Preserves reproducibility and traceability | Open |
 | Q-016 | Who approves the published enterprise-specific capability model? | Establishes accountability | Open |
+| Q-033 | What deterministic resolution rules govern inheritance, specialization, exclusions, conflicts and duplicate candidates? | Makes enterprise composition reproducible and auditable | Open |
+| Q-034 | What versioned interchange schema and import validation contract govern capability catalogues, compositions and assessments? | Enables safe portability and integration | Open |
 
-## 4. Factory ecosystem
+## 4. Enterprise architecture and capability intelligence
+
+| ID | Question | Why it matters | Status |
+|---|---|---|---|
+| Q-035 | Which enterprise architecture relationships are mandatory for a publishable enterprise capability model? | Connects capabilities to value streams, processes, organization, products, data, applications and technology | Open |
+| Q-036 | Which maturity dimensions, evidence rules and confidence measures are required? | Prevents a single maturity score from masking capability weaknesses | Open |
+| Q-037 | How should strategic value, customer impact, operational criticality, regulatory criticality and investment be measured? | Supports capability prioritization and portfolio decisions | Open |
+| Q-038 | What provenance, SME validation and catalogue quality gates are required before a capability or mapping is accepted? | Establishes trust and defensible reuse | Open |
+
+## 5. Factory ecosystem
 
 | ID | Question | Why it matters | Status |
 |---|---|---|---|
@@ -46,8 +63,10 @@ This document records unresolved questions for the Capability Factory workstream
 | Q-020 | What distinguishes factory blueprint, configuration, instance and execution run? | Enables lifecycle and runtime modeling | Open |
 | Q-021 | Which factory contracts are mandatory for inter-factory collaboration? | Enables composition and interoperability | Open |
 | Q-022 | How are factory outcomes, economics and maturity measured? | Enables portfolio governance | Open |
+| Q-039 | What mapping semantics distinguish a factory that realizes, partially realizes, enables, governs or consumes a capability? | Makes capability-to-factory coverage measurable and many-to-many | Open |
+| Q-040 | How should capability gaps be translated into candidate factory blueprints and investment options? | Connects capability intelligence to factory portfolio planning | Open |
 
-## 5. Enterprise Meta Factory and EPF
+## 6. Enterprise Meta Factory and EPF
 
 | ID | Question | Why it matters | Status |
 |---|---|---|---|
@@ -56,7 +75,7 @@ This document records unresolved questions for the Capability Factory workstream
 | Q-025 | Which EPF engines and shared services should be reused by all factories? | Aligns with existing EPF architecture | Open |
 | Q-026 | How are non-digital and physical operations represented when factories extend beyond software delivery? | Keeps the model enterprise-wide | Open |
 
-## 6. Proposed design principles to confirm
+## 7. Proposed design principles to confirm
 
 1. Capability and factory taxonomies are separate but linked models.
 2. The enterprise capability model is composed from universal, industry, specialized and enterprise-local definitions.
@@ -68,8 +87,12 @@ This document records unresolved questions for the Capability Factory workstream
 8. Allow enterprise-specific extensions with explicit provenance and governance.
 9. EPF provides shared execution and trust infrastructure; it is not the entire factory ecosystem.
 10. The Enterprise Meta Factory creates, configures, governs and evolves the factory ecosystem.
+11. Applicability must be explicit and evidence-backed; an absent mapping is unassessed.
+12. Capability definitions must express enduring abilities and outcomes, not generic process phases.
+13. Capability composition must preserve version, provenance, inheritance and conflict decisions.
+14. Capability-to-factory relationships are many-to-many and do not imply dedicated factories.
 
-## 7. Decision record template
+## 8. Decision record template
 
 For each accepted decision, record:
 
