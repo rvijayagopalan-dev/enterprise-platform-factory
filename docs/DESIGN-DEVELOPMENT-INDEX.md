@@ -47,6 +47,13 @@ The baseline is a draft design contract, not a complete set of per-entity produc
 
 The [Capability Factory workspace](../capability-factory/README.md) maintains the capability and factory domain model. Its [Capability Model Gap Register](../capability-factory/capability-model-gap-register.md) records source-derived findings from the Universal Enterprise Capability Explorer and prioritized remediation proposals. It is a domain-level design workstream, not a replacement for EPF's shared execution and trust platform.
 
+## Product capability ontology (v1.0.0-draft)
+
+- [Product components index](../product/README.md) — capability ontology and versioned demos.
+- [Capability ontology](../product/components/capability-ontology.md) — canonical concepts, semantics, decomposition, context, relationships and governance.
+- [Capability JSON Schema](../product/components/capability.schema.json) — machine-readable capability definition contract.
+- [L1 demo](../product/demo/capability-l1-universal-v1.0.0.html) · [L2 demo](../product/demo/capability-l2-branch-v1.0.0.html) · [L3 demo](../product/demo/capability-l3-component-v1.0.0.html).
+
 ## Recommended sequence
 1. Confirm product boundaries, capabilities and terminology.
 2. Complete entities, relationships, schemas and lifecycle.
