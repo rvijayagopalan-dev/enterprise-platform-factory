@@ -76,3 +76,11 @@ The ontology is a domain model. It reuses the EPF Core Entity envelope for ident
 - [Interactive realization intelligence demo](demo/uece-realization-intelligence-v0.4.0.html) — capability register, traceability coverage, connected relationship inspector and realization gap view.
 - Engine functions: `validateArchitectureGraph`, `traceCapability` and `analyzeRealizationPortfolio` in [the UECE engine](engines/uece-intelligence-engine.mjs).
 - [Realization engine tests](engines/tests/uece-realization.test.mjs) — typed endpoint integrity, accepted-edge gating, traceability and gap analysis.
+
+
+## UECE Strategy Traceability & Dependency Impact v0.5.0
+
+- [Strategy traceability and dependency impact specification](../capability-factory/strategy-traceability-dependency-impact-v0.5.0.md) — objective-to-capability-to-metric traceability, dependency semantics, impact propagation and governance.
+- [Strategy and impact demo](demo/uece-strategy-impact-v0.5.0.html) — inspect a sample strategic outcome chain and potential dependency blast radius.
+- [Strategy and impact tests](engines/tests/uece-strategy-impact.test.mjs) — accepted-edge strategy tracing, reverse dependency traversal and cycle reporting.
+- Engine functions: `analyzeStrategicTraceability` and `analyzeDependencyImpact` in [the UECE engine](engines/uece-intelligence-engine.mjs).
