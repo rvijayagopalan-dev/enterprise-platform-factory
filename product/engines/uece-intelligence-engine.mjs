@@ -328,3 +328,45 @@ export function analyzeRealizationPortfolio({capabilities=[],graph={nodes:[],rel
     capabilitiesWithoutRealizationDecision:rows.filter(r=>r.realizationMode==="not_decided").length,gapCount:gapRegister.length},
     capabilities:rows,gapRegister};
 }
+
+
+// UECE v0.5.0 — strategy-to-outcome traceability and dependency impact.
+export function analyzeStrategicTraceability(graph,{objectiveIds=[]}={}) {
+  const check=validateArchitectureGraph(graph);
+  if(!check.valid) return {valid:false,errors:check.errors,objectives:[],summary:null};
+  const accepted=(graph.relationships||[]).filter(e=>e.lifecycleState==="accepted");
+  const objectives=(graph.nodes||[]).filter(n=>n.nodeType==="objective"&&(!objectiveIds.length||objectiveIds.includes(n.id)));
+  const results=objectives.map(o=>{
+    const capabilityIds=accepted.filter(e=>e.source.nodeType==="objective"&&e.source.nodeId===o.id&&e.predicate==="enables"&&e.target.nodeType==="capability").map(e=>e.target.nodeId);
+    const capabilities=capabilityIds.map(id=>{
+      const c=(graph.nodes||[]).find(n=>n.id===id);
+      const metrics=accepted.filter(e=>e.source.nodeType==="capability"&&e.source.nodeId===id&&e.predicate==="measures").map(e=>({metricId:e.target.nodeId,metricName:(graph.nodes||[]).find(n=>n.id===e.target.nodeId)?.name||e.target.nodeId}));
+      return {capabilityId:id,capabilityName:c?.name||id,metrics};
+    });
+    return {objectiveId:o.id,objectiveName:o.name,capabilities,capabilityCount:capabilities.length,measuredCapabilityCount:capabilities.filter(c=>c.metrics.length).length};
+  });
+  return {valid:true,objectives:results,summary:{objectiveCount:results.length,objectivesWithCapabilityLinks:results.filter(o=>o.capabilityCount>0).length,capabilityLinks:results.reduce((s,o)=>s+o.capabilityCount,0),measuredCapabilityLinks:results.reduce((s,o)=>s+o.measuredCapabilityCount,0)}};
+}
+
+export function analyzeDependencyImpact(graph,changedNodeId,{acceptedOnly=true}={}) {
+  const check=validateArchitectureGraph(graph);
+  if(!check.valid) return {valid:false,errors:check.errors,changedNodeId,affectedNodes:[],cycles:[]};
+  const nodes=new Map((graph.nodes||[]).map(n=>[n.id,n]));
+  if(!nodes.has(changedNodeId)) return {valid:false,errors:["Unknown changed node: "+changedNodeId],changedNodeId,affectedNodes:[],cycles:[]};
+  const edges=(graph.relationships||[]).filter(e=>e.predicate==="dependsOn"&&(!acceptedOnly||e.lifecycleState==="accepted"));
+  // source depends on target: a change to target impacts source, so traverse reverse dependency edges.
+  const reverse=new Map();
+  for(const e of edges){if(!reverse.has(e.target.nodeId))reverse.set(e.target.nodeId,[]);reverse.get(e.target.nodeId).push(e.source.nodeId);}
+  const visited=new Set([changedNodeId]),queue=[changedNodeId],affected=[];
+  while(queue.length){const current=queue.shift();for(const dependent of reverse.get(current)||[]){if(!visited.has(dependent)){visited.add(dependent);queue.push(dependent);affected.push(dependent);}}}
+  const cycles=[],state=new Map(),stack=[];
+  function visit(id){
+    if(state.get(id)===1){const start=stack.indexOf(id);cycles.push(stack.slice(start).concat(id));return;}
+    if(state.get(id)===2)return;
+    state.set(id,1);stack.push(id);
+    for(const e of edges.filter(x=>x.source.nodeId===id))visit(e.target.nodeId);
+    stack.pop();state.set(id,2);
+  }
+  for(const id of nodes.keys())if(!state.has(id))visit(id);
+  return {valid:true,changedNodeId,affectedNodes:affected.map(id=>({nodeId:id,nodeType:nodes.get(id).nodeType,name:nodes.get(id).name||id})),affectedCount:affected.length,cycles,cycleCount:cycles.length,dependencyEdgeCount:edges.length};
+}
