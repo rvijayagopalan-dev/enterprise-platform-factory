@@ -1,0 +1,607 @@
+{
+  "overlaySetId": "epf.uece.industry-overlays",
+  "version": "0.2.0",
+  "status": "proposed",
+  "designPrinciples": [
+    "Industry overlays extend universal capability definitions; they never mutate the universal catalog.",
+    "Specialized capabilities have stable overlay-local IDs and retain a base universal capability lineage.",
+    "All records remain proposed and applicability remains unassessed until reviewed with evidence.",
+    "Industry capability names are illustrative modeling candidates, not approved standards."
+  ],
+  "overlays": [
+    {
+      "id": "OVL-BANKING",
+      "classificationId": "IND-BANK",
+      "industry": "Banking and Capital Markets",
+      "version": "0.2.0",
+      "status": "proposed",
+      "capabilities": [
+        {
+          "id": "BANK-CAP-001",
+          "name": "Customer Due Diligence and KYC",
+          "level": "L2",
+          "parentId": "U02",
+          "baseCapabilityId": "U02",
+          "definition": "Establish and maintain customer identity, beneficial ownership and due-diligence records.",
+          "status": "proposed",
+          "applicability": "unassessed",
+          "mappingType": "specialization",
+          "lineage": [
+            {
+              "type": "universal_capability",
+              "id": "U02"
+            }
+          ],
+          "evidenceRefs": []
+        },
+        {
+          "id": "BANK-CAP-002",
+          "name": "Deposit Account Lifecycle Management",
+          "level": "L2",
+          "parentId": "U05",
+          "baseCapabilityId": "U05",
+          "definition": "Open, maintain, service and close deposit accounts and related account products.",
+          "status": "proposed",
+          "applicability": "unassessed",
+          "mappingType": "specialization",
+          "lineage": [
+            {
+              "type": "universal_capability",
+              "id": "U05"
+            }
+          ],
+          "evidenceRefs": []
+        },
+        {
+          "id": "BANK-CAP-003",
+          "name": "Credit Origination and Underwriting",
+          "level": "L2",
+          "parentId": "U05",
+          "baseCapabilityId": "U05",
+          "definition": "Assess borrower eligibility, structure credit facilities and make controlled lending decisions.",
+          "status": "proposed",
+          "applicability": "unassessed",
+          "mappingType": "specialization",
+          "lineage": [
+            {
+              "type": "universal_capability",
+              "id": "U05"
+            }
+          ],
+          "evidenceRefs": []
+        },
+        {
+          "id": "BANK-CAP-004",
+          "name": "Payment Processing and Settlement",
+          "level": "L2",
+          "parentId": "U06",
+          "baseCapabilityId": "U06",
+          "definition": "Authorize, route, clear, settle and reconcile payment transactions.",
+          "status": "proposed",
+          "applicability": "unassessed",
+          "mappingType": "specialization",
+          "lineage": [
+            {
+              "type": "universal_capability",
+              "id": "U06"
+            }
+          ],
+          "evidenceRefs": []
+        },
+        {
+          "id": "BANK-CAP-005",
+          "name": "Financial Crime Transaction Monitoring",
+          "level": "L2",
+          "parentId": "U10",
+          "baseCapabilityId": "U10",
+          "definition": "Detect, investigate and report suspicious financial activity using governed controls.",
+          "status": "proposed",
+          "applicability": "unassessed",
+          "mappingType": "specialization",
+          "lineage": [
+            {
+              "type": "universal_capability",
+              "id": "U10"
+            }
+          ],
+          "evidenceRefs": []
+        }
+      ]
+    },
+    {
+      "id": "OVL-INSURANCE",
+      "classificationId": "IND-INS",
+      "industry": "Insurance",
+      "version": "0.2.0",
+      "status": "proposed",
+      "capabilities": [
+        {
+          "id": "INS-CAP-001",
+          "name": "Insurance Product Design and Pricing",
+          "level": "L2",
+          "parentId": "U05",
+          "baseCapabilityId": "U05",
+          "definition": "Design insurance products, coverage structures, rating factors and product rules.",
+          "status": "proposed",
+          "applicability": "unassessed",
+          "mappingType": "specialization",
+          "lineage": [
+            {
+              "type": "universal_capability",
+              "id": "U05"
+            }
+          ],
+          "evidenceRefs": []
+        },
+        {
+          "id": "INS-CAP-002",
+          "name": "Risk Selection and Underwriting",
+          "level": "L2",
+          "parentId": "U10",
+          "baseCapabilityId": "U10",
+          "definition": "Evaluate insured risks and determine acceptance, terms, exclusions and pricing authority.",
+          "status": "proposed",
+          "applicability": "unassessed",
+          "mappingType": "specialization",
+          "lineage": [
+            {
+              "type": "universal_capability",
+              "id": "U10"
+            }
+          ],
+          "evidenceRefs": []
+        },
+        {
+          "id": "INS-CAP-003",
+          "name": "Policy Administration",
+          "level": "L2",
+          "parentId": "U06",
+          "baseCapabilityId": "U06",
+          "definition": "Issue, endorse, renew and cancel insurance policies and maintain policy records.",
+          "status": "proposed",
+          "applicability": "unassessed",
+          "mappingType": "specialization",
+          "lineage": [
+            {
+              "type": "universal_capability",
+              "id": "U06"
+            }
+          ],
+          "evidenceRefs": []
+        },
+        {
+          "id": "INS-CAP-004",
+          "name": "Claims Adjudication and Settlement",
+          "level": "L2",
+          "parentId": "U06",
+          "baseCapabilityId": "U06",
+          "definition": "Register, assess, adjudicate and settle claims while controlling leakage and fraud.",
+          "status": "proposed",
+          "applicability": "unassessed",
+          "mappingType": "specialization",
+          "lineage": [
+            {
+              "type": "universal_capability",
+              "id": "U06"
+            }
+          ],
+          "evidenceRefs": []
+        },
+        {
+          "id": "INS-CAP-005",
+          "name": "Actuarial Valuation and Reserving",
+          "level": "L2",
+          "parentId": "U08",
+          "baseCapabilityId": "U08",
+          "definition": "Estimate liabilities, reserves, pricing assumptions and capital-sensitive actuarial measures.",
+          "status": "proposed",
+          "applicability": "unassessed",
+          "mappingType": "specialization",
+          "lineage": [
+            {
+              "type": "universal_capability",
+              "id": "U08"
+            }
+          ],
+          "evidenceRefs": []
+        }
+      ]
+    },
+    {
+      "id": "OVL-HEALTHCARE",
+      "classificationId": "IND-HOSP",
+      "industry": "Healthcare Providers",
+      "version": "0.2.0",
+      "status": "proposed",
+      "capabilities": [
+        {
+          "id": "HEALTH-CAP-001",
+          "name": "Patient Access and Registration",
+          "level": "L2",
+          "parentId": "U02",
+          "baseCapabilityId": "U02",
+          "definition": "Coordinate patient identity, eligibility, scheduling, registration and access.",
+          "status": "proposed",
+          "applicability": "unassessed",
+          "mappingType": "specialization",
+          "lineage": [
+            {
+              "type": "universal_capability",
+              "id": "U02"
+            }
+          ],
+          "evidenceRefs": []
+        },
+        {
+          "id": "HEALTH-CAP-002",
+          "name": "Clinical Care Delivery",
+          "level": "L2",
+          "parentId": "U06",
+          "baseCapabilityId": "U06",
+          "definition": "Coordinate evidence-informed clinical assessment, treatment and care delivery.",
+          "status": "proposed",
+          "applicability": "unassessed",
+          "mappingType": "specialization",
+          "lineage": [
+            {
+              "type": "universal_capability",
+              "id": "U06"
+            }
+          ],
+          "evidenceRefs": []
+        },
+        {
+          "id": "HEALTH-CAP-003",
+          "name": "Care Coordination and Transitions",
+          "level": "L2",
+          "parentId": "U06",
+          "baseCapabilityId": "U06",
+          "definition": "Coordinate multidisciplinary care plans, referrals and transitions across settings.",
+          "status": "proposed",
+          "applicability": "unassessed",
+          "mappingType": "specialization",
+          "lineage": [
+            {
+              "type": "universal_capability",
+              "id": "U06"
+            }
+          ],
+          "evidenceRefs": []
+        },
+        {
+          "id": "HEALTH-CAP-004",
+          "name": "Clinical Quality and Patient Safety",
+          "level": "L2",
+          "parentId": "U10",
+          "baseCapabilityId": "U10",
+          "definition": "Monitor clinical quality, patient safety events, improvement actions and assurance.",
+          "status": "proposed",
+          "applicability": "unassessed",
+          "mappingType": "specialization",
+          "lineage": [
+            {
+              "type": "universal_capability",
+              "id": "U10"
+            }
+          ],
+          "evidenceRefs": []
+        },
+        {
+          "id": "HEALTH-CAP-005",
+          "name": "Patient Revenue Cycle Management",
+          "level": "L2",
+          "parentId": "U08",
+          "baseCapabilityId": "U08",
+          "definition": "Manage charge capture, coding, claims, payment posting and patient financial services.",
+          "status": "proposed",
+          "applicability": "unassessed",
+          "mappingType": "specialization",
+          "lineage": [
+            {
+              "type": "universal_capability",
+              "id": "U08"
+            }
+          ],
+          "evidenceRefs": []
+        }
+      ]
+    },
+    {
+      "id": "OVL-RETAIL",
+      "classificationId": "IND-RETAIL",
+      "industry": "Retail and E-commerce",
+      "version": "0.2.0",
+      "status": "proposed",
+      "capabilities": [
+        {
+          "id": "RETAIL-CAP-001",
+          "name": "Assortment and Category Management",
+          "level": "L2",
+          "parentId": "U05",
+          "baseCapabilityId": "U05",
+          "definition": "Define category strategies, assortment breadth, depth and lifecycle decisions.",
+          "status": "proposed",
+          "applicability": "unassessed",
+          "mappingType": "specialization",
+          "lineage": [
+            {
+              "type": "universal_capability",
+              "id": "U05"
+            }
+          ],
+          "evidenceRefs": []
+        },
+        {
+          "id": "RETAIL-CAP-002",
+          "name": "Merchandising and Promotion Management",
+          "level": "L2",
+          "parentId": "U03",
+          "baseCapabilityId": "U03",
+          "definition": "Plan product presentation, pricing events, promotions and merchandising execution.",
+          "status": "proposed",
+          "applicability": "unassessed",
+          "mappingType": "specialization",
+          "lineage": [
+            {
+              "type": "universal_capability",
+              "id": "U03"
+            }
+          ],
+          "evidenceRefs": []
+        },
+        {
+          "id": "RETAIL-CAP-003",
+          "name": "Omnichannel Order Management",
+          "level": "L2",
+          "parentId": "U06",
+          "baseCapabilityId": "U06",
+          "definition": "Orchestrate orders, inventory promises, fulfillment, returns and channel handoffs.",
+          "status": "proposed",
+          "applicability": "unassessed",
+          "mappingType": "specialization",
+          "lineage": [
+            {
+              "type": "universal_capability",
+              "id": "U06"
+            }
+          ],
+          "evidenceRefs": []
+        },
+        {
+          "id": "RETAIL-CAP-004",
+          "name": "Store Operations Management",
+          "level": "L2",
+          "parentId": "U06",
+          "baseCapabilityId": "U06",
+          "definition": "Operate stores, workforce routines, cash controls, service and store execution.",
+          "status": "proposed",
+          "applicability": "unassessed",
+          "mappingType": "specialization",
+          "lineage": [
+            {
+              "type": "universal_capability",
+              "id": "U06"
+            }
+          ],
+          "evidenceRefs": []
+        },
+        {
+          "id": "RETAIL-CAP-005",
+          "name": "Customer Loyalty and Personalization",
+          "level": "L2",
+          "parentId": "U02",
+          "baseCapabilityId": "U02",
+          "definition": "Manage loyalty propositions, customer engagement and governed personalization.",
+          "status": "proposed",
+          "applicability": "unassessed",
+          "mappingType": "specialization",
+          "lineage": [
+            {
+              "type": "universal_capability",
+              "id": "U02"
+            }
+          ],
+          "evidenceRefs": []
+        }
+      ]
+    },
+    {
+      "id": "OVL-MANUFACTURING",
+      "classificationId": "IND-MFG",
+      "industry": "Manufacturing",
+      "version": "0.2.0",
+      "status": "proposed",
+      "capabilities": [
+        {
+          "id": "MFG-CAP-001",
+          "name": "Product Engineering and Configuration",
+          "level": "L2",
+          "parentId": "U05",
+          "baseCapabilityId": "U05",
+          "definition": "Engineer products, manage configurations, changes and product lifecycle data.",
+          "status": "proposed",
+          "applicability": "unassessed",
+          "mappingType": "specialization",
+          "lineage": [
+            {
+              "type": "universal_capability",
+              "id": "U05"
+            }
+          ],
+          "evidenceRefs": []
+        },
+        {
+          "id": "MFG-CAP-002",
+          "name": "Production Planning and Scheduling",
+          "level": "L2",
+          "parentId": "U06",
+          "baseCapabilityId": "U06",
+          "definition": "Translate demand and constraints into feasible production plans and schedules.",
+          "status": "proposed",
+          "applicability": "unassessed",
+          "mappingType": "specialization",
+          "lineage": [
+            {
+              "type": "universal_capability",
+              "id": "U06"
+            }
+          ],
+          "evidenceRefs": []
+        },
+        {
+          "id": "MFG-CAP-003",
+          "name": "Manufacturing Execution",
+          "level": "L2",
+          "parentId": "U06",
+          "baseCapabilityId": "U06",
+          "definition": "Execute, dispatch, record and monitor production operations and work orders.",
+          "status": "proposed",
+          "applicability": "unassessed",
+          "mappingType": "specialization",
+          "lineage": [
+            {
+              "type": "universal_capability",
+              "id": "U06"
+            }
+          ],
+          "evidenceRefs": []
+        },
+        {
+          "id": "MFG-CAP-004",
+          "name": "Quality Engineering and Control",
+          "level": "L2",
+          "parentId": "U10",
+          "baseCapabilityId": "U10",
+          "definition": "Plan quality, inspect outputs, manage nonconformance and drive corrective action.",
+          "status": "proposed",
+          "applicability": "unassessed",
+          "mappingType": "specialization",
+          "lineage": [
+            {
+              "type": "universal_capability",
+              "id": "U10"
+            }
+          ],
+          "evidenceRefs": []
+        },
+        {
+          "id": "MFG-CAP-005",
+          "name": "Plant Asset Reliability and Maintenance",
+          "level": "L2",
+          "parentId": "U06",
+          "baseCapabilityId": "U06",
+          "definition": "Maintain plant assets, improve reliability and manage maintenance strategies.",
+          "status": "proposed",
+          "applicability": "unassessed",
+          "mappingType": "specialization",
+          "lineage": [
+            {
+              "type": "universal_capability",
+              "id": "U06"
+            }
+          ],
+          "evidenceRefs": []
+        }
+      ]
+    },
+    {
+      "id": "OVL-ENERGY",
+      "classificationId": "IND-ENERGY",
+      "industry": "Energy and Utilities",
+      "version": "0.2.0",
+      "status": "proposed",
+      "capabilities": [
+        {
+          "id": "ENERGY-CAP-001",
+          "name": "Generation and Supply Portfolio Planning",
+          "level": "L2",
+          "parentId": "U01",
+          "baseCapabilityId": "U01",
+          "definition": "Plan generation, supply portfolios, capacity and long-term resource adequacy.",
+          "status": "proposed",
+          "applicability": "unassessed",
+          "mappingType": "specialization",
+          "lineage": [
+            {
+              "type": "universal_capability",
+              "id": "U01"
+            }
+          ],
+          "evidenceRefs": []
+        },
+        {
+          "id": "ENERGY-CAP-002",
+          "name": "Grid and Network Operations",
+          "level": "L2",
+          "parentId": "U06",
+          "baseCapabilityId": "U06",
+          "definition": "Monitor and operate energy networks, balancing reliability, safety and service continuity.",
+          "status": "proposed",
+          "applicability": "unassessed",
+          "mappingType": "specialization",
+          "lineage": [
+            {
+              "type": "universal_capability",
+              "id": "U06"
+            }
+          ],
+          "evidenceRefs": []
+        },
+        {
+          "id": "ENERGY-CAP-003",
+          "name": "Energy Trading and Market Operations",
+          "level": "L2",
+          "parentId": "U04",
+          "baseCapabilityId": "U04",
+          "definition": "Manage bids, trades, nominations, settlements and market obligations.",
+          "status": "proposed",
+          "applicability": "unassessed",
+          "mappingType": "specialization",
+          "lineage": [
+            {
+              "type": "universal_capability",
+              "id": "U04"
+            }
+          ],
+          "evidenceRefs": []
+        },
+        {
+          "id": "ENERGY-CAP-004",
+          "name": "Asset Integrity and Field Maintenance",
+          "level": "L2",
+          "parentId": "U06",
+          "baseCapabilityId": "U06",
+          "definition": "Manage asset integrity, field work, maintenance and operational risk.",
+          "status": "proposed",
+          "applicability": "unassessed",
+          "mappingType": "specialization",
+          "lineage": [
+            {
+              "type": "universal_capability",
+              "id": "U06"
+            }
+          ],
+          "evidenceRefs": []
+        },
+        {
+          "id": "ENERGY-CAP-005",
+          "name": "Environmental and Emissions Management",
+          "level": "L2",
+          "parentId": "U10",
+          "baseCapabilityId": "U10",
+          "definition": "Measure, report and control environmental impacts and emissions obligations.",
+          "status": "proposed",
+          "applicability": "unassessed",
+          "mappingType": "specialization",
+          "lineage": [
+            {
+              "type": "universal_capability",
+              "id": "U10"
+            }
+          ],
+          "evidenceRefs": []
+        }
+      ]
+    }
+  ]
+}
