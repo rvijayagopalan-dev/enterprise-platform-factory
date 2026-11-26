@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>UECE | Executive Command Center</title>
+<style>
+:root{--bg:#0b1020;--panel:#121a2d;--panel2:#172239;--line:#263550;--muted:#91a1bb;--text:#edf3ff;--cyan:#58d5e8;--blue:#7b9cff;--green:#51d6a2;--amber:#f5bd62;--red:#ff7d87;--purple:#ba9bff}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(1000px 600px at 75% -10%,#1c3155 0%,transparent 60%),var(--bg);color:var(--text);font:14px/1.5 Inter,ui-sans-serif,system-ui,-apple-system,Segoe UI,sans-serif}
+button,input{font:inherit}button{cursor:pointer}.shell{display:grid;grid-template-columns:248px 1fr;min-height:100vh}.sidebar{border-right:1px solid var(--line);background:#0b1324;padding:24px 16px;display:flex;flex-direction:column;gap:24px}.brand{display:flex;gap:12px;align-items:center;padding:0 8px}.mark{width:38px;height:38px;border-radius:12px;background:linear-gradient(135deg,var(--cyan),var(--blue));display:grid;place-items:center;color:#071321;font-weight:900;font-size:18px}.brand strong{font-size:15px;letter-spacing:.08em}.brand small{display:block;color:var(--muted);font-size:10px;letter-spacing:.14em}.workspace{padding:12px 8px;border:1px solid var(--line);border-radius:12px;background:#111c30;color:var(--muted);font-size:12px}.workspace b{display:block;color:var(--text);font-size:13px;margin-top:4px}.navlabel{color:#657793;font-size:10px;font-weight:800;letter-spacing:.16em;padding:0 10px;margin-bottom:6px}.nav{display:grid;gap:4px}.nav button{border:0;background:transparent;color:#aebbd0;text-align:left;padding:10px 12px;border-radius:9px;display:flex;gap:11px;align-items:center}.nav button:hover,.nav button.active{background:#1a2a45;color:white}.nav button.active{box-shadow:inset 2px 0 var(--cyan)}.nav i{width:18px;text-align:center;font-style:normal;color:var(--cyan)}.sidefoot{margin-top:auto;color:#6f809c;font-size:11px;padding:10px}.main{min-width:0;padding:26px clamp(18px,3vw,42px) 48px}.topbar{display:flex;justify-content:space-between;align-items:center;gap:16px;margin-bottom:26px}.crumb{color:var(--muted);font-size:12px}.crumb b{color:var(--text)}.actions{display:flex;gap:9px;align-items:center}.btn{border:1px solid var(--line);background:#17243a;color:#dce7fa;border-radius:9px;padding:9px 13px}.btn.primary{background:var(--cyan);color:#071321;border-color:var(--cyan);font-weight:800}.btn:hover{filter:brightness(1.12)}.avatar{width:34px;height:34px;border-radius:50%;display:grid;place-items:center;background:#273b5b;color:#c7eaff;font-weight:800}.hero{display:flex;justify-content:space-between;gap:20px;align-items:flex-end;margin-bottom:22px}.eyebrow{color:var(--cyan);font-size:10px;font-weight:800;letter-spacing:.18em;text-transform:uppercase}.hero h1{font-size:clamp(25px,3vw,36px);letter-spacing:-.04em;margin:5px 0}.hero p{color:var(--muted);margin:0;max-width:700px}.release{border:1px solid #31536a;background:#102a3a;color:#8fe9f3;padding:7px 11px;border-radius:99px;white-space:nowrap;font-size:11px}.filters{display:flex;gap:8px;flex-wrap:wrap;margin:20px 0}.filters button{border:1px solid var(--line);border-radius:99px;background:#111b2d;color:#aebbd0;padding:7px 12px;font-size:11px}.filters button.active{border-color:#438da3;background:#123344;color:#a9f2fa}.kpis{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin-bottom:18px}.card{background:linear-gradient(145deg,#152139,#10192b);border:1px solid var(--line);border-radius:14px;padding:16px;min-width:0}.kpihead{display:flex;justify-content:space-between;color:var(--muted);font-size:11px}.kpi{font-size:29px;font-weight:750;letter-spacing:-.04em;margin:10px 0 2px}.delta{font-size:11px;color:var(--green)}.muted{color:var(--muted)}.grid{display:grid;grid-template-columns:1.45fr 1fr;gap:14px;margin-bottom:14px}.sectionhead{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px}.sectionhead h2{font-size:14px;margin:0}.sectionhead span{font-size:11px;color:var(--muted)}.journey{display:grid;grid-template-columns:repeat(5,1fr);gap:7px;align-items:stretch}.stage{border:1px solid var(--line);background:#111d31;border-radius:10px;padding:11px 9px;position:relative;min-height:112px}.stage:not(:last-child):after{content:'›';position:absolute;right:-9px;top:42%;z-index:2;color:var(--cyan);font-size:19px}.stage .num{font-size:10px;color:var(--cyan);font-weight:800}.stage b{display:block;font-size:12px;margin:6px 0}.stage small{color:var(--muted);font-size:10px}.bar{height:5px;background:#25344c;border-radius:9px;margin-top:12px;overflow:hidden}.bar span{display:block;height:100%;background:linear-gradient(90deg,var(--cyan),var(--blue));border-radius:9px}.objective{display:grid;grid-template-columns:1fr auto;gap:12px;padding:12px 0;border-bottom:1px solid #24324a}.objective:last-child{border:0}.objective b{font-size:12px}.objective small{display:block;color:var(--muted);margin-top:3px;font-size:10px}.status{font-size:10px;padding:4px 8px;border-radius:99px;height:max-content}.on{color:#8ce9bd;background:#12372f}.watch{color:#f7cb7a;background:#3b2c18}.risk{color:#ff9ba2;background:#40232c}.portfolio{display:grid;grid-template-columns:150px 1fr;gap:18px;align-items:center}.donut{width:140px;height:140px;border-radius:50%;background:conic-gradient(var(--cyan) 0 41%,var(--blue) 41% 68%,var(--purple) 68% 84%,#33445e 84% 100%);display:grid;place-items:center;position:relative}.donut:before{content:'';position:absolute;inset:13px;border-radius:50%;background:#121d31}.donut div{position:relative;text-align:center}.donut strong{display:block;font-size:25px}.donut small{color:var(--muted);font-size:10px}.legend{display:grid;gap:10px}.legend div{display:flex;justify-content:space-between;color:#b9c6d9;font-size:11px}.dot{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:7px}.trace{display:grid;grid-template-columns:repeat(6,1fr);gap:6px;margin-top:10px}.trace button{background:#111d31;border:1px solid var(--line);border-radius:9px;color:#d9e4f6;padding:10px 7px;text-align:center;font-size:10px}.trace button:hover{border-color:var(--cyan)}.trace strong{display:block;color:var(--cyan);font-size:11px;margin-bottom:4px}.tablewrap{overflow:auto}table{width:100%;border-collapse:collapse;min-width:560px}th,td{text-align:left;padding:11px 9px;border-bottom:1px solid #25334b;font-size:11px}th{color:#8092ad;font-weight:700}td{color:#d3def0}.pill{padding:4px 7px;border-radius:99px;background:#193247;color:#8fe6ef;font-size:10px}.link{color:var(--cyan);background:none;border:0;padding:0;font-size:11px}.detail{display:none;margin-top:14px;padding:14px;border:1px solid #3b6a7b;background:#10283a;border-radius:12px}.detail.show{display:block}.detail h3{margin:0 0 5px;font-size:13px}.detail p{color:#b2c2d8;font-size:11px;margin:0}.footer{display:flex;justify-content:space-between;gap:12px;color:#647793;font-size:10px;margin-top:24px;padding-top:14px;border-top:1px solid var(--line)}
+@media(max-width:1050px){.kpis{grid-template-columns:repeat(2,1fr)}.grid{grid-template-columns:1fr}.journey{grid-template-columns:repeat(5,minmax(100px,1fr));overflow:auto}.trace{grid-template-columns:repeat(3,1fr)}}
+@media(max-width:700px){.shell{grid-template-columns:1fr}.sidebar{padding:12px;gap:12px;border-right:0;border-bottom:1px solid var(--line)}.brand{padding:0}.workspace,.navlabel,.sidefoot{display:none}.nav{display:flex;overflow:auto}.nav button{white-space:nowrap;padding:8px 10px;font-size:11px}.main{padding:18px 14px 32px}.hero{align-items:flex-start;flex-direction:column}.topbar{margin-bottom:18px}.actions .btn:first-child{display:none}.kpis{gap:8px}.card{padding:12px}.kpi{font-size:24px}.portfolio{grid-template-columns:120px 1fr}.donut{width:112px;height:112px}.donut strong{font-size:20px}.footer{flex-direction:column}}
+</style>
+</head>
+<body>
+<div class="shell">
+<aside class="sidebar">
+ <div class="brand"><div class="mark">U</div><div><strong>UECE</strong><small>ENTERPRISE INTELLIGENCE</small></div></div>
+ <div class="workspace">WORKSPACE<b>Global Enterprise · FY27</b></div>
+ <div><div class="navlabel">COMMAND CENTER</div><nav class="nav">
+  <button class="active" data-view="overview"><i>◈</i> Executive overview</button>
+  <button data-view="strategy"><i>⌘</i> Strategy & outcomes</button>
+  <button data-view="capabilities"><i>▦</i> Capability portfolio</button>
+  <button data-view="architecture"><i>⌬</i> Architecture graph</button>
+  <button data-view="investment"><i>◉</i> Investment scenarios</button>
+  <button data-view="realization"><i>⚙</i> Factory & agent map</button>
+  <button data-view="governance"><i>⬡</i> Governance & assurance</button>
+ </nav></div>
+ <div class="sidefoot">UECE PLATFORM · RELEASE 1.0.0<br>Reference implementation · Demo data</div>
+</aside>
+<main class="main">
+ <div class="topbar"><div class="crumb">Enterprise Intelligence <span> / </span><b id="crumb">Executive overview</b></div><div class="actions"><button class="btn" id="exportBtn">↓ Export snapshot</button><button class="btn">FY27 ▾</button><div class="avatar">EA</div></div></div>
+ <header class="hero"><div><div class="eyebrow">Universal Enterprise Capability Explorer</div><h1 id="pageTitle">Executive Command Center</h1><p id="pageDesc">A connected view from strategic intent to enterprise capability, architecture, investment, delivery realization and governed outcomes.</p></div><div class="release">● UECE v1.0 · MAIN</div></header>
+ <div class="filters" id="filters"><button class="active" data-filter="All">All domains</button><button data-filter="Business">Business</button><button data-filter="Data & AI">Data & AI</button><button data-filter="Technology">Technology</button><button data-filter="Operations">Operations</button></div>
+ <section class="kpis">
+  <div class="card"><div class="kpihead">ENTERPRISE CAPABILITIES <span>◈</span></div><div class="kpi">248</div><div class="delta">↑ 18 mapped this quarter</div></div>
+  <div class="card"><div class="kpihead">AVERAGE MATURITY <span>◎</span></div><div class="kpi">3.4<span style="font-size:13px;color:#91a1bb"> / 5</span></div><div class="delta">↑ 0.3 vs previous assessment</div></div>
+  <div class="card"><div class="kpihead">STRATEGIC ALIGNMENT <span>⌁</span></div><div class="kpi">82%</div><div class="delta">↑ 6 pts across priority outcomes</div></div>
+  <div class="card"><div class="kpihead">GOVERNED REALIZATIONS <span>⬡</span></div><div class="kpi">76%</div><div class="delta" style="color:var(--amber)">12 items require evidence review</div></div>
+ </section>
+ <section class="grid">
+  <div class="card"><div class="sectionhead"><h2>Strategy-to-value lifecycle</h2><span>Connected enterprise execution</span></div>
+   <div class="journey">
+    <div class="stage"><div class="num">01 · INTENT</div><b>Strategy</b><small>6 strategic themes</small><div class="bar"><span style="width:92%"></span></div></div>
+    <div class="stage"><div class="num">02 · DESIGN</div><b>Capabilities</b><small>248 capabilities</small><div class="bar"><span style="width:88%"></span></div></div>
+    <div class="stage"><div class="num">03 · ASSESS</div><b>Maturity & gaps</b><small>34 priority gaps</small><div class="bar"><span style="width:69%"></span></div></div>
+    <div class="stage"><div class="num">04 · FUND</div><b>Investment</b><small>18 active scenarios</small><div class="bar"><span style="width:76%"></span></div></div>
+    <div class="stage"><div class="num">05 · DELIVER</div><b>Realization</b><small>42 delivery units</small><div class="bar"><span style="width:76%"></span></div></div>
+   </div>
+   <div class="sectionhead" style="margin-top:22px"><h2>Strategic objectives</h2><span>FY27 priority outcomes</span></div>
+   <div id="objectiveList">
+    <div class="objective" data-domain="Business"><div><b>Accelerate digital customer journeys</b><small>Customer experience · 8 capabilities · 3 initiatives</small></div><span class="status on">On track</span></div>
+    <div class="objective" data-domain="Data & AI"><div><b>Establish trusted enterprise AI foundation</b><small>Data & AI · 14 capabilities · 5 initiatives</small></div><span class="status watch">Watch</span></div>
+    <div class="objective" data-domain="Technology"><div><b>Modernize hybrid cloud platform</b><small>Technology · 11 capabilities · 4 initiatives</small></div><span class="status on">On track</span></div>
+    <div class="objective" data-domain="Operations"><div><b>Improve operational resilience</b><small>Operations · 7 capabilities · 2 initiatives</small></div><span class="status risk">At risk</span></div>
+   </div>
+  </div>
+  <div class="card"><div class="sectionhead"><h2>Capability portfolio health</h2><span>Illustrative distribution</span></div>
+   <div class="portfolio"><div class="donut"><div><strong>248</strong><small>CAPABILITIES</small></div></div><div class="legend">
+    <div><span><i class="dot" style="background:var(--cyan)"></i>Strategic</span><b>102 · 41%</b></div>
+    <div><span><i class="dot" style="background:var(--blue)"></i>Core</span><b>67 · 27%</b></div>
+    <div><span><i class="dot" style="background:var(--purple)"></i>Enabling</span><b>40 · 16%</b></div>
+    <div><span><i class="dot" style="background:#33445e"></i>Supporting</span><b>39 · 16%</b></div>
+   </div></div>
+   <div class="sectionhead" style="margin-top:18px"><h2>Intelligence signals</h2><span>Needs attention</span></div>
+   <div class="objective"><div><b>Capability dependency concentration</b><small>4 critical capabilities are shared by 9 initiatives</small></div><span class="status watch">Review</span></div>
+   <div class="objective"><div><b>Assurance evidence freshness</b><small>12 realization records need refreshed evidence</small></div><span class="status risk">Action</span></div>
+   <div class="objective"><div><b>Investment scenario coverage</b><small>3 priority gaps lack funded scenarios</small></div><span class="status watch">Review</span></div>
+  </div>
+ </section>
+ <section class="grid">
+  <div class="card"><div class="sectionhead"><h2>Enterprise traceability explorer</h2><span>Select a node to inspect its trace</span></div>
+   <div class="trace">
+    <button data-node="Strategic objective"><strong>01</strong>Strategic objective</button><button data-node="Business capability"><strong>02</strong>Business capability</button><button data-node="Maturity gap"><strong>03</strong>Maturity gap</button><button data-node="Investment initiative"><strong>04</strong>Investment initiative</button><button data-node="Factory / agent"><strong>05</strong>Factory / agent</button><button data-node="Governance evidence"><strong>06</strong>Governance evidence</button>
+   </div>
+   <div class="detail" id="nodeDetail"><h3 id="detailTitle">Trace detail</h3><p id="detailText"></p></div>
+  </div>
+  <div class="card"><div class="sectionhead"><h2>Investment allocation</h2><span>Illustrative FY27 portfolio</span></div>
+   <div class="legend">
+    <div><span>Cloud & platform modernization</span><b>$4.2M</b></div><div class="bar"><span style="width:84%"></span></div>
+    <div><span>Data & AI foundation</span><b>$3.6M</b></div><div class="bar"><span style="width:72%;background:var(--blue)"></span></div>
+    <div><span>Customer experience</span><b>$2.4M</b></div><div class="bar"><span style="width:48%;background:var(--purple)"></span></div>
+    <div><span>Resilience & risk</span><b>$1.8M</b></div><div class="bar"><span style="width:36%;background:var(--amber)"></span></div>
+   </div>
+  </div>
+ </section>
+ <section class="card"><div class="sectionhead"><h2>Priority capability realization register</h2><span>Sample records · Select a capability</span></div>
+  <div class="tablewrap"><table><thead><tr><th>CAPABILITY</th><th>DOMAIN</th><th>MATURITY</th><th>REALIZATION</th><th>ASSURANCE</th><th></th></tr></thead><tbody id="capTable">
+   <tr data-domain="Data & AI"><td>Enterprise Data Governance</td><td>Data & AI</td><td>3.8 / 5</td><td><span class="pill">Platform + Agent</span></td><td><span class="status on">Assured</span></td><td><button class="link" data-cap="Enterprise Data Governance">Inspect →</button></td></tr>
+   <tr data-domain="Technology"><td>Cloud Platform Engineering</td><td>Technology</td><td>3.2 / 5</td><td><span class="pill">Factory</span></td><td><span class="status watch">Evidence review</span></td><td><button class="link" data-cap="Cloud Platform Engineering">Inspect →</button></td></tr>
+   <tr data-domain="Business"><td>Customer Journey Management</td><td>Business</td><td>4.1 / 5</td><td><span class="pill">Product + Team</span></td><td><span class="status on">Assured</span></td><td><button class="link" data-cap="Customer Journey Management">Inspect →</button></td></tr>
+   <tr data-domain="Operations"><td>Operational Resilience Management</td><td>Operations</td><td>2.7 / 5</td><td><span class="pill">Human + Agent</span></td><td><span class="status risk">Gap identified</span></td><td><button class="link" data-cap="Operational Resilience Management">Inspect →</button></td></tr>
+  </tbody></table></div>
+  <div class="detail" id="capDetail"><h3 id="capTitle"></h3><p id="capText"></p></div>
+ </section>
+ <div class="footer"><span>UECE · Universal Enterprise Capability Explorer · v1.0.0</span><span>Conceptual executive demo · Sample data, not live enterprise telemetry</span></div>
+</main>
+</div>
+<script>
+const descriptions={
+overview:["Executive Command Center","A connected view from strategic intent to enterprise capability, architecture, investment, delivery realization and governed outcomes."],
+strategy:["Strategy & Outcomes","Connect enterprise objectives to measurable outcomes, capabilities, initiatives, dependencies and value realization."],
+capabilities:["Capability Portfolio","Explore the enterprise capability landscape, maturity profile, strategic importance, gaps and industry context."],
+architecture:["Architecture Graph","Trace capabilities through business services, applications, data products, platforms, integrations and technology components."],
+investment:["Investment Scenarios","Compare investment options, expected value, cost, risk, confidence and portfolio constraints."],
+realization:["Factory & Agent Map","Understand which factories, agents, human teams, products and external services realize enterprise capabilities."],
+governance:["Governance & Assurance","Inspect controls, evidence, risk posture, approvals, oversight and governed release readiness."]
+};
+document.querySelectorAll('.nav button').forEach(b=>b.addEventListener('click',()=>{document.querySelectorAll('.nav button').forEach(x=>x.classList.remove('active'));b.classList.add('active');const v=descriptions[b.dataset.view];document.getElementById('crumb').textContent=v[0];document.getElementById('pageTitle').textContent=v[0]==='Executive overview'?'Executive Command Center':v[0];document.getElementById('pageDesc').textContent=v[1];}));
+document.querySelectorAll('.filters button').forEach(b=>b.addEventListener('click',()=>{document.querySelectorAll('.filters button').forEach(x=>x.classList.remove('active'));b.classList.add('active');const f=b.dataset.filter;document.querySelectorAll('[data-domain]').forEach(el=>el.style.display=(f==='All'||el.dataset.domain===f)?'':'none');}));
+const trace={
+'Strategic objective':'Objective: Establish trusted enterprise AI foundation. Outcome measures: governed AI use cases, trusted data products, risk-adjusted value and adoption.',
+'Business capability':'Capability: Enterprise Data Governance. Parent domain: Data & AI. Related capabilities: metadata management, data quality, lineage and policy management.',
+'Maturity gap':'Gap: evidence-backed data lineage and ownership are inconsistently implemented. Target maturity: 4.0. Current illustrative maturity: 3.2.',
+'Investment initiative':'Initiative: Enterprise Data Trust Program. Candidate funding: $1.2M. Expected benefits: improved data discoverability, control coverage and AI readiness.',
+'Factory / agent':'Realization: Data Platform Factory provisions governed data products; Data Steward Agent assists classification and quality triage with human oversight.',
+'Governance evidence':'Assurance: policy mapping, control test results, lineage evidence and accountable owner approval. Evidence freshness and validation are required before release.'
+};
+document.querySelectorAll('[data-node]').forEach(b=>b.addEventListener('click',()=>{document.getElementById('detailTitle').textContent=b.dataset.node;document.getElementById('detailText').textContent=trace[b.dataset.node];document.getElementById('nodeDetail').classList.add('show')}));
+const caps={
+'Enterprise Data Governance':'Mapped to data governance strategy; realized by governance platform capabilities and steward-agent assistance. Sample maturity 3.8/5; assurance shown as assured for demonstration only.',
+'Cloud Platform Engineering':'Mapped to hybrid cloud modernization; realized by platform factory templates and infrastructure automation. Sample maturity 3.2/5; evidence review remains open.',
+'Customer Journey Management':'Mapped to digital customer experience; realized by product teams and customer experience platform services. Sample maturity 4.1/5.',
+'Operational Resilience Management':'Mapped to resilience objective; realized through human operations teams and bounded agent assistance. Sample maturity 2.7/5; remediation and assurance gaps remain.'
+};
+document.querySelectorAll('[data-cap]').forEach(b=>b.addEventListener('click',()=>{document.getElementById('capTitle').textContent=b.dataset.cap;document.getElementById('capText').textContent=caps[b.dataset.cap];document.getElementById('capDetail').classList.add('show')}));
+document.getElementById('exportBtn').addEventListener('click',()=>{const content='UECE Executive Command Center v1.0\nIllustrative executive snapshot\nCapabilities: 248\nAverage maturity: 3.4/5\nStrategic alignment: 82%\nGoverned realizations: 76%\n\nNote: Sample data, not live enterprise telemetry.';const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([content],{type:'text/plain'}));a.download='uece-executive-snapshot.txt';a.click();URL.revokeObjectURL(a.href)});
+</script>
+</body></html>
