@@ -49,3 +49,12 @@ The ontology is a domain model. It reuses the EPF Core Entity envelope for ident
 - [Engine developer guide](engines/README.md) — runtime, API outline, invariants and production hardening backlog.
 - [Automated tests](engines/tests/uece-engine.test.mjs) — Node.js test suite for seed integrity, approval gates, determinism and failure cases.
 - [Interactive engine demo](demo/uece-intelligence-engine-v0.1.0.html) — local browser walkthrough of quality gates, industry context, composition manifest and graph summary.
+
+## UECE Industry Capability Overlay Factory v0.2.0
+
+- [Industry overlay schema](components/industry-overlay.schema.json) — contract for industry-specific specializations that preserve universal capability lineage.
+- [Six industry overlays v0.2.0](../capability-factory/data/industry-capability-overlays-v0.2.0.json) — 30 proposed L2 specialization candidates across Banking, Insurance, Healthcare, Retail, Manufacturing and Energy.
+- [Classification crosswalk registry v0.1.0](../capability-factory/data/classification-crosswalk-registry-v0.1.0.json) — governed NAICS, ISIC and NACE crosswalk scaffold; official code mappings remain intentionally empty pending release-specific verification.
+- [Overlay Factory specification](../capability-factory/industry-overlay-factory-v0.2.0.md) — lifecycle, lineage, evidence and stewardship rules.
+- [Interactive Overlay Factory demo](demo/uece-industry-overlay-factory-v0.2.0.html) — inspect six industry overlays and their candidate specializations.
+- Engine functions: `validateIndustryOverlay` and `resolveIndustryOverlay` in [the UECE engine](engines/uece-intelligence-engine.mjs).
