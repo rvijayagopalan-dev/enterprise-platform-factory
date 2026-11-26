@@ -65,3 +65,14 @@ The ontology is a domain model. It reuses the EPF Core Entity envelope for ident
 - [Capability maturity and assessment model](../capability-factory/capability-maturity-assessment-model-v0.3.0.md) — five maturity levels, eight dimensions, evidence rules, aggregation, coverage, gap analysis and benchmarking guardrails.
 - [Assessment dashboard demo](demo/uece-capability-assessment-dashboard-v0.3.0.html) — illustrative executive maturity heatmap, coverage, gap register and prioritization view.
 - Engine functions: `scoreCapabilityAssessment`, `analyzeCapabilityPortfolio` and `prioritizeCapabilityGaps` in [the UECE engine](engines/uece-intelligence-engine.mjs).
+
+
+## UECE Enterprise Capability Knowledge Graph & Realization Intelligence v0.4.0
+
+- [Architecture relationship schema](components/architecture-relationship.schema.json) — typed directed graph edges with lifecycle, provenance, confidence and evidence references.
+- [Enterprise realization schema](components/enterprise-realization.schema.json) — build/improve/buy/partner/automate/orchestrate/retire decision records, status, investment and approval provenance.
+- [Illustrative enterprise architecture graph seed](../capability-factory/data/enterprise-architecture-graph-seed-v0.4.0.json) — synthetic capability, process, role, application, data, product, risk, control, factory, agent, objective, metric and investment nodes.
+- [Realization Intelligence specification](../capability-factory/enterprise-capability-realization-intelligence-v0.4.0.md) — graph semantics, traceability dimensions, governance, decision boundaries and roadmap.
+- [Interactive realization intelligence demo](demo/uece-realization-intelligence-v0.4.0.html) — capability register, traceability coverage, connected relationship inspector and realization gap view.
+- Engine functions: `validateArchitectureGraph`, `traceCapability` and `analyzeRealizationPortfolio` in [the UECE engine](engines/uece-intelligence-engine.mjs).
+- [Realization engine tests](engines/tests/uece-realization.test.mjs) — typed endpoint integrity, accepted-edge gating, traceability and gap analysis.
