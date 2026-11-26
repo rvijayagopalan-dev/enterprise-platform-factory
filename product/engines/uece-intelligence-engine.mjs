@@ -105,10 +105,10 @@ export function resolveIndustryCrosswalk(taxonomy, catalog, classificationIds) {
   for (const id of selected) {
     const node=nodeById.get(id);
     if (!node) { errors.push(`Unknown industry/context id: ${id}`); continue; }
+    if (node.lifecycleState!=="accepted") warnings.push(`${id}: classification is ${node.lifecycleState}; it is not eligible for authoritative crosswalk composition.`);
     for (const m of node.capabilityMappings||[]) {
       if (!capabilityById.has(m.capabilityId)) { errors.push(`${id}: mapping references unknown capability ${m.capabilityId}`); continue; }
       mappings.push({classificationId:id,classificationName:node.name,...m,sourceLifecycle:node.lifecycleState});
-      if (node.lifecycleState!=="accepted") warnings.push(`${id}: mapping ignored for authoritative composition until classification is accepted.`);
     }
   }
   return {mappings,warnings,errors};
@@ -324,7 +324,8 @@ export function analyzeRealizationPortfolio({capabilities=[],graph={nodes:[],rel
   return {valid:true,errors:[],summary:{capabilityCount:total,capabilitiesWithAcceptedLinks:rows.filter(r=>r.acceptedRelationshipCount>0).length,
     averageTraceabilityCoverage:total?Math.round(rows.reduce((s,r)=>s+r.traceabilityCoverage,0)/total):null,
     averageEvidenceCoverage:total?Math.round(rows.reduce((s,r)=>s+r.evidenceCoverage,0)/total):null,
-    acceptedRelationshipCount:acceptedLinks,proposedRelationshipCount:rows.reduce((s,r)=>s+r.candidateRelationshipCount,0),
+    acceptedRelationshipCount:(graph.relationships||[]).filter(e=>e.lifecycleState==="accepted").length,
+    proposedRelationshipCount:(graph.relationships||[]).filter(e=>e.lifecycleState==="proposed"||e.lifecycleState==="in_review").length,
     capabilitiesWithoutRealizationDecision:rows.filter(r=>r.realizationMode==="not_decided").length,gapCount:gapRegister.length},
     capabilities:rows,gapRegister};
 }
