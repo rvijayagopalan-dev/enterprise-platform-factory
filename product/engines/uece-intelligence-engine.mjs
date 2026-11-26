@@ -403,6 +403,8 @@ export function optimizeInvestmentPortfolio(scenario,{budget=scenario?.constrain
   if(!valid.valid)return {valid:false,errors:valid.errors,selected:[],unfunded:[],summary:null};
   const decisions=scenario.decisions,required=new Set(scenario.constraints?.requiredCapabilities||[]);
   const candidates=decisions.filter(d=>d.riskScore<=maxRisk);
+  const missingRequired=[...required].filter(id=>!candidates.some(d=>d.capabilityId===id));
+  if(missingRequired.length)return {valid:false,errors:["Required capabilities are absent or exceed the risk limit: "+missingRequired.join(", ")],selected:[],unfunded:decisions,summary:null};
   const mandatory=candidates.filter(d=>required.has(d.capabilityId)),optional=candidates.filter(d=>!required.has(d.capabilityId));
   const mandatoryCost=mandatory.reduce((s,d)=>s+d.cost,0);
   if(mandatoryCost>budget)return {valid:false,errors:["Required capability decisions exceed the available budget."],selected:[],unfunded:candidates,summary:null};
