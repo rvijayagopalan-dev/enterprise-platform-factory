@@ -33,3 +33,12 @@
 ## Modeling boundary
 
 The ontology is a domain model. It reuses the EPF Core Entity envelope for identity, tenant scope, principal, lifecycle, provenance and audit. Capability definitions are distinct from processes, organization structures, applications, technology and factories. Capability-to-factory realization is many-to-many.
+
+
+## UECE knowledge graph and composition foundation
+
+- [Industry classification schema](components/industry-classification.schema.json) — typed sector, industry, sub-industry and specialist context records with capability overlay mappings.
+- [Capability relationship schema](components/capability-relationship.schema.json) — typed graph edges with direction, provenance, confidence and lifecycle.
+- [Universal capability catalog v0.1.0](../capability-factory/data/universal-capability-catalog-v0.1.0.json) — 15 proposed L1 domains and representative Finance L2-L4 seed records.
+- [Industry classification taxonomy v0.1.0](../capability-factory/data/industry-classification-taxonomy-v0.1.0.json) — starter sector/industry/sub-industry hierarchy.
+- [Composition engine specification](../capability-factory/enterprise-composition-engine-spec.md) — deterministic, version-pinned enterprise capability resolution.
