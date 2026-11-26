@@ -255,3 +255,76 @@ export function prioritizeCapabilityGaps(items=[]) {
   return items.filter(x=>x.gap!==null&&x.gap>0).map(x=>({...x,priorityScore:Math.round((x.gap*(x.criticality??1)*(x.strategicValue??1)*(x.riskExposure??1))*100)/100}))
     .sort((a,b)=>b.priorityScore-a.priorityScore);
 }
+
+
+// UECE v0.4.0 — typed enterprise architecture graph and realization intelligence.
+export const ARCHITECTURE_NODE_TYPES = Object.freeze(["capability","process","role","application","data","technology","product","risk","control","factory","agent","objective","metric","investment"]);
+export const ARCHITECTURE_PREDICATES = Object.freeze(["realizedByProcess","ownedByRole","supportedByApplication","usesData","runsOnTechnology","enablesProduct","mitigatedByControl","exposedToRisk","deliveredByFactory","orchestratedByAgent","dependsOn","enables","measures","governedBy"]);
+export const REALIZATION_MODES = Object.freeze(["build","improve","buy","partner","automate","orchestrate","retire","not_decided"]);
+const REALIZATION_DIMENSIONS = Object.freeze(["process","role","application","data","technology","risk_control","product_outcome","factory_agent"]);
+const PREDICATE_DIMENSION = Object.freeze({realizedByProcess:"process",ownedByRole:"role",supportedByApplication:"application",usesData:"data",runsOnTechnology:"technology",enablesProduct:"product_outcome",mitigatedByControl:"risk_control",exposedToRisk:"risk_control",deliveredByFactory:"factory_agent",orchestratedByAgent:"factory_agent"});
+
+export function validateArchitectureGraph(graph) {
+  const errors=[],warnings=[];
+  if (!graph?.graphId || !Array.isArray(graph.nodes) || !Array.isArray(graph.relationships)) errors.push("Graph envelope, nodes and relationships are required.");
+  const nodes=graph?.nodes||[], edges=graph?.relationships||[];
+  const nodeIds=new Set(), edgeIds=new Set(), nodeById=new Map();
+  for(const n of nodes){
+    if(!n.id||!n.nodeType||!ARCHITECTURE_NODE_TYPES.includes(n.nodeType)) errors.push("Each graph node requires an ID and supported nodeType.");
+    if(nodeIds.has(n.id)) errors.push("Duplicate graph node ID: "+n.id);
+    nodeIds.add(n.id); nodeById.set(n.id,n);
+  }
+  for(const e of edges){
+    if(!e.relationshipId||edgeIds.has(e.relationshipId)) errors.push("Missing or duplicate relationship ID: "+(e.relationshipId||"unknown"));
+    edgeIds.add(e.relationshipId);
+    if(!ARCHITECTURE_PREDICATES.includes(e.predicate)) errors.push((e.relationshipId||"edge")+": unsupported predicate.");
+    if(!["proposed","in_review","accepted","rejected","deprecated"].includes(e.lifecycleState)) errors.push((e.relationshipId||"edge")+": invalid lifecycleState.");
+    if(!e.provenance?.sourceType||!e.provenance?.sourceRef) errors.push((e.relationshipId||"edge")+": provenance is required.");
+    if(e.confidence!==undefined&&(!Number.isFinite(e.confidence)||e.confidence<0||e.confidence>1)) errors.push((e.relationshipId||"edge")+": confidence must be between 0 and 1.");
+    for(const side of ["source","target"]){
+      const endpoint=e[side], actual=endpoint&&nodeById.get(endpoint.nodeId);
+      if(!endpoint?.nodeId||!endpoint?.nodeType) errors.push((e.relationshipId||"edge")+": "+side+" endpoint is incomplete.");
+      else if(!actual) errors.push((e.relationshipId||"edge")+": dangling "+side+" endpoint "+endpoint.nodeId+".");
+      else if(actual.nodeType!==endpoint.nodeType) errors.push((e.relationshipId||"edge")+": "+side+" endpoint type mismatch for "+endpoint.nodeId+".");
+    }
+    if(e.lifecycleState!=="accepted") warnings.push((e.relationshipId||"edge")+": relationship is "+e.lifecycleState+" and excluded from authoritative traceability.");
+  }
+  return {valid:errors.length===0,errors,warnings,counts:{nodes:nodes.length,relationships:edges.length,acceptedRelationships:edges.filter(e=>e.lifecycleState==="accepted").length,proposedRelationships:edges.filter(e=>e.lifecycleState==="proposed"||e.lifecycleState==="in_review").length}};
+}
+
+export function traceCapability(graph,capabilityId,{acceptedOnly=false}={}) {
+  const check=validateArchitectureGraph(graph);
+  if(!check.valid) return {valid:false,errors:check.errors,capabilityId,relationships:[]};
+  const node=(graph.nodes||[]).find(n=>n.id===capabilityId&&n.nodeType==="capability");
+  if(!node) return {valid:false,errors:["Unknown capability: "+capabilityId],capabilityId,relationships:[]};
+  const relationships=(graph.relationships||[]).filter(e=>(e.source.nodeType==="capability"&&e.source.nodeId===capabilityId)||(e.target.nodeType==="capability"&&e.target.nodeId===capabilityId))
+    .filter(e=>!acceptedOnly||e.lifecycleState==="accepted");
+  return {valid:true,capabilityId,name:node.name,relationships,acceptedCount:relationships.filter(e=>e.lifecycleState==="accepted").length,candidateCount:relationships.filter(e=>e.lifecycleState!=="accepted").length};
+}
+
+export function analyzeRealizationPortfolio({capabilities=[],graph={nodes:[],relationships:[]},realizations=[],requiredDimensions=REALIZATION_DIMENSIONS}={}) {
+  const graphCheck=validateArchitectureGraph(graph);
+  if(!graphCheck.valid) return {valid:false,errors:graphCheck.errors,summary:null,capabilities:[],gapRegister:[]};
+  const rows=capabilities.map(c=>{
+    const links=(graph.relationships||[]).filter(e=>e.source.nodeType==="capability"&&e.source.nodeId===c.id);
+    const accepted=links.filter(e=>e.lifecycleState==="accepted");
+    const covered=new Set(accepted.map(e=>PREDICATE_DIMENSION[e.predicate]).filter(Boolean));
+    const evidenceCovered=new Set(accepted.filter(e=>(e.evidenceRefs||[]).length>0).map(e=>PREDICATE_DIMENSION[e.predicate]).filter(Boolean));
+    const decisions=realizations.filter(r=>r.capabilityId===c.id);
+    const current=decisions.slice().sort((a,b)=>String(b.updatedAt||b.createdAt||"").localeCompare(String(a.updatedAt||a.createdAt||"")))[0]||null;
+    const missing=requiredDimensions.filter(d=>!covered.has(d));
+    return {capabilityId:c.id,name:c.name,level:c.level||null,relationshipCount:links.length,acceptedRelationshipCount:accepted.length,candidateRelationshipCount:links.length-accepted.length,
+      coveredDimensions:[...covered],evidenceCoveredDimensions:[...evidenceCovered],requiredDimensionCount:requiredDimensions.length,coveredDimensionCount:covered.size,
+      traceabilityCoverage:requiredDimensions.length?Math.round(requiredDimensions.filter(d=>covered.has(d)).length/requiredDimensions.length*100):100,
+      evidenceCoverage:requiredDimensions.length?Math.round(requiredDimensions.filter(d=>evidenceCovered.has(d)).length/requiredDimensions.length*100):100,
+      missingDimensions:missing,realizationMode:current?.realizationMode||"not_decided",realizationStatus:current?.status||"not_decided",realizationId:current?.realizationId||null};
+  });
+  const gapRegister=rows.filter(r=>r.missingDimensions.length||r.realizationMode==="not_decided").sort((a,b)=>b.missingDimensions.length-a.missingDimensions.length||a.name.localeCompare(b.name));
+  const total=rows.length, acceptedLinks=rows.reduce((s,r)=>s+r.acceptedRelationshipCount,0);
+  return {valid:true,errors:[],summary:{capabilityCount:total,capabilitiesWithAcceptedLinks:rows.filter(r=>r.acceptedRelationshipCount>0).length,
+    averageTraceabilityCoverage:total?Math.round(rows.reduce((s,r)=>s+r.traceabilityCoverage,0)/total):null,
+    averageEvidenceCoverage:total?Math.round(rows.reduce((s,r)=>s+r.evidenceCoverage,0)/total):null,
+    acceptedRelationshipCount:acceptedLinks,proposedRelationshipCount:rows.reduce((s,r)=>s+r.candidateRelationshipCount,0),
+    capabilitiesWithoutRealizationDecision:rows.filter(r=>r.realizationMode==="not_decided").length,gapCount:gapRegister.length},
+    capabilities:rows,gapRegister};
+}
