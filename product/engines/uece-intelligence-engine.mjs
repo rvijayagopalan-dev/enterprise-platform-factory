@@ -184,3 +184,74 @@ export function resolveIndustryOverlay(overlaySet, classificationId, catalog, {a
   if (acceptedOnly && capabilities.length!==(overlay.capabilities||[]).length) warnings.push(`Overlay ${overlay.id} is proposed or contains proposed capabilities; no candidate records were promoted.`);
   return {valid:true,overlayId:overlay.id,overlayVersion:overlay.version,classificationId,capabilities:capabilities.map(c=>({...c,lineage:[...(c.lineage||[]),{type:"industry_overlay",id:overlay.id,version:overlay.version}]})),warnings};
 }
+
+
+export const MATURITY_LEVELS = Object.freeze({
+  1:"Initial / Ad hoc",2:"Repeatable",3:"Defined",4:"Managed / Measured",5:"Optimizing"
+});
+export const ASSESSMENT_DIMENSIONS = Object.freeze([
+  "strategy_outcomes","governance_accountability","process_operating_model","people_organization",
+  "data_measurement","technology_automation","risk_security_compliance","continuous_improvement"
+]);
+
+/** Score only evidence-backed dimensions. Missing scores are never imputed. */
+export function scoreCapabilityAssessment(assessment,{minimumDimensions=5}={}) {
+  const errors=[], warnings=[];
+  if (!assessment?.assessmentId || !assessment?.capabilityId) errors.push("assessmentId and capabilityId are required.");
+  const scores=assessment?.maturity?.dimensionScores||{};
+  const valid=[];
+  for (const [dimension,score] of Object.entries(scores)) {
+    if (!ASSESSMENT_DIMENSIONS.includes(dimension)) errors.push(`Unknown maturity dimension: ${dimension}`);
+    else if (!Number.isInteger(score)||score<1||score>5) errors.push(`${dimension}: score must be an integer from 1 to 5.`);
+    else valid.push(score);
+  }
+  const evidence=assessment?.evidence||[];
+  if (!evidence.length) warnings.push("No evidence references supplied.");
+  const coverage=valid.length/ASSESSMENT_DIMENSIONS.length;
+  const enough=valid.length>=minimumDimensions;
+  const aggregate=enough?Math.round((valid.reduce((a,b)=>a+b,0)/valid.length)*10)/10:null;
+  const target=assessment?.maturity?.targetLevel;
+  if (target!==undefined && (!Number.isInteger(target)||target<1||target>5)) errors.push("targetLevel must be an integer from 1 to 5.");
+  const approved=assessment?.status==="approved"||assessment?.status==="validated";
+  if (!approved) warnings.push("Assessment is not validated or approved; score is provisional.");
+  if (evidence.length===0) warnings.push("Maturity scores require traceable evidence and assessor review.");
+  return {valid:errors.length===0,errors,warnings,dimensionCount:valid.length,dimensionCoverage:Math.round(coverage*100),aggregateMaturity:enough?aggregate:null,
+    maturityLabel:enough?(`Level ${Math.round(aggregate)} · ${MATURITY_LEVELS[Math.round(aggregate)]}`):"Insufficient evidence",
+    targetLevel:target??null,gap:enough&&target!==undefined?Math.max(0,Math.round((target-aggregate)*10)/10):null,
+    evidenceCount:evidence.length,confidence:assessment?.confidence??null,
+    status:errors.length?"invalid":enough?"scored":"insufficient_evidence"};
+}
+
+export function analyzeCapabilityPortfolio({capabilities=[],assessments=[],applicability={},targetLevels={}}={}) {
+  const latest=new Map();
+  for (const a of assessments) {
+    const prior=latest.get(a.capabilityId);
+    if (!prior || String(a.assessedAt||"")>String(prior.assessedAt||"")) latest.set(a.capabilityId,a);
+  }
+  const rows=capabilities.map(c=>{
+    const a=latest.get(c.id), scored=a?scoreCapabilityAssessment(a):null;
+    const state=applicability[c.id]||c.applicability||"unassessed";
+    const target=targetLevels[c.id]??a?.maturity?.targetLevel??null;
+    const excluded=["not_applicable","externally_provided"].includes(state);
+    return {capabilityId:c.id,name:c.name,level:c.level,applicability:state,assessmentStatus:a?.status||"not_started",
+      maturity:scored?.aggregateMaturity??null,targetLevel:target,gap:scored?.aggregateMaturity!==null&&scored?.aggregateMaturity!==undefined&&target!==null?Math.max(0,Math.round((target-scored.aggregateMaturity)*10)/10):null,
+      dimensionCoverage:scored?.dimensionCoverage??0,evidenceCount:scored?.evidenceCount??0,excludedFromInternalDenominator:excluded};
+  });
+  const denominator=rows.filter(r=>!r.excludedFromInternalDenominator&&r.applicability!=="unassessed");
+  const assessed=denominator.filter(r=>r.assessmentStatus==="validated"||r.assessmentStatus==="approved");
+  const scored=denominator.filter(r=>r.maturity!==null);
+  const gaps=denominator.filter(r=>r.gap!==null).sort((a,b)=>b.gap-a.gap);
+  const distribution={};
+  for(let i=1;i<=5;i++)distribution[i]=scored.filter(r=>Math.round(r.maturity)===i).length;
+  return {summary:{totalCapabilities:rows.length,applicableDenominator:denominator.length,validatedAssessments:assessed.length,
+    assessmentCoverage:denominator.length?Math.round(assessed.length/denominator.length*100):null,
+    scoredCapabilities:scored.length,averageMaturity:scored.length?Math.round(scored.reduce((s,r)=>s+r.maturity,0)/scored.length*10)/10:null,
+    unassessed:rows.filter(r=>r.applicability==="unassessed"||r.assessmentStatus==="not_started").length,
+    excluded:rows.filter(r=>r.excludedFromInternalDenominator).length,distribution},
+    gapRegister:gaps,capabilities:rows};
+}
+
+export function prioritizeCapabilityGaps(items=[]) {
+  return items.filter(x=>x.gap!==null&&x.gap>0).map(x=>({...x,priorityScore:Math.round((x.gap*(x.criticality??1)*(x.strategicValue??1)*(x.riskExposure??1))*100)/100}))
+    .sort((a,b)=>b.priorityScore-a.priorityScore);
+}
