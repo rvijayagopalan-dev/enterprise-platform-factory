@@ -68,3 +68,11 @@ node --test product/engines/tests/*.test.mjs
 ```
 
 The v0.4 graph seed is synthetic and all edges are proposed. Tests assert that candidate links do not count as authoritative coverage. The engine remains dependency-free and is not a production authorization, graph persistence, evidence validation or approval service.
+
+
+## UECE v0.5.0 — Strategy traceability and dependency impact
+
+- `analyzeStrategicTraceability(graph, options)`: connects accepted objective-to-capability links to accepted capability-to-metric links.
+- `analyzeDependencyImpact(graph, changedNodeId, options)`: traverses reverse dependency edges (A dependsOn B; a change to B may affect A), returns transitive dependents and reports dependency cycles.
+
+These outputs indicate traceability and potential impact, not causal proof or confirmed operational incidents. Only accepted relationships contribute by default. Tests are in `tests/uece-strategy-impact.test.mjs`.
