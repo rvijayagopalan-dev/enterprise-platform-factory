@@ -146,3 +146,41 @@ export function composeEnterprise(request, {catalog,taxonomy,policy={version:"0.
   const digest=fingerprint(manifest);
   return {compositionId:request.compositionId||`uece-${digest.slice(-8)}`,status:reviewTasks.length?"review_required":"draft",digest,manifest,reviewTasks,warnings:[...catalogCheck.warnings,...taxonomyCheck.warnings,...crosswalk.warnings],publicationEligible:false,publicationNote:"Prototype does not publish. Human approval and production policy enforcement are required."};
 }
+
+
+/**
+ * Validate and resolve a proposed industry overlay without mutating the universal catalog.
+ * The overlay is usable as a review candidate; acceptedOnly defaults to true for composition.
+ */
+export function validateIndustryOverlay(overlay, catalog) {
+  const errors=[], warnings=[];
+  const bases=new Map((catalog.capabilities||[]).map(c=>[c.id,c]));
+  const overlays=overlay?.overlays||[];
+  for (const id of duplicateIds(overlays)) errors.push(`Duplicate overlay id: ${id}`);
+  for (const o of overlays) {
+    const seen=new Set();
+    for (const c of o.capabilities||[]) {
+      if (seen.has(c.id)) errors.push(`${o.id}: duplicate capability id ${c.id}`);
+      seen.add(c.id);
+      if (bases.has(c.id)) errors.push(`${o.id}: overlay id collides with universal id ${c.id}`);
+      if (!bases.has(c.parentId)) errors.push(`${c.id}: missing universal parent ${c.parentId}`);
+      if (!bases.has(c.baseCapabilityId)) errors.push(`${c.id}: missing base capability ${c.baseCapabilityId}`);
+      if (!APPLICABILITY.has(c.applicability)) errors.push(`${c.id}: invalid applicability`);
+      if (!MAPPING_TYPES.has(c.mappingType)) errors.push(`${c.id}: invalid mapping type`);
+      if (c.level==="L2" && bases.has(c.parentId) && bases.get(c.parentId).level!=="L1") errors.push(`${c.id}: L2 overlay must extend an L1 universal domain`);
+      if (c.status!=="accepted" || o.status!=="accepted") warnings.push(`${c.id}: proposed overlay capability; excluded from accepted composition`);
+    }
+  }
+  return {valid:errors.length===0,errors,warnings,counts:{overlays:overlays.length,capabilities:overlays.reduce((n,o)=>n+(o.capabilities||[]).length,0)}};
+}
+
+export function resolveIndustryOverlay(overlaySet, classificationId, catalog, {acceptedOnly=true}={}) {
+  const check=validateIndustryOverlay(overlaySet,catalog);
+  if (!check.valid) return {valid:false,errors:check.errors,capabilities:[],warnings:check.warnings};
+  const overlay=(overlaySet.overlays||[]).find(o=>o.classificationId===classificationId);
+  if (!overlay) return {valid:false,errors:[`No overlay found for ${classificationId}`],capabilities:[],warnings:[]};
+  const capabilities=(overlay.capabilities||[]).filter(c=>!acceptedOnly || (overlay.status==="accepted" && c.status==="accepted"));
+  const warnings=[...check.warnings];
+  if (acceptedOnly && capabilities.length!==(overlay.capabilities||[]).length) warnings.push(`Overlay ${overlay.id} is proposed or contains proposed capabilities; no candidate records were promoted.`);
+  return {valid:true,overlayId:overlay.id,overlayVersion:overlay.version,classificationId,capabilities:capabilities.map(c=>({...c,lineage:[...(c.lineage||[]),{type:"industry_overlay",id:overlay.id,version:overlay.version}]})),warnings};
+}
