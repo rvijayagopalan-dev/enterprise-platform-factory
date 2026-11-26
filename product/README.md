@@ -58,3 +58,10 @@ The ontology is a domain model. It reuses the EPF Core Entity envelope for ident
 - [Overlay Factory specification](../capability-factory/industry-overlay-factory-v0.2.0.md) — lifecycle, lineage, evidence and stewardship rules.
 - [Interactive Overlay Factory demo](demo/uece-industry-overlay-factory-v0.2.0.html) — inspect six industry overlays and their candidate specializations.
 - Engine functions: `validateIndustryOverlay` and `resolveIndustryOverlay` in [the UECE engine](engines/uece-intelligence-engine.mjs).
+
+## UECE Capability Assessment & Intelligence v0.3.0
+
+- [Capability assessment schema](components/capability-assessment.schema.json) — evidence-linked maturity assessment record, dimension scores, lifecycle and approval metadata.
+- [Capability maturity and assessment model](../capability-factory/capability-maturity-assessment-model-v0.3.0.md) — five maturity levels, eight dimensions, evidence rules, aggregation, coverage, gap analysis and benchmarking guardrails.
+- [Assessment dashboard demo](demo/uece-capability-assessment-dashboard-v0.3.0.html) — illustrative executive maturity heatmap, coverage, gap register and prioritization view.
+- Engine functions: `scoreCapabilityAssessment`, `analyzeCapabilityPortfolio` and `prioritizeCapabilityGaps` in [the UECE engine](engines/uece-intelligence-engine.mjs).
