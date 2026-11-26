@@ -1,0 +1,178 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.enterprise-platform-factory.dev/product/components/industry-classification.schema.json",
+  "title": "EPF Industry Classification and Context Overlay",
+  "type": "object",
+  "required": [
+    "id",
+    "code",
+    "name",
+    "classificationType",
+    "lifecycleState",
+    "version"
+  ],
+  "properties": {
+    "id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "code": {
+      "type": "string",
+      "pattern": "^[A-Z0-9][A-Z0-9._-]{1,31}$"
+    },
+    "name": {
+      "type": "string",
+      "minLength": 2,
+      "maxLength": 180
+    },
+    "definition": {
+      "type": "string",
+      "maxLength": 4000
+    },
+    "classificationType": {
+      "enum": [
+        "sector",
+        "industry",
+        "sub_industry",
+        "institutional_domain",
+        "specialist_context"
+      ]
+    },
+    "parentId": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "relatedIds": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {
+        "type": "string"
+      }
+    },
+    "contexts": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/contextRef"
+      }
+    },
+    "capabilityMappings": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/capabilityMapping"
+      }
+    },
+    "sourceRefs": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "lifecycleState": {
+      "enum": [
+        "draft",
+        "proposed",
+        "in_review",
+        "accepted",
+        "deprecated",
+        "retired"
+      ]
+    },
+    "version": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "validFrom": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "validTo": {
+      "type": "string",
+      "format": "date-time"
+    }
+  },
+  "$defs": {
+    "contextRef": {
+      "type": "object",
+      "required": [
+        "type",
+        "value"
+      ],
+      "properties": {
+        "type": {
+          "enum": [
+            "business_model",
+            "product_service",
+            "geography",
+            "jurisdiction",
+            "operating_model",
+            "sourcing_mode"
+          ]
+        },
+        "value": {
+          "type": "string"
+        },
+        "conditions": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+    "capabilityMapping": {
+      "type": "object",
+      "required": [
+        "capabilityId",
+        "mappingType",
+        "applicability"
+      ],
+      "properties": {
+        "capabilityId": {
+          "type": "string"
+        },
+        "mappingType": {
+          "enum": [
+            "reuse",
+            "specialization",
+            "extension",
+            "addition",
+            "alias",
+            "replacement_proposal"
+          ]
+        },
+        "applicability": {
+          "enum": [
+            "unassessed",
+            "applicable",
+            "conditional",
+            "not_applicable",
+            "externally_provided",
+            "planned"
+          ]
+        },
+        "specializedCapabilityId": {
+          "type": "string"
+        },
+        "rationale": {
+          "type": "string"
+        },
+        "confidence": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+        },
+        "evidenceRefs": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false
+}
