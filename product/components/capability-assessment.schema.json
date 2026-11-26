@@ -1,0 +1,174 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.enterprise-platform-factory.dev/product/components/capability-assessment.schema.json",
+  "title": "EPF Capability Assessment",
+  "type": "object",
+  "required": [
+    "assessmentId",
+    "tenantId",
+    "enterpriseId",
+    "capabilityId",
+    "assessmentVersion",
+    "status",
+    "maturity",
+    "evidence",
+    "assessedAt"
+  ],
+  "properties": {
+    "assessmentId": {
+      "type": "string",
+      "minLength": 1
+    },
+    "tenantId": {
+      "type": "string",
+      "minLength": 1
+    },
+    "enterpriseId": {
+      "type": "string",
+      "minLength": 1
+    },
+    "capabilityId": {
+      "type": "string",
+      "minLength": 1
+    },
+    "industryClassificationIds": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "uniqueItems": true
+    },
+    "assessmentVersion": {
+      "type": "string"
+    },
+    "status": {
+      "enum": [
+        "not_started",
+        "in_progress",
+        "submitted",
+        "validated",
+        "approved",
+        "rejected",
+        "superseded"
+      ]
+    },
+    "maturity": {
+      "type": "object",
+      "required": [
+        "level",
+        "modelVersion"
+      ],
+      "properties": {
+        "level": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 5
+        },
+        "modelVersion": {
+          "type": "string"
+        },
+        "dimensionScores": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 5
+          }
+        },
+        "targetLevel": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 5
+        },
+        "rationale": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false
+    },
+    "evidence": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "evidenceId",
+          "type",
+          "description",
+          "sourceRef"
+        ],
+        "properties": {
+          "evidenceId": {
+            "type": "string"
+          },
+          "type": {
+            "enum": [
+              "policy",
+              "process",
+              "metric",
+              "system_record",
+              "audit",
+              "interview",
+              "document",
+              "observation",
+              "other"
+            ]
+          },
+          "description": {
+            "type": "string"
+          },
+          "sourceRef": {
+            "type": "string"
+          },
+          "observedAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "validatedBy": {
+            "type": "string"
+          },
+          "confidence": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 1
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "assessor": {
+      "type": "object",
+      "properties": {
+        "principalId": {
+          "type": "string"
+        },
+        "role": {
+          "type": "string"
+        },
+        "method": {
+          "enum": [
+            "self_assessment",
+            "facilitated",
+            "independent_review",
+            "automated_evidence"
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "assessedAt": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "approvedAt": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "approvedBy": {
+      "type": "string"
+    },
+    "notes": {
+      "type": "string"
+    }
+  },
+  "additionalProperties": false
+}
