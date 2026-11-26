@@ -42,3 +42,10 @@ The ontology is a domain model. It reuses the EPF Core Entity envelope for ident
 - [Universal capability catalog v0.1.0](../capability-factory/data/universal-capability-catalog-v0.1.0.json) — 15 proposed L1 domains and representative Finance L2-L4 seed records.
 - [Industry classification taxonomy v0.1.0](../capability-factory/data/industry-classification-taxonomy-v0.1.0.json) — starter sector/industry/sub-industry hierarchy.
 - [Composition engine specification](../capability-factory/enterprise-composition-engine-spec.md) — deterministic, version-pinned enterprise capability resolution.
+
+## UECE Capability Intelligence Engine v0.1.0
+
+- [Engine implementation](engines/uece-intelligence-engine.mjs) — dependency-free catalog/taxonomy validators, graph construction, industry crosswalk resolution, deterministic composition and prototype fingerprinting.
+- [Engine developer guide](engines/README.md) — runtime, API outline, invariants and production hardening backlog.
+- [Automated tests](engines/tests/uece-engine.test.mjs) — Node.js test suite for seed integrity, approval gates, determinism and failure cases.
+- [Interactive engine demo](demo/uece-intelligence-engine-v0.1.0.html) — local browser walkthrough of quality gates, industry context, composition manifest and graph summary.
