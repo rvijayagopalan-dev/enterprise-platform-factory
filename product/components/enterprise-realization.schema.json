@@ -1,0 +1,15 @@
+{
+ "$schema":"https://json-schema.org/draft/2020-12/schema",
+ "$id":"https://schemas.enterprise-platform-factory.dev/product/components/enterprise-realization.schema.json",
+ "title":"UECE Enterprise Capability Realization","type":"object",
+ "required":["realizationId","tenantId","enterpriseId","capabilityId","realizationMode","status","assessmentVersion","provenance"],
+ "properties":{
+  "realizationId":{"type":"string"},"tenantId":{"type":"string"},"enterpriseId":{"type":"string"},"capabilityId":{"type":"string"},
+  "realizationMode":{"enum":["build","improve","buy","partner","automate","orchestrate","retire","not_decided"]},
+  "status":{"enum":["proposed","planned","in_progress","operational","blocked","retired"]},"targetState":{"type":"string"},
+  "investment":{"type":"object","properties":{"currency":{"type":"string","minLength":3,"maxLength":3},"amount":{"type":"number","minimum":0},"confidence":{"type":"number","minimum":0,"maximum":1},"period":{"type":"string"}},"additionalProperties":false},
+  "outcomeMetrics":{"type":"array","items":{"type":"string"}},"assessmentVersion":{"type":"string"},"owner":{"type":"string"},
+  "provenance":{"type":"object","required":["sourceType","sourceRef"],"properties":{"sourceType":{"enum":["portfolio_plan","architecture_roadmap","business_case","workshop","generated_seed"]},"sourceRef":{"type":"string"},"recordedAt":{"type":"string","format":"date-time"}},"additionalProperties":false},
+  "approvedBy":{"type":"string"},"approvedAt":{"type":"string","format":"date-time"}
+ },"additionalProperties":false
+}
