@@ -2,18 +2,23 @@
 
 **Product area:** Enterprise Platform Factory (EPF)  
 **Capability ontology release:** 1.0.0-draft  
-**Demo release:** 1.0.0
+**Demo release:** 2.0.0 concept demo
 
 ## Capability ontology
 
 - [Capability Ontology](components/capability-ontology.md) — semantic model, layers, decomposition, identity, relationships, applicability, composition, traceability and governance.
 - [Capability JSON Schema](components/capability.schema.json) — JSON Schema Draft 2020-12 domain contract extending the EPF Core Entity envelope.
 
-## Versioned HTML demonstrations
+## Universal Enterprise Capability Explorer
+
+- [UECE Deep Dive](../capability-factory/universal-enterprise-capability-explorer-deep-dive.md) — product positioning, universal domains, industry overlays, common branching patterns, composition, graph relationships, assessment, governance, AI intelligence and roadmap.
+- [UECE v2.0.0 HTML Demo](demo/universal-enterprise-capability-explorer-v2.0.0.html) — interactive universal domain map, capability inspector, common branching patterns, industry overlays, enterprise composer and capability-to-factory realization.
+
+## Earlier versioned decomposition demonstrations
 
 | Demo | Purpose |
 |---|---|
-| [L1 — Universal Capability Domains v1.0.0](demo/capability-l1-universal-v1.0.0.html) | Explore the proposed universal enterprise capability domains. |
+| [L1 — Universal Capability Domains v1.0.0](demo/capability-l1-universal-v1.0.0.html) | Explore proposed universal enterprise capability domains. |
 | [L2 — Capability Branch Explorer v1.0.0](demo/capability-l2-branch-v1.0.0.html) | Explore outcome-oriented branches under Finance and Accounting. |
 | [L3 — Capability Component Explorer v1.0.0](demo/capability-l3-component-v1.0.0.html) | Explore reusable components and a specialized retail-banking example. |
 
