@@ -1,0 +1,144 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.enterprise-platform-factory.dev/product/components/industry-overlay.schema.json",
+  "title": "EPF Industry Capability Overlay",
+  "type": "object",
+  "required": [
+    "overlaySetId",
+    "version",
+    "status",
+    "overlays"
+  ],
+  "properties": {
+    "overlaySetId": {
+      "type": "string"
+    },
+    "version": {
+      "type": "string",
+      "pattern": "^\\d+\\.\\d+\\.\\d+$"
+    },
+    "status": {
+      "enum": [
+        "proposed",
+        "in_review",
+        "accepted",
+        "deprecated"
+      ]
+    },
+    "overlays": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "id",
+          "classificationId",
+          "industry",
+          "version",
+          "status",
+          "capabilities"
+        ],
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "classificationId": {
+            "type": "string"
+          },
+          "industry": {
+            "type": "string"
+          },
+          "version": {
+            "type": "string"
+          },
+          "status": {
+            "enum": [
+              "proposed",
+              "in_review",
+              "accepted",
+              "deprecated"
+            ]
+          },
+          "capabilities": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": [
+                "id",
+                "name",
+                "level",
+                "parentId",
+                "baseCapabilityId",
+                "definition",
+                "status",
+                "applicability",
+                "mappingType"
+              ],
+              "properties": {
+                "id": {
+                  "type": "string"
+                },
+                "name": {
+                  "type": "string"
+                },
+                "level": {
+                  "enum": [
+                    "L2",
+                    "L3",
+                    "L4",
+                    "L5"
+                  ]
+                },
+                "parentId": {
+                  "type": "string"
+                },
+                "baseCapabilityId": {
+                  "type": "string"
+                },
+                "definition": {
+                  "type": "string"
+                },
+                "status": {
+                  "enum": [
+                    "proposed",
+                    "in_review",
+                    "accepted",
+                    "deprecated"
+                  ]
+                },
+                "applicability": {
+                  "enum": [
+                    "unassessed",
+                    "applicable",
+                    "conditional",
+                    "not_applicable",
+                    "externally_provided",
+                    "planned"
+                  ]
+                },
+                "mappingType": {
+                  "enum": [
+                    "specialization",
+                    "extension",
+                    "addition"
+                  ]
+                },
+                "lineage": {
+                  "type": "array"
+                },
+                "evidenceRefs": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                }
+              },
+              "additionalProperties": false
+            }
+          }
+        },
+        "additionalProperties": false
+      }
+    }
+  },
+  "additionalProperties": false
+}
