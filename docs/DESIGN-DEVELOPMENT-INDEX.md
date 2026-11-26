@@ -69,3 +69,11 @@ The [Capability Factory workspace](../capability-factory/README.md) maintains th
 Starter → Draft → Reviewed → Accepted → Implemented → Verified.
 
 Record material decisions as ADRs with context, options, decision, consequences, owner and affected artifacts. Maintain traceability as the design evolves.
+
+
+## Universal Enterprise Capability Explorer deep dive
+
+- [UECE deep dive](../capability-factory/universal-enterprise-capability-explorer-deep-dive.md) — universal domains, common branching patterns, industry overlays, deterministic enterprise composition, graph relationships, assessment, governance and AI-assisted intelligence.
+- [UECE v2.0.0 demo](../product/demo/universal-enterprise-capability-explorer-v2.0.0.html) — interactive concept demonstration.
+
+The Explorer is a capability knowledge product over the EPF ontology/catalog. It is not a replacement for the Capability Factory, EPF shared platform services or EMF orchestration. Keep semantic classification (universal / industry / specialized / enterprise-specific), decomposition depth (L1–L4+) and contextual applicability as independent dimensions.
