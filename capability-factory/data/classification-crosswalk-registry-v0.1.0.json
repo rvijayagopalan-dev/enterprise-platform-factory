@@ -1,0 +1,58 @@
+{
+  "crosswalkRegistryId": "epf.uece.classification-crosswalks",
+  "version": "0.1.0",
+  "status": "proposed",
+  "purpose": "Governed mapping registry for EPF industry classifications to external classification systems. No equivalence is inferred from labels.",
+  "systems": [
+    {
+      "system": "NAICS",
+      "authority": "U.S. Census Bureau",
+      "jurisdiction": "United States",
+      "officialEntryPoint": "https://www.census.gov/naics/",
+      "mappingStatus": "source-discovery-required"
+    },
+    {
+      "system": "ISIC",
+      "authority": "United Nations Statistics Division",
+      "jurisdiction": "International",
+      "officialEntryPoint": "https://unstats.un.org/unsd/classifications/Econ/",
+      "mappingStatus": "source-discovery-required"
+    },
+    {
+      "system": "NACE",
+      "authority": "Eurostat",
+      "jurisdiction": "European Union",
+      "officialEntryPoint": "https://ec.europa.eu/eurostat/web/nace",
+      "mappingStatus": "source-discovery-required"
+    }
+  ],
+  "mappingContract": {
+    "required": [
+      "sourceSystem",
+      "sourceCode",
+      "sourceLabel",
+      "targetClassificationId",
+      "relationship",
+      "evidenceRef",
+      "reviewStatus",
+      "validFrom"
+    ],
+    "relationship": [
+      "exact",
+      "broader_than",
+      "narrower_than",
+      "related",
+      "partial"
+    ],
+    "reviewStatus": [
+      "proposed",
+      "in_review",
+      "accepted",
+      "rejected",
+      "deprecated"
+    ],
+    "rule": "Mappings must be tied to a named classification release and effective date. Do not populate codes until checked against the official release."
+  },
+  "mappings": [],
+  "note": "Registry scaffold only. Official code mappings are intentionally empty pending release-specific source verification and steward approval."
+}
