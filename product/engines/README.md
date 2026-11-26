@@ -50,3 +50,21 @@ const composition = composeEnterprise({
 - Add full overlay model for business model, product/service, jurisdiction, operating model and sourcing mode.
 - Add relationship store, semantic equivalence approval workflow and graph cycle policies.
 - Add API service, idempotency keys, concurrency controls, observability and policy-as-code.
+
+
+## UECE v0.4.0 — Enterprise realization intelligence
+
+The engine now exposes:
+- `validateArchitectureGraph(graph)`: validates node IDs/types, relationship IDs, typed endpoints, predicates, lifecycle, provenance and confidence.
+- `traceCapability(graph, capabilityId, options)`: returns inbound/outbound links; optionally restricts to accepted relationships.
+- `analyzeRealizationPortfolio({capabilities, graph, realizations, requiredDimensions})`: computes accepted-link traceability, evidence coverage, missing dimensions and realization decision gaps.
+
+Coverage dimensions are process, role, application, data, technology, risk/control, product/outcome and factory/agent. Only accepted edges contribute. Evidence coverage additionally requires non-empty evidence references. This prototype checks evidence-reference presence, not evidence validity or control effectiveness.
+
+Run the test suites from the repository root with:
+
+```bash
+node --test product/engines/tests/*.test.mjs
+```
+
+The v0.4 graph seed is synthetic and all edges are proposed. Tests assert that candidate links do not count as authoritative coverage. The engine remains dependency-free and is not a production authorization, graph persistence, evidence validation or approval service.
