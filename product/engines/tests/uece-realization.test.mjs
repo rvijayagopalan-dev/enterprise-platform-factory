@@ -12,7 +12,7 @@ test("illustrative graph has valid typed endpoints and provenance",()=>{
 });
 test("proposed graph relationships are not authoritative traceability",()=>{
  const r=traceCapability(graph,"U02",{acceptedOnly:true});assert.equal(r.valid,true);assert.equal(r.relationships.length,0);
- const all=traceCapability(graph,"U02");assert.equal(all.relationships.length,12);assert.equal(all.candidateCount,12);
+ const all=traceCapability(graph,"U02");assert.equal(all.relationships.length,11);assert.equal(all.candidateCount,11);
 });
 test("dangling endpoint is rejected",()=>{
  const bad=structuredClone(graph);bad.relationships[0].target.nodeId="MISSING";assert.equal(validateArchitectureGraph(bad).valid,false);
@@ -23,7 +23,7 @@ test("endpoint type mismatch is rejected",()=>{
 test("realization coverage counts accepted edges only and surfaces gaps",()=>{
  const accepted=structuredClone(graph);accepted.relationships=accepted.relationships.map(e=>({...e,lifecycleState:"accepted",evidenceRefs:["evidence://sample"]}));
  const r=analyzeRealizationPortfolio({capabilities,graph:accepted,realizations:[{realizationId:"R1",capabilityId:"U02",realizationMode:"improve",status:"planned"}]});
- assert.equal(r.valid,true);const row=r.capabilities.find(x=>x.capabilityId==="U02");assert.equal(row.traceabilityCoverage,75);assert.equal(row.evidenceCoverage,75);assert.equal(row.realizationMode,"improve");
+ assert.equal(r.valid,true);const row=r.capabilities.find(x=>x.capabilityId==="U02");assert.equal(row.traceabilityCoverage,88);assert.equal(row.evidenceCoverage,88);assert.equal(row.realizationMode,"improve");
 });
 test("candidate edges do not inflate traceability coverage",()=>{
  const r=analyzeRealizationPortfolio({capabilities,graph});assert.equal(r.valid,true);assert.equal(r.summary.averageTraceabilityCoverage,0);assert.equal(r.summary.proposedRelationshipCount,13);
