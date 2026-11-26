@@ -8,7 +8,7 @@ const graph=JSON.parse(await readFile(new URL("capability-factory/data/enterpris
 const capabilities=graph.nodes.filter(n=>n.nodeType==="capability");
 
 test("illustrative graph has valid typed endpoints and provenance",()=>{
- const r=validateArchitectureGraph(graph);assert.equal(r.valid,true);assert.equal(r.counts.nodes,25);assert.equal(r.counts.relationships,13);
+ const r=validateArchitectureGraph(graph);assert.equal(r.valid,true);assert.equal(r.counts.nodes,27);assert.equal(r.counts.relationships,13);
 });
 test("proposed graph relationships are not authoritative traceability",()=>{
  const r=traceCapability(graph,"U02",{acceptedOnly:true});assert.equal(r.valid,true);assert.equal(r.relationships.length,0);
