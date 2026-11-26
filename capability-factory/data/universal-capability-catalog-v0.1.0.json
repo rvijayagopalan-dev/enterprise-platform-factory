@@ -1,0 +1,278 @@
+{
+  "catalogId": "epf.uece.universal",
+  "catalogVersion": "0.1.0",
+  "status": "proposed",
+  "note": "Illustrative seed: 15 proposed universal L1 domains; detailed L2-L4 examples are seeded for Finance and Accounting only. Validate with domain owners before acceptance.",
+  "capabilities": [
+    {
+      "id": "U01",
+      "name": "Strategy and Corporate Management",
+      "level": "L1",
+      "parentId": null,
+      "definition": "Set enterprise direction, make strategic choices and govern enterprise-wide performance.",
+      "status": "proposed",
+      "applicability": "unassessed",
+      "outcomes": []
+    },
+    {
+      "id": "U02",
+      "name": "Customer and Relationship Management",
+      "level": "L1",
+      "parentId": null,
+      "definition": "Understand, acquire, serve and sustain customer and stakeholder relationships.",
+      "status": "proposed",
+      "applicability": "unassessed",
+      "outcomes": []
+    },
+    {
+      "id": "U03",
+      "name": "Marketing and Brand Management",
+      "level": "L1",
+      "parentId": null,
+      "definition": "Understand markets, shape brand meaning and create demand.",
+      "status": "proposed",
+      "applicability": "unassessed",
+      "outcomes": []
+    },
+    {
+      "id": "U04",
+      "name": "Sales and Commercial Management",
+      "level": "L1",
+      "parentId": null,
+      "definition": "Convert market demand into sustainable commercial commitments.",
+      "status": "proposed",
+      "applicability": "unassessed",
+      "outcomes": []
+    },
+    {
+      "id": "U05",
+      "name": "Product and Service Management",
+      "level": "L1",
+      "parentId": null,
+      "definition": "Shape, develop, manage and retire products and services.",
+      "status": "proposed",
+      "applicability": "unassessed",
+      "outcomes": []
+    },
+    {
+      "id": "U06",
+      "name": "Operations Management",
+      "level": "L1",
+      "parentId": null,
+      "definition": "Plan, execute, monitor and improve operational delivery.",
+      "status": "proposed",
+      "applicability": "unassessed",
+      "outcomes": []
+    },
+    {
+      "id": "U07",
+      "name": "Supply Chain and Procurement",
+      "level": "L1",
+      "parentId": null,
+      "definition": "Source, acquire and coordinate external resources and supply networks.",
+      "status": "proposed",
+      "applicability": "unassessed",
+      "outcomes": []
+    },
+    {
+      "id": "U08",
+      "name": "Finance and Accounting",
+      "level": "L1",
+      "parentId": null,
+      "definition": "Plan, record, control and report financial resources and obligations.",
+      "status": "proposed",
+      "applicability": "unassessed",
+      "outcomes": []
+    },
+    {
+      "id": "U09",
+      "name": "Human Capital Management",
+      "level": "L1",
+      "parentId": null,
+      "definition": "Plan, acquire, develop and sustain workforce capabilities.",
+      "status": "proposed",
+      "applicability": "unassessed",
+      "outcomes": []
+    },
+    {
+      "id": "U10",
+      "name": "Risk and Compliance Management",
+      "level": "L1",
+      "parentId": null,
+      "definition": "Identify, assess, treat and monitor risk and compliance obligations.",
+      "status": "proposed",
+      "applicability": "unassessed",
+      "outcomes": []
+    },
+    {
+      "id": "U11",
+      "name": "Legal and Corporate Affairs",
+      "level": "L1",
+      "parentId": null,
+      "definition": "Manage legal obligations, advice, contracts and corporate affairs.",
+      "status": "proposed",
+      "applicability": "unassessed",
+      "outcomes": []
+    },
+    {
+      "id": "U12",
+      "name": "Technology and Digital Management",
+      "level": "L1",
+      "parentId": null,
+      "definition": "Govern, engineer, secure and operate technology and digital services.",
+      "status": "proposed",
+      "applicability": "unassessed",
+      "outcomes": []
+    },
+    {
+      "id": "U13",
+      "name": "Data and Information Management",
+      "level": "L1",
+      "parentId": null,
+      "definition": "Govern, manage, protect and use data and information assets.",
+      "status": "proposed",
+      "applicability": "unassessed",
+      "outcomes": []
+    },
+    {
+      "id": "U14",
+      "name": "Enterprise Support Services",
+      "level": "L1",
+      "parentId": null,
+      "definition": "Provide shared workplace, facilities and administrative services.",
+      "status": "proposed",
+      "applicability": "unassessed",
+      "outcomes": []
+    },
+    {
+      "id": "U15",
+      "name": "Innovation and Transformation",
+      "level": "L1",
+      "parentId": null,
+      "definition": "Discover opportunities, innovate and orchestrate enterprise change.",
+      "status": "proposed",
+      "applicability": "unassessed",
+      "outcomes": []
+    },
+    {
+      "id": "U08-L2-01",
+      "name": "Financial Planning and Analysis",
+      "level": "L2",
+      "parentId": "U08",
+      "definition": "Translate strategic and operational plans into budgets, forecasts and financial decision support.",
+      "status": "proposed",
+      "applicability": "unassessed",
+      "outcomes": []
+    },
+    {
+      "id": "U08-L2-02",
+      "name": "Accounting and Financial Control",
+      "level": "L2",
+      "parentId": "U08",
+      "definition": "Record financial events, maintain accounts and enforce financial control.",
+      "status": "proposed",
+      "applicability": "unassessed",
+      "outcomes": []
+    },
+    {
+      "id": "U08-L2-03",
+      "name": "Treasury Management",
+      "level": "L2",
+      "parentId": "U08",
+      "definition": "Manage liquidity, cash, funding, financial risk and treasury operations.",
+      "status": "proposed",
+      "applicability": "unassessed",
+      "outcomes": []
+    },
+    {
+      "id": "U08-L2-04",
+      "name": "Tax Management",
+      "level": "L2",
+      "parentId": "U08",
+      "definition": "Determine, report and settle tax obligations across applicable jurisdictions.",
+      "status": "proposed",
+      "applicability": "unassessed",
+      "outcomes": []
+    },
+    {
+      "id": "U08-L2-05",
+      "name": "Financial Reporting",
+      "level": "L2",
+      "parentId": "U08",
+      "definition": "Produce reliable internal and external financial statements and disclosures.",
+      "status": "proposed",
+      "applicability": "unassessed",
+      "outcomes": []
+    },
+    {
+      "id": "U08-L2-06",
+      "name": "Accounts Payable and Receivable",
+      "level": "L2",
+      "parentId": "U08",
+      "definition": "Administer supplier obligations and collect amounts due from customers and counterparties.",
+      "status": "proposed",
+      "applicability": "unassessed",
+      "outcomes": []
+    },
+    {
+      "id": "U08-L2-03-L3-01",
+      "name": "Cash Position Management",
+      "level": "L3",
+      "parentId": "U08-L2-03",
+      "definition": "Establish a timely and controlled view of cash balances and available liquidity across accounts and entities.",
+      "status": "proposed",
+      "applicability": "unassessed",
+      "outcomes": []
+    },
+    {
+      "id": "U08-L2-03-L3-02",
+      "name": "Cash Flow Forecasting",
+      "level": "L3",
+      "parentId": "U08-L2-03",
+      "definition": "Forecast expected cash inflows and outflows across defined horizons and scenarios.",
+      "status": "proposed",
+      "applicability": "unassessed",
+      "outcomes": []
+    },
+    {
+      "id": "U08-L2-03-L3-03",
+      "name": "Liquidity Risk Monitoring",
+      "level": "L3",
+      "parentId": "U08-L2-03",
+      "definition": "Identify, measure and monitor liquidity exposures against approved limits and risk appetite.",
+      "status": "proposed",
+      "applicability": "unassessed",
+      "outcomes": []
+    },
+    {
+      "id": "U08-L2-03-L3-04",
+      "name": "Bank Account Administration",
+      "level": "L3",
+      "parentId": "U08-L2-03",
+      "definition": "Govern bank account structures, mandates, signatories and account lifecycle.",
+      "status": "proposed",
+      "applicability": "unassessed",
+      "outcomes": []
+    },
+    {
+      "id": "U08-L2-03-L3-01-L4-01",
+      "name": "Intraday Cash Position Aggregation",
+      "level": "L4",
+      "parentId": "U08-L2-03-L3-01",
+      "definition": "Aggregate intraday balances and transactions from approved account and banking data sources.",
+      "status": "proposed",
+      "applicability": "unassessed",
+      "outcomes": []
+    },
+    {
+      "id": "U08-L2-03-L3-02-L4-01",
+      "name": "Scenario-Based Cash Forecasting",
+      "level": "L4",
+      "parentId": "U08-L2-03-L3-02",
+      "definition": "Evaluate cash flow projections under approved business, market and funding scenarios.",
+      "status": "proposed",
+      "applicability": "unassessed",
+      "outcomes": []
+    }
+  ]
+}
