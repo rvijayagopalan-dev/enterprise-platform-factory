@@ -1,0 +1,107 @@
+openapi: 3.1.0
+info:
+  title: UECE Enterprise Intelligence API
+  version: 1.0.0
+  description: Logical API contract. Endpoints are specifications; no live service is deployed by this repository artifact.
+servers:
+  - url: https://uece.example.invalid/api/v1
+security:
+  - bearerAuth: []
+paths:
+  /capabilities:
+    get:
+      summary: List tenant-scoped capabilities
+      parameters:
+        - in: query
+          name: catalogVersion
+          schema: {type: string}
+      responses:
+        '200': {description: Capability page}
+        '401': {description: Unauthenticated}
+        '403': {description: Not authorized}
+  /graphs/{graphId}/validate:
+    post:
+      summary: Validate a candidate graph
+      parameters:
+        - in: path
+          name: graphId
+          required: true
+          schema: {type: string}
+      responses:
+        '200': {description: Validation report}
+        '400': {description: Invalid graph}
+  /capabilities/{capabilityId}/trace:
+    get:
+      summary: Trace capability realization relationships
+      parameters:
+        - in: path
+          name: capabilityId
+          required: true
+          schema: {type: string}
+        - in: query
+          name: acceptedOnly
+          schema: {type: boolean, default: true}
+      responses:
+        '200': {description: Trace result}
+  /investment/scenarios:
+    post:
+      summary: Analyze a portfolio scenario
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: {$ref: '#/components/schemas/InvestmentScenario'}
+      responses:
+        '200': {description: Scenario analysis}
+        '422': {description: Invalid scenario}
+  /governance/assurance:
+    post:
+      summary: Evaluate release assurance gates
+      responses:
+        '200': {description: Assurance report}
+  /releases:
+    post:
+      summary: Create a candidate immutable release
+      responses:
+        '201': {description: Candidate release created}
+        '409': {description: Release conflicts with current state}
+  /releases/{releaseId}/approve:
+    post:
+      summary: Approve a release through a separated human approval workflow
+      parameters:
+        - in: path
+          name: releaseId
+          required: true
+          schema: {type: string}
+      responses:
+        '202': {description: Approval decision accepted for processing}
+        '403': {description: Approval authority missing}
+  /releases/{releaseId}/publish:
+    post:
+      summary: Publish an approved release
+      parameters:
+        - in: path
+          name: releaseId
+          required: true
+          schema: {type: string}
+      responses:
+        '202': {description: Publication requested}
+        '409': {description: Approval or policy gates not satisfied}
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+  schemas:
+    InvestmentScenario:
+      type: object
+      required: [scenarioId, tenantId, enterpriseId, scenarioVersion, currency, period, decisions, provenance]
+      properties:
+        scenarioId: {type: string}
+        tenantId: {type: string}
+        enterpriseId: {type: string}
+        scenarioVersion: {type: string}
+        currency: {type: string, pattern: '^[A-Z]{3}$'}
+        period: {type: string}
+        decisions: {type: array, items: {type: object}}

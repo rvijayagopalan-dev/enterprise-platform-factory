@@ -1,0 +1,18 @@
+import test from "node:test";
+import assert from "node:assert/strict";
+import {readFile} from "node:fs/promises";
+import {analyzeInvestmentScenario,optimizeInvestmentPortfolio,validateFactoryAgentRealizations,analyzeFactoryAgentCoverage,evaluateGovernanceAssurance,createGovernedPlatformRelease,buildEnterpriseIntelligenceWorkbench} from "../uece-intelligence-engine.mjs";
+const root=new URL("../../../",import.meta.url);
+const scenario=JSON.parse(await readFile(new URL("capability-factory/data/investment-scenario-seed-v0.6.0.json",root),"utf8"));
+const graph=JSON.parse(await readFile(new URL("capability-factory/data/enterprise-architecture-graph-seed-v0.4.0.json",root),"utf8"));
+const caps=graph.nodes.filter(n=>n.nodeType==="capability");
+test("investment scenario computes portfolio economics",()=>{const r=analyzeInvestmentScenario(scenario,{portfolioCapabilities:caps});assert.equal(r.valid,true);assert.equal(r.summary.totalCost,1470000);assert.equal(r.summary.budgetVariance,-470000);});
+test("portfolio optimizer retains mandatory capability and respects budget",()=>{const r=optimizeInvestmentPortfolio(scenario);assert.equal(r.valid,true);assert.ok(r.selected.some(d=>d.capabilityId==="U08"));assert.ok(r.summary.allocated<=scenario.constraints.budgetCeiling);});
+test("optimizer fails when mandatory decisions exceed budget",()=>{const s=structuredClone(scenario);s.constraints.budgetCeiling=100;s.constraints.requiredCapabilities=["U02"];const r=optimizeInvestmentPortfolio(s);assert.equal(r.valid,false);});
+test("bounded autonomy requires human oversight and escalation",()=>{const r=validateFactoryAgentRealizations([{realizationId:"R1",capabilityId:"U02",providerType:"agent",providerId:"A1",lifecycleState:"pilot",executionMode:"autonomous_bounded",humanOversight:{required:false,escalationPath:""},provenance:{sourceType:"synthetic_demo",sourceRef:"test"}}],{capabilities:caps});assert.equal(r.valid,false);});
+test("factory agent coverage distinguishes production from pilot",()=>{const r=analyzeFactoryAgentCoverage({capabilities:caps,realizations:[{capabilityId:"U02",providerType:"agent",providerId:"A1",lifecycleState:"pilot"}]});assert.equal(r.summary.withApprovedOrPilotProvider,1);assert.equal(r.summary.withProductionProvider,0);});
+test("assurance gate blocks missing and ineffective controls",()=>{const r=evaluateGovernanceAssurance({records:[],requiredControlIds:["C1"]});assert.equal(r.ready,false);assert.equal(r.blockers.length,1);});
+test("candidate release is never published by prototype",()=>{const records=[{subjectId:"release",controlId:"C1",status:"effective",evidenceRefs:["ev1"]}];const r=createGovernedPlatformRelease({tenantId:"t",enterpriseId:"e",releaseVersion:"1.0.0",catalogRef:{id:"catalog",version:"1.0.0"},graph,policyVersion:"1.0.0",createdBy:"architect",governanceRecords:records,requiredControlIds:["C1"]});assert.equal(r.valid,true);assert.equal(r.release.status,"in_review");assert.equal(r.publicationAllowed,false);});
+test("integrated workbench combines maturity, traceability, assurance and investment",()=>{const r=buildEnterpriseIntelligenceWorkbench({capabilities:caps,graph,requiredControlIds:["C1"],investmentScenario:scenario});assert.equal(r.status,"available");assert.equal(r.summary.governanceReady,false);assert.ok(r.maturity&&r.realization&&r.factory&&r.assurance&&r.investment);});
+
+test("optimizer refuses a mandatory capability excluded by risk policy",()=>{const s=structuredClone(scenario);s.constraints.maxRiskScore=2;s.constraints.requiredCapabilities=["U08"];const r=optimizeInvestmentPortfolio(s);assert.equal(r.valid,false);});

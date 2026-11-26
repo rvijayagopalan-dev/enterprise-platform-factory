@@ -105,10 +105,10 @@ export function resolveIndustryCrosswalk(taxonomy, catalog, classificationIds) {
   for (const id of selected) {
     const node=nodeById.get(id);
     if (!node) { errors.push(`Unknown industry/context id: ${id}`); continue; }
+    if (node.lifecycleState!=="accepted") warnings.push(`${id}: classification is ${node.lifecycleState}; it is not eligible for authoritative crosswalk composition.`);
     for (const m of node.capabilityMappings||[]) {
       if (!capabilityById.has(m.capabilityId)) { errors.push(`${id}: mapping references unknown capability ${m.capabilityId}`); continue; }
       mappings.push({classificationId:id,classificationName:node.name,...m,sourceLifecycle:node.lifecycleState});
-      if (node.lifecycleState!=="accepted") warnings.push(`${id}: mapping ignored for authoritative composition until classification is accepted.`);
     }
   }
   return {mappings,warnings,errors};
@@ -324,7 +324,8 @@ export function analyzeRealizationPortfolio({capabilities=[],graph={nodes:[],rel
   return {valid:true,errors:[],summary:{capabilityCount:total,capabilitiesWithAcceptedLinks:rows.filter(r=>r.acceptedRelationshipCount>0).length,
     averageTraceabilityCoverage:total?Math.round(rows.reduce((s,r)=>s+r.traceabilityCoverage,0)/total):null,
     averageEvidenceCoverage:total?Math.round(rows.reduce((s,r)=>s+r.evidenceCoverage,0)/total):null,
-    acceptedRelationshipCount:acceptedLinks,proposedRelationshipCount:rows.reduce((s,r)=>s+r.candidateRelationshipCount,0),
+    acceptedRelationshipCount:(graph.relationships||[]).filter(e=>e.lifecycleState==="accepted").length,
+    proposedRelationshipCount:(graph.relationships||[]).filter(e=>e.lifecycleState==="proposed"||e.lifecycleState==="in_review").length,
     capabilitiesWithoutRealizationDecision:rows.filter(r=>r.realizationMode==="not_decided").length,gapCount:gapRegister.length},
     capabilities:rows,gapRegister};
 }
@@ -369,4 +370,109 @@ export function analyzeDependencyImpact(graph,changedNodeId,{acceptedOnly=true}=
   }
   for(const id of nodes.keys())if(!state.has(id))visit(id);
   return {valid:true,changedNodeId,affectedNodes:affected.map(id=>({nodeId:id,nodeType:nodes.get(id).nodeType,name:nodes.get(id).name||id})),affectedCount:affected.length,cycles,cycleCount:cycles.length,dependencyEdgeCount:edges.length};
+}
+
+
+// UECE v0.6 — deterministic investment scenario and portfolio analysis.
+export function analyzeInvestmentScenario(scenario,{portfolioCapabilities=[]}={}) {
+  const errors=[],warnings=[];
+  if(!scenario?.scenarioId||!scenario?.tenantId||!scenario?.enterpriseId)errors.push("Scenario identity and tenant scope are required.");
+  if(!/^[A-Z]{3}$/.test(scenario?.currency||""))errors.push("A three-letter ISO currency code is required.");
+  const ids=new Set(),known=new Set(portfolioCapabilities.map(c=>c.id));
+  for(const d of scenario?.decisions||[]){
+    if(ids.has(d.capabilityId))errors.push("Duplicate decision for capability "+d.capabilityId);ids.add(d.capabilityId);
+    if(!REALIZATION_MODES.includes(d.mode))errors.push(d.capabilityId+": invalid realization mode.");
+    for(const k of ["cost","expectedValue","riskScore"])if(!Number.isFinite(d[k])||d[k]<0)errors.push(d.capabilityId+": "+k+" must be non-negative.");
+    if(d.riskScore>5)errors.push(d.capabilityId+": riskScore cannot exceed 5.");
+    if(known.size&&!known.has(d.capabilityId))errors.push("Unknown capability "+d.capabilityId);
+    if(d.confidence!==undefined&&(!Number.isFinite(d.confidence)||d.confidence<0||d.confidence>1))errors.push(d.capabilityId+": confidence must be between 0 and 1.");
+  }
+  const decisions=scenario?.decisions||[],budget=scenario?.constraints?.budgetCeiling??null;
+  const totalCost=decisions.reduce((s,d)=>s+(Number(d.cost)||0),0),expectedValue=decisions.reduce((s,d)=>s+(Number(d.expectedValue)||0),0);
+  if(budget!==null&&totalCost>budget)warnings.push("Full scenario exceeds the budget ceiling.");
+  const maxRisk=scenario?.constraints?.maxRiskScore??5;
+  const eligible=decisions.filter(d=>d.riskScore<=maxRisk);
+  const required=scenario?.constraints?.requiredCapabilities||[];
+  const missingRequired=required.filter(id=>!decisions.some(d=>d.capabilityId===id));
+  return {valid:errors.length===0,errors,warnings,scenarioId:scenario?.scenarioId,currency:scenario?.currency,period:scenario?.period,
+    summary:{decisionCount:decisions.length,totalCost,expectedValue,netExpectedValue:expectedValue-totalCost,averageRisk:decisions.length?decisions.reduce((s,d)=>s+d.riskScore,0)/decisions.length:null,
+      budgetCeiling:budget,budgetVariance:budget===null?null:budget-totalCost,eligibleUnderRiskLimit:eligible.length,missingRequiredCapabilities:missingRequired}};
+}
+
+export function optimizeInvestmentPortfolio(scenario,{budget=scenario?.constraints?.budgetCeiling??Infinity,maxRisk=scenario?.constraints?.maxRiskScore??5}={}) {
+  const valid=analyzeInvestmentScenario(scenario);
+  if(!valid.valid)return {valid:false,errors:valid.errors,selected:[],unfunded:[],summary:null};
+  const decisions=scenario.decisions,required=new Set(scenario.constraints?.requiredCapabilities||[]);
+  const candidates=decisions.filter(d=>d.riskScore<=maxRisk);
+  const missingRequired=[...required].filter(id=>!candidates.some(d=>d.capabilityId===id));
+  if(missingRequired.length)return {valid:false,errors:["Required capabilities are absent or exceed the risk limit: "+missingRequired.join(", ")],selected:[],unfunded:decisions,summary:null};
+  const mandatory=candidates.filter(d=>required.has(d.capabilityId)),optional=candidates.filter(d=>!required.has(d.capabilityId));
+  const mandatoryCost=mandatory.reduce((s,d)=>s+d.cost,0);
+  if(mandatoryCost>budget)return {valid:false,errors:["Required capability decisions exceed the available budget."],selected:[],unfunded:candidates,summary:null};
+  const ranked=optional.map(d=>({...d,decisionScore:Math.round(((d.expectedValue/(d.cost||1))*(d.confidence??0.7)*(1-d.riskScore/10))*10000)/10000}))
+    .sort((a,b)=>b.decisionScore-a.decisionScore||a.capabilityId.localeCompare(b.capabilityId));
+  const selected=[...mandatory],unfunded=[];let remaining=budget-mandatoryCost;
+  for(const d of ranked){if(d.cost<=remaining){selected.push(d);remaining-=d.cost;}else unfunded.push(d);}
+  const riskExcluded=decisions.filter(d=>d.riskScore>maxRisk);
+  const cost=selected.reduce((s,d)=>s+d.cost,0),value=selected.reduce((s,d)=>s+d.expectedValue,0);
+  return {valid:true,errors:[],selected:selected.map(({decisionScore,...d})=>d),unfunded:[...unfunded,...riskExcluded],
+    summary:{currency:scenario.currency,budget,allocated:cost,remaining,expectedValue:value,netExpectedValue:value-cost,selectedCount:selected.length,unfundedCount:unfunded.length,riskExcludedCount:riskExcluded.length,selectionMethod:"mandatory inclusion then deterministic value-cost-confidence-risk heuristic; not a global optimum"}};
+}
+
+// UECE v0.7 — factory/agent realization validation and coverage.
+export function validateFactoryAgentRealizations(records,{capabilities=[],providers=[]}={}) {
+  const errors=[],warnings=[],ids=new Set(),capIds=new Set(capabilities.map(c=>c.id)),providerMap=new Map(providers.map(p=>[p.id,p]));
+  for(const r of records||[]){
+    if(!r.realizationId||ids.has(r.realizationId))errors.push("Missing or duplicate realizationId: "+(r.realizationId||"unknown"));ids.add(r.realizationId);
+    if(capIds.size&&!capIds.has(r.capabilityId))errors.push(r.realizationId+": unknown capability "+r.capabilityId);
+    const p=providerMap.get(r.providerId);
+    if(providerMap.size&&(!p||p.nodeType!==r.providerType))errors.push(r.realizationId+": provider reference missing or type mismatch.");
+    if(!["factory","agent","human_team","external_service","platform_product"].includes(r.providerType))errors.push(r.realizationId+": invalid providerType.");
+    if(!["proposed","approved","pilot","production","suspended","retired"].includes(r.lifecycleState))errors.push(r.realizationId+": invalid lifecycleState.");
+    if(!r.humanOversight||typeof r.humanOversight.required!=="boolean"||!r.humanOversight.escalationPath)errors.push(r.realizationId+": human oversight and escalation path are required.");
+    if(r.executionMode==="autonomous_bounded"&&!r.humanOversight.required)errors.push(r.realizationId+": bounded autonomy requires a human escalation/oversight path.");
+    if(r.lifecycleState==="production"&&(!Array.isArray(r.controls)||!r.controls.length))warnings.push(r.realizationId+": production realization has no linked controls.");
+  }
+  return {valid:errors.length===0,errors,warnings,counts:{realizations:(records||[]).length,production:(records||[]).filter(r=>r.lifecycleState==="production").length}};
+}
+
+export function analyzeFactoryAgentCoverage({capabilities=[],realizations=[]}={}) {
+  const rows=capabilities.map(c=>{const linked=realizations.filter(r=>r.capabilityId===c.id&&["approved","pilot","production"].includes(r.lifecycleState));
+    return {capabilityId:c.id,name:c.name,providerCount:linked.length,providers:linked.map(r=>({providerType:r.providerType,providerId:r.providerId,lifecycleState:r.lifecycleState,executionMode:r.executionMode})),realized:linked.some(r=>r.lifecycleState==="production")};});
+  return {summary:{capabilityCount:rows.length,withApprovedOrPilotProvider:rows.filter(r=>r.providerCount>0).length,withProductionProvider:rows.filter(r=>r.realized).length,withoutProvider:rows.filter(r=>r.providerCount===0).length},capabilities:rows};
+}
+
+// UECE v0.8 — assurance and publication gates.
+export function evaluateGovernanceAssurance({records=[],requiredControlIds=[],subjectId=null}={}) {
+  const scoped=records.filter(r=>subjectId===null||r.subjectId===subjectId),byControl=new Map(scoped.map(r=>[r.controlId,r]));
+  const missing=requiredControlIds.filter(id=>!byControl.has(id)),ineffective=scoped.filter(r=>["ineffective","partially_effective","not_assessed"].includes(r.status));
+  const exceptions=scoped.filter(r=>r.status==="exception_approved"&&r.approval?.approvedBy&&r.approval?.approvedAt);
+  const effective=scoped.filter(r=>r.status==="effective"&&r.evidenceRefs?.length);
+  const blockers=[...missing.map(id=>"Missing required control "+id),...ineffective.map(r=>"Control "+r.controlId+" status "+r.status),...scoped.filter(r=>r.status==="effective"&&!r.evidenceRefs?.length).map(r=>"Control "+r.controlId+" has no evidence references")];
+  return {ready:blockers.length===0,blockers,warnings:exceptions.length?["Approved exceptions exist and require expiry/periodic review."]:[],summary:{records:scoped.length,requiredControls:requiredControlIds.length,missingControls:missing.length,evidenceBackedEffective:effective.length,approvedExceptions:exceptions.length}};
+}
+
+export function createGovernedPlatformRelease({tenantId,enterpriseId,releaseVersion,catalogRef,graph,policyVersion,createdBy,governanceRecords=[],requiredControlIds=[],parentReleaseId=null,changeSummary=""}={}) {
+  const graphCheck=validateArchitectureGraph(graph||{});
+  const assurance=evaluateGovernanceAssurance({records:governanceRecords,requiredControlIds});
+  const errors=[];
+  for(const [k,v] of Object.entries({tenantId,enterpriseId,releaseVersion,policyVersion,createdBy}))if(!v)errors.push(k+" is required.");
+  if(!catalogRef?.id||!catalogRef?.version)errors.push("Pinned catalogRef id and version are required.");
+  if(!graphCheck.valid)errors.push(...graphCheck.errors);
+  if(!assurance.ready)errors.push(...assurance.blockers);
+  const manifest={tenantId,enterpriseId,releaseVersion,catalogRef,graph:{id:graph.graphId,version:graph.version,nodes:graph.nodes,relationships:graph.relationships},policyVersion,governanceRecords,requiredControlIds:[...requiredControlIds].sort(),parentReleaseId,changeSummary};
+  const digest=fingerprint(manifest);
+  const release={releaseId:"uece-release-"+digest.slice(-10),tenantId,enterpriseId,releaseVersion,catalogRef,graphRef:{id:graph?.graphId||"invalid",version:graph?.version||"unknown"},policyVersion,status:errors.length?"draft":"in_review",createdAt:"caller-supplied-at-publication",createdBy,digest,parentReleaseId,changeSummary};
+  return {valid:errors.length===0,errors,assurance,graphCheck,release,publicationAllowed:false,note:"Prototype never publishes. A separate authenticated approval action and immutable persistence transaction are required."};
+}
+
+// UECE v0.9 — integrated workbench projection.
+export function buildEnterpriseIntelligenceWorkbench({capabilities=[],assessments=[],graph={nodes:[],relationships:[]},realizations=[],factoryAgentRealizations=[],governanceRecords=[],requiredControlIds=[],investmentScenario=null}={}) {
+  const maturity=analyzeCapabilityPortfolio({capabilities,assessments});
+  const realization=analyzeRealizationPortfolio({capabilities,graph,realizations});
+  const factory=analyzeFactoryAgentCoverage({capabilities,realizations:factoryAgentRealizations});
+  const assurance=evaluateGovernanceAssurance({records:governanceRecords,requiredControlIds});
+  const investment=investmentScenario?analyzeInvestmentScenario(investmentScenario,{portfolioCapabilities:capabilities}):null;
+  return {status:realization.valid&&(!investment||investment.valid)?"available":"degraded",summary:{capabilities:capabilities.length,maturityCoverage:maturity.summary.assessmentCoverage,averageMaturity:maturity.summary.averageMaturity,architectureTraceability:realization.summary.averageTraceabilityCoverage,factoryAgentProductionCoverage:factory.summary.capabilityCount?Math.round(factory.summary.withProductionProvider/factory.summary.capabilityCount*100):null,governanceReady:assurance.ready,investmentNetValue:investment?.summary?.netExpectedValue??null},
+    maturity,realization,factory,assurance,investment,limitations:["In-memory prototype; not a tenant-isolated service.","Evidence references are not dereferenced or cryptographically verified.","No live authorization, approvals, persistence or workflow orchestration."]};
 }

@@ -84,3 +84,38 @@ The ontology is a domain model. It reuses the EPF Core Entity envelope for ident
 - [Strategy and impact demo](demo/uece-strategy-impact-v0.5.0.html) — inspect a sample strategic outcome chain and potential dependency blast radius.
 - [Strategy and impact tests](engines/tests/uece-strategy-impact.test.mjs) — accepted-edge strategy tracing, reverse dependency traversal and cycle reporting.
 - Engine functions: `analyzeStrategicTraceability` and `analyzeDependencyImpact` in [the UECE engine](engines/uece-intelligence-engine.mjs).
+
+
+## UECE Investment & Scenario Intelligence v0.6.0
+
+- [Investment scenario schema](components/investment-scenario.schema.json)
+- [Illustrative investment scenario](../capability-factory/data/investment-scenario-seed-v0.6.0.json)
+- [Investment intelligence specification](../capability-factory/uece-enterprise-investment-intelligence-v0.6.0.md)
+- Engine: `analyzeInvestmentScenario`, `optimizeInvestmentPortfolio`
+
+## UECE Factory & Agent Realization v0.7.0
+
+- [Factory and agent realization schema](components/factory-agent-realization.schema.json)
+- [Factory/agent realization specification](../capability-factory/uece-factory-agent-realization-v0.7.0.md)
+- Engine: `validateFactoryAgentRealizations`, `analyzeFactoryAgentCoverage`
+
+## UECE Governance & Assurance v0.8.0
+
+- [Governance and assurance schema](components/governance-assurance.schema.json)
+- [Governance and assurance specification](../capability-factory/uece-governance-assurance-v0.8.0.md)
+- Engine: `evaluateGovernanceAssurance`, `createGovernedPlatformRelease`
+
+## UECE Enterprise Intelligence Workbench v0.9.0
+
+- [Workbench specification](../capability-factory/uece-enterprise-intelligence-workbench-v0.9.0.md)
+- [Interactive integrated workbench demo](demo/uece-enterprise-intelligence-workbench-v1.0.0.html)
+- Engine: `buildEnterpriseIntelligenceWorkbench`
+
+## UECE Governed Platform v1.0.0
+
+- [Platform release schema](components/uece-platform-release.schema.json)
+- [Logical OpenAPI contract](api/openapi-v1.0.0.yaml) — specification only; no live API is deployed.
+- [Platform reference architecture](../capability-factory/uece-platform-reference-architecture-v1.0.0.md)
+- [Production readiness and operations checklist](../capability-factory/uece-v1.0-production-readiness-and-operations.md)
+- [Engine tests](engines/tests/uece-platform-release.test.mjs)
+- [GitHub Actions test workflow](../.github/workflows/uece-engine-tests.yml)

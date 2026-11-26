@@ -76,3 +76,29 @@ The v0.4 graph seed is synthetic and all edges are proposed. Tests assert that c
 - `analyzeDependencyImpact(graph, changedNodeId, options)`: traverses reverse dependency edges (A dependsOn B; a change to B may affect A), returns transitive dependents and reports dependency cycles.
 
 These outputs indicate traceability and potential impact, not causal proof or confirmed operational incidents. Only accepted relationships contribute by default. Tests are in `tests/uece-strategy-impact.test.mjs`.
+
+
+## UECE v0.6-v1.0 APIs
+
+Investment:
+- `analyzeInvestmentScenario`
+- `optimizeInvestmentPortfolio` — deterministic mandatory-first heuristic, explicitly not a global optimum.
+
+Factory/agent:
+- `validateFactoryAgentRealizations`
+- `analyzeFactoryAgentCoverage`
+
+Governance/release:
+- `evaluateGovernanceAssurance`
+- `createGovernedPlatformRelease` — creates a candidate in-review manifest only; never approves or publishes.
+
+Workbench:
+- `buildEnterpriseIntelligenceWorkbench` — integrates maturity, graph traceability, factory/agent coverage, assurance and optional investment analysis.
+
+Run all tests from the repository root:
+
+```bash
+node --test product/engines/tests/*.test.mjs
+```
+
+GitHub Actions workflow: `.github/workflows/uece-engine-tests.yml`. The reference engine is not a production multi-tenant service. See the v1.0 reference architecture and production-readiness checklist for required infrastructure, identity, evidence, audit, resilience and operational controls.

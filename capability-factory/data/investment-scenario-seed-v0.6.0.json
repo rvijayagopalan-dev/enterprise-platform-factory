@@ -1,0 +1,12 @@
+{
+ "scenarioId":"scenario-digital-customer-2027","tenantId":"demo-tenant","enterpriseId":"demo-enterprise","scenarioVersion":"0.6.0","name":"Illustrative customer experience portfolio","currency":"USD","period":"FY2027",
+ "decisions":[
+  {"capabilityId":"U02","mode":"improve","cost":420000,"expectedValue":900000,"riskScore":2,"confidence":0.8},
+  {"capabilityId":"U10","mode":"build","cost":360000,"expectedValue":700000,"riskScore":3,"confidence":0.75},
+  {"capabilityId":"U11","mode":"improve","cost":280000,"expectedValue":510000,"riskScore":2,"confidence":0.85},
+  {"capabilityId":"U08","mode":"build","cost":220000,"expectedValue":300000,"riskScore":4,"confidence":0.7},
+  {"capabilityId":"U05","mode":"automate","cost":190000,"expectedValue":440000,"riskScore":2,"confidence":0.8}
+ ],
+ "constraints":{"budgetCeiling":1000000,"maxRiskScore":4,"requiredCapabilities":["U08"]},
+ "provenance":{"sourceType":"synthetic_demo","sourceRef":"uece-v0.6.0-seed"}
+}
