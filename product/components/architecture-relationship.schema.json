@@ -1,0 +1,19 @@
+{
+ "$schema":"https://json-schema.org/draft/2020-12/schema",
+ "$id":"https://schemas.enterprise-platform-factory.dev/product/components/architecture-relationship.schema.json",
+ "title":"UECE Enterprise Architecture Relationship","type":"object",
+ "required":["relationshipId","source","predicate","target","lifecycleState","provenance"],
+ "properties":{
+  "relationshipId":{"type":"string","minLength":1},
+  "source":{"$ref":"#/$defs/endpoint"},"target":{"$ref":"#/$defs/endpoint"},
+  "predicate":{"enum":["realizedByProcess","ownedByRole","supportedByApplication","usesData","runsOnTechnology","enablesProduct","mitigatedByControl","exposedToRisk","deliveredByFactory","orchestratedByAgent","dependsOn","enables","measures","governedBy"]},
+  "direction":{"const":"directed"},
+  "lifecycleState":{"enum":["proposed","in_review","accepted","rejected","deprecated"]},
+  "provenance":{"type":"object","required":["sourceType","sourceRef"],"properties":{"sourceType":{"enum":["repository","architecture_model","interview","assessment","system_inventory","workshop","generated_seed"]},"sourceRef":{"type":"string"},"observedAt":{"type":"string","format":"date-time"},"owner":{"type":"string"}},"additionalProperties":false},
+  "confidence":{"type":"number","minimum":0,"maximum":1},
+  "evidenceRefs":{"type":"array","items":{"type":"string"},"uniqueItems":true},
+  "validFrom":{"type":"string","format":"date-time"},"validTo":{"type":"string","format":"date-time"},"rationale":{"type":"string"}
+ },
+ "$defs":{"endpoint":{"type":"object","required":["nodeType","nodeId"],"properties":{"nodeType":{"enum":["capability","process","role","application","data","technology","product","risk","control","factory","agent","objective","metric","investment"]},"nodeId":{"type":"string","minLength":1}},"additionalProperties":false}},
+ "additionalProperties":false
+}
