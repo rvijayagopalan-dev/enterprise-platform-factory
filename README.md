@@ -176,3 +176,13 @@ The [Design & Development Index](docs/DESIGN-DEVELOPMENT-INDEX.md) is the entry 
 
 These are deliberately starter documents: they capture scope, candidate models, design questions and expected deliverables so detailed design and implementation can be continued later. They are not all approved or implementation-ready specifications.
 
+
+
+## Enterprise factory ecosystem integration
+
+This repository owns the **Enterprise Platform Factory** domain: reusable enterprise platform blueprints, infrastructure, cloud foundations, shared data/API/AI capabilities, governed deployment and platform operations. It is a peer of, not a replacement for:
+
+- [Enterprise Product Factory](https://github.com/rvijayagopalan-dev/enterprise-product-factory) — product discovery, strategy, PRDs, customer journeys, portfolio and value realization.
+- [Enterprise Engineering Factory](https://github.com/rvijayagopalan-dev/enterprise-engineering-factory) — application/software engineering engines, code, tests, reviews, packages and releases.
+
+See [Factory Ecosystem Integration](docs/architecture/factory-ecosystem-integration.md) for responsibility boundaries, platform capability request/response contracts and the cross-factory workflow. The contract is a v1 design baseline, not a claim that these APIs are deployed.
